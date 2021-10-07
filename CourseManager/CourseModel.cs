@@ -45,9 +45,15 @@ namespace CourseManager
             nodeTableRows.RemoveAt(0); // 移除 tbody
             nodeTableRows.RemoveAt(0); // 移除 <tr>資工三
             nodeTableRows.RemoveAt(0); // 移除 table header
-            nodeTableRows.RemoveAt(nodeTableRows.Count - 1); // 移除 <tr>小計
+            nodeTableRows.RemoveAt(GetCollectionSize(nodeTableRows) - 1); // 移除 <tr>小計
 
             return nodeTableRows;
+        }
+
+        // avoid feature envy
+        private int GetCollectionSize(HtmlNodeCollection collection)
+        {
+            return collection.Count;
         }
 
         // create course info instance from list
