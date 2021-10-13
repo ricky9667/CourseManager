@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CourseDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CourseInfo.cs" />
     <Compile Include="CourseManagementForm.cs">
       <SubType>Form</SubType>

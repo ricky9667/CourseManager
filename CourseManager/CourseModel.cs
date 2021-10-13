@@ -6,7 +6,6 @@ namespace CourseManager
 {
     public class CourseModel
     {
-
         public CourseModel()
         {
             
@@ -18,7 +17,7 @@ namespace CourseManager
             return new List<CourseTabPageInfo>
             {
                 new CourseTabPageInfo("computerScience3TabPage", "資工三", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433"),
-                new CourseTabPageInfo("electronicEngineering3ATabPage", "電子三甲", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433")
+                new CourseTabPageInfo("electronicEngineering3ATabPage", "電子三甲", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423")
             };
         }
 

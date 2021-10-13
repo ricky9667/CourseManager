@@ -28,7 +28,7 @@
             this.Language = language;
             this.Outline = outline;
             this.Note = note;
-            this.Audit = audit; //
+            this.Audit = audit;
             this.Experiment = experiment;
         }
 
