@@ -13,9 +13,9 @@ namespace CourseManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            CourseModel courseModel = new CourseModel();
-            Form form = new SelectCourseForm(courseModel);
-            Application.Run(form);
+
+            Form startUpForm = new StartUpForm();
+            Application.Run(startUpForm);
         }
     }
 }

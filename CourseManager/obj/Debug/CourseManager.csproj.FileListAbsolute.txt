@@ -10,5 +10,6 @@ C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.
 C:\Users\ricky\source\repos\CourseManager\CourseManager\bin\Debug\HtmlAgilityPack.dll
 C:\Users\ricky\source\repos\CourseManager\CourseManager\bin\Debug\HtmlAgilityPack.pdb
 C:\Users\ricky\source\repos\CourseManager\CourseManager\bin\Debug\HtmlAgilityPack.xml
-C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.csproj.CopyComplete
-C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.SelectCourseForm.resources
+C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.StartUpForm.resources
+C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.CourseSelectingForm.resources
+C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.CourseManagementForm.resources

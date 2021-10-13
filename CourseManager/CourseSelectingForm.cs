@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace CourseManager
 {
-    public partial class SelectCourseForm : Form
+    public partial class CourseSelectingForm : Form
     {
         CourseModel _courseModel;
         DataGridViewCheckBoxColumn _checkBoxColumn;
@@ -12,7 +12,7 @@ namespace CourseManager
         string[] _columnHeaderText = { "number", "name", "stage", "credit", "hour", "courseType", "teacher", "classtime0", "classtime1", "classtime2", "classtime3", "classtime4", "classtime5", "classtime6", "classroom", "numberOfStudent", "numberOfDropStudent", "teachingAssistant", "language", "note", "outline", "audit", "experiment" };
         string[] _columnHeaderTextChinese = { "課號", "課程名稱", "階段", "學分", "時數", "修", "教師", "日", "一", "二", "三", "四", "五", "六", "教室", "人", "撤", "教學助理", "授課語言", "教學大綱與進度表", "備註", "隨班附讀", "實驗實習" };
         
-        public SelectCourseForm(CourseModel courseModel)
+        public CourseSelectingForm(CourseModel courseModel)
         {
             _courseModel = courseModel;
             InitializeComponent();
@@ -55,13 +55,29 @@ namespace CourseManager
 
             foreach (DataGridViewRow row in _courseDataGridView.Rows)
             {
-                if (row.Cells[0].Value == _checkBoxColumn.TrueValue)
+                if (Convert.ToBoolean(row.Cells[0].Value))
                 {
                     selectedCourses++;
                 }
             }
 
             _submitButton.Enabled = selectedCourses > 0;
+        }
+
+        // make datagridview data readonly
+        private void CourseDataGridViewCellClicked(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
+            {
+                if (Convert.ToBoolean(_courseDataGridView.Rows[e.RowIndex].Cells[0].Value))
+                {
+                    _courseDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+                }
+                else
+                {
+                    _courseDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                }
+            }
         }
 
         // handle dirty state change

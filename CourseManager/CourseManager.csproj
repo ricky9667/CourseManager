@@ -50,18 +50,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CourseInfo.cs" />
-    <Compile Include="CourseModel.cs" />
-    <Compile Include="DataColumns.cs" />
-    <Compile Include="SelectCourseForm.cs">
+    <Compile Include="CourseManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SelectCourseForm.Designer.cs">
-      <DependentUpon>SelectCourseForm.cs</DependentUpon>
+    <Compile Include="CourseManagementForm.Designer.cs">
+      <DependentUpon>CourseManagementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CourseModel.cs" />
+    <Compile Include="DataColumns.cs" />
+    <Compile Include="CourseSelectingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CourseSelectingForm.Designer.cs">
+      <DependentUpon>CourseSelectingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="SelectCourseForm.resx">
-      <DependentUpon>SelectCourseForm.cs</DependentUpon>
+    <Compile Include="StartUpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartUpForm.Designer.cs">
+      <DependentUpon>StartUpForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CourseManagementForm.resx">
+      <DependentUpon>CourseManagementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CourseSelectingForm.resx">
+      <DependentUpon>CourseSelectingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -72,6 +87,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StartUpForm.resx">
+      <DependentUpon>StartUpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
