@@ -57,6 +57,7 @@
       <DependentUpon>CourseManagementForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CourseModel.cs" />
+    <Compile Include="CourseTabPageInfo.cs" />
     <Compile Include="DataColumns.cs" />
     <Compile Include="CourseSelectingForm.cs">
       <SubType>Form</SubType>

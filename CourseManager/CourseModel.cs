@@ -6,16 +6,26 @@ namespace CourseManager
 {
     public class CourseModel
     {
-        public CourseModel()
-        {            
 
+        public CourseModel()
+        {
+            
+        }
+
+        // get tab page infos
+        public List<CourseTabPageInfo> GetCourseTabPageInfos()
+        {
+            return new List<CourseTabPageInfo>
+            {
+                new CourseTabPageInfo("computerScience3TabPage", "資工三", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433"),
+                new CourseTabPageInfo("electronicEngineering3ATabPage", "電子三甲", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433")
+            };
         }
 
         // get courses infos
-        public List<CourseInfo> GetCourseInfos()
+        public List<CourseInfo> GetCourseInfos(string courseLink)
         {
-            const string COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433";
-            HtmlNodeCollection nodeTableRows = FetchCourseData(COURSE_LINK);
+            HtmlNodeCollection nodeTableRows = FetchCourseData(courseLink);
             List<CourseInfo> courseInfos = new List<CourseInfo>();
             foreach (var row in nodeTableRows)
             {
