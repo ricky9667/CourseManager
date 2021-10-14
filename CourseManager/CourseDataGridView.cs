@@ -13,18 +13,17 @@ namespace CourseManager
         private Button _submitButton;
         public CourseDataGridView(string name, List<CourseInfo> courseInfos, Button submitButton)
         {
+            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+
             Name = name;
+            DataSource = courseInfos;
             _submitButton = submitButton;
 
             SetBasicProperties();
             SetUpCourseGridViewColumns();
             AddCheckBoxColumn();
 
-            CellClick += new DataGridViewCellEventHandler(this.CourseDataGridViewCellClicked);
-            CellContentClick += new DataGridViewCellEventHandler(this.CourseDataGridViewCellValueChanged);
-            CurrentCellDirtyStateChanged += new EventHandler(this.CourseDataGridViewCurrentCellDirtyStateChanged);
-
-            DataSource = courseInfos;
+            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
         }
 
         // init datagridview basic properties
@@ -41,6 +40,9 @@ namespace CourseManager
             RowTemplate.Height = 20;
             Size = new System.Drawing.Size(1552, 537);
             TabIndex = 2;
+            CellClick += new DataGridViewCellEventHandler(this.CourseDataGridViewCellClicked);
+            CellContentClick += new DataGridViewCellEventHandler(this.CourseDataGridViewCellValueChanged);
+            CurrentCellDirtyStateChanged += new EventHandler(this.CourseDataGridViewCurrentCellDirtyStateChanged);
         }
 
         // rename header text of datagridview
@@ -58,7 +60,7 @@ namespace CourseManager
                 string headerTextChinese = columnHeaderTextChinese[index];
                 Console.WriteLine(index + " : " + headerText + " : " + headerTextChinese);
 
-                //Columns[headerText].HeaderText = headerTextChinese;
+                Columns[headerText].HeaderText = headerTextChinese;
                 Console.WriteLine("headerText: " + this.Columns[headerText]);
             }
         }

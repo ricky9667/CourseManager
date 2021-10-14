@@ -15,7 +15,7 @@ namespace CourseManager
         }
 
         // load select course form
-        private void SelectCourseFormLoad(object sender, EventArgs e)
+        private void CourseSelectingFormLoad(object sender, EventArgs e)
         {
             List<CourseTabPageInfo> courseTabPageInfos = _courseModel.GetCourseTabPageInfos();
             int tabCount = courseTabPageInfos.Count;
@@ -23,9 +23,14 @@ namespace CourseManager
             for (int index = 0; index < tabCount; index++)
             {
                 CourseTabPageInfo tabPageInfo = courseTabPageInfos[index];
-                TabPage courseTabPage = GetCourseTabPage(tabPageInfo.TabName, tabPageInfo.TabText, index, tabPageInfo.CourseLink);
-                courseTabControl.Controls.Add(courseTabPage);
+                courseTabControl.Controls[index].Name = tabPageInfo.TabName;
+                courseTabControl.Controls[index].Text = tabPageInfo.TabText;
+                
+                //TabPage courseTabPage = GetCourseTabPage(tabPageInfo.TabName, tabPageInfo.TabText, index, tabPageInfo.CourseLink);
+                //courseTabControl.Controls.Add(courseTabPage);
             }
+
+            courseDataGridView.DataSource = _courseModel.GetCourseInfos(courseTabPageInfos[0].CourseLink);
         }
 
         // dynamically create course tab page 
@@ -44,6 +49,52 @@ namespace CourseManager
             courseTabPage.UseVisualStyleBackColor = true;
 
             return courseTabPage;
+        }
+
+        // triggers when checkboxes in datagridview has value change 
+        private void CourseDataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int selectedCourses = 0;
+
+            foreach (DataGridViewRow row in courseDataGridView.Rows)
+            {
+                if (Convert.ToBoolean(row.Cells[0].Value))
+                {
+                    selectedCourses++;
+                }
+            }
+
+            _submitButton.Enabled = selectedCourses > 0;
+        }
+
+        // make datagridview data readonly
+        private void CourseDataGridViewCellClicked(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
+            {
+                if (Convert.ToBoolean(courseDataGridView.Rows[e.RowIndex].Cells[0].Value))
+                {
+                    courseDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+                }
+                else
+                {
+                    courseDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                }
+            }
+        }
+
+        // handle dirty state change
+        void CourseDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (courseDataGridView.IsCurrentCellDirty)
+            {
+                courseDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        void CourseTabControlSelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("Tab index changed");
         }
     }
 }

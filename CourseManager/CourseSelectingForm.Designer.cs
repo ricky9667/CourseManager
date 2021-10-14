@@ -32,7 +32,12 @@ namespace CourseManager
             this._exploreCourseButton = new System.Windows.Forms.Button();
             this._submitButton = new System.Windows.Forms.Button();
             this.courseTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.courseDataGridView = new System.Windows.Forms.DataGridView();
             this.courseTabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.courseDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // _exploreCourseButton
@@ -56,12 +61,55 @@ namespace CourseManager
             // 
             // courseTabControl
             // 
+            this.courseTabControl.Controls.Add(this.tabPage1);
+            this.courseTabControl.Controls.Add(this.tabPage2);
             this.courseTabControl.Dock = System.Windows.Forms.DockStyle.Top;
             this.courseTabControl.Location = new System.Drawing.Point(0, 0);
             this.courseTabControl.Name = "courseTabControl";
+            this.courseTabControl.Padding = new System.Drawing.Point(3, 3);
             this.courseTabControl.SelectedIndex = 0;
             this.courseTabControl.Size = new System.Drawing.Size(1574, 590);
             this.courseTabControl.TabIndex = 3;
+            this.courseTabControl.SelectedIndexChanged += new System.EventHandler(this.CourseTabControlSelectedIndexChanged);
+            //this.courseDataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.CourseDataGridViewCurrentCellDirtyStateChanged);
+
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.courseDataGridView);
+            this.tabPage1.Location = new System.Drawing.Point(8, 39);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(1558, 543);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(8, 39);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(1558, 543);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // courseDataGridView
+            // 
+            this.courseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.courseDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.courseDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.courseDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.courseDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.courseDataGridView.Name = "courseDataGridView";
+            this.courseDataGridView.ReadOnly = true;
+            this.courseDataGridView.RowHeadersVisible = false;
+            this.courseDataGridView.RowHeadersWidth = 100;
+            this.courseDataGridView.RowTemplate.Height = 20;
+            this.courseDataGridView.Size = new System.Drawing.Size(1552, 537);
+            this.courseDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CourseDataGridViewCellClicked);
+            this.courseDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CourseDataGridViewCellValueChanged);
+            this.courseDataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.CourseDataGridViewCurrentCellDirtyStateChanged);
+            this.courseDataGridView.TabIndex = 0;
             // 
             // CourseSelectingForm
             // 
@@ -75,9 +123,12 @@ namespace CourseManager
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "CourseSelectingForm";
             this.Text = "選課";
-            this.Load += new System.EventHandler(this.SelectCourseFormLoad);
+            this.Load += new System.EventHandler(this.CourseSelectingFormLoad);
             this.courseTabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.courseDataGridView)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -85,6 +136,9 @@ namespace CourseManager
         private System.Windows.Forms.Button _exploreCourseButton;
         private System.Windows.Forms.Button _submitButton;
         private System.Windows.Forms.TabControl courseTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DataGridView courseDataGridView;
     }
 }
 
