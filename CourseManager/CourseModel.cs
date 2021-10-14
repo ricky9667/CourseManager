@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using HtmlAgilityPack;
 
@@ -8,7 +9,7 @@ namespace CourseManager
     {
         private List<CourseTabPageInfo> _courseTabPageInfos;
         private List<CourseInfo> _selectedCourseInfos;
-        private Dictionary<int, List<CourseInfo>> _courseInfosDictonary;
+        private Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
 
         public CourseModel()
         {
@@ -19,7 +20,7 @@ namespace CourseManager
             };
 
             _selectedCourseInfos = new List<CourseInfo>();
-            _courseInfosDictonary = new Dictionary<int, List<CourseInfo>>();
+            _courseInfosDictionary = new Dictionary<int, List<CourseInfo>>();
         }
 
         // get tab page infos
@@ -29,15 +30,15 @@ namespace CourseManager
         }
 
         // get course info from selected tab
-        public List<CourseInfo> GetCourseInfosByIndex(int index)
+        public List<CourseInfo> GetCourseInfos(int tabIndex)
         {
-            if (!_courseInfosDictonary.ContainsKey(index))
+            if (!_courseInfosDictionary.ContainsKey(tabIndex))
             {
-                List<CourseInfo> courseInfos = FetchCourseInfos(_courseTabPageInfos[index].CourseLink);
-                _courseInfosDictonary.Add(index, courseInfos);
+                List<CourseInfo> courseInfos = FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
+                _courseInfosDictionary.Add(tabIndex, courseInfos);
             }
 
-            return _courseInfosDictonary[index];
+            return _courseInfosDictionary[tabIndex];
         }
 
         // get courses infos

@@ -27,41 +27,23 @@ namespace CourseManager
                 courseTabControl.Controls[index].Text = tabPageInfo.TabText;
             }
 
-            SetUpCourseDataGridView();
+            SetUpCourseDataGridView(0);
         }
 
-        // setup data grid view
-        private void SetUpCourseDataGridView()
+        // setup datagridview
+        private void SetUpCourseDataGridView(int currentIndex)
         {
-            courseDataGridView.DataSource = _courseModel.GetCourseInfosByIndex(0);
-            SetUpCourseGridViewColumns();
-            courseDataGridView.Columns.Insert(0, new DataGridViewCheckBoxColumn
+            List<CourseInfo> courseInfos = _courseModel.GetCourseInfos(currentIndex);
+            courseDataGridView.Rows.Clear();
+            foreach (CourseInfo info in courseInfos)
             {
-                HeaderText = "選",
-                Width = 30,
-                ReadOnly = false,
-                TrueValue = true,
-                FalseValue = false
-            });
-        }
-
-        // rename header text of datagridview
-        private void SetUpCourseGridViewColumns()
-        {
-            Console.WriteLine(courseDataGridView.Columns.Count);
-
-            int columnCount = 23;
-            string[] columnHeaderText = { "number", "name", "stage", "credit", "hour", "courseType", "teacher", "classtime0", "classtime1", "classtime2", "classtime3", "classtime4", "classtime5", "classtime6", "classroom", "numberOfStudent", "numberOfDropStudent", "teachingAssistant", "language", "note", "outline", "audit", "experiment" };
-            string[] columnHeaderTextChinese = { "課號", "課程名稱", "階段", "學分", "時數", "修", "教師", "日", "一", "二", "三", "四", "五", "六", "教室", "人", "撤", "教學助理", "授課語言", "教學大綱與進度表", "備註", "隨班附讀", "實驗實習" };
-
-            for (int index = 0; index < columnCount; index++)
-            {
-                string headerText = columnHeaderText[index];
-                string headerTextChinese = columnHeaderTextChinese[index];
-                Console.WriteLine(index + " : " + headerText + " : " + headerTextChinese);
-
-                courseDataGridView.Columns[headerText].HeaderText = headerTextChinese;
-                Console.WriteLine("headerText: " + courseDataGridView.Columns[headerText]);
+                DataGridViewRow row = new DataGridViewRow();
+                foreach (string cellValue in info.GetCourseInfoStrings())
+                {
+                    row.Cells.Add(new DataGridViewTextBoxCell { Value = cellValue });
+                }
+                row.Cells.Insert(0, new DataGridViewCheckBoxCell());
+                courseDataGridView.Rows.Add(row);
             }
         }
 
@@ -109,9 +91,11 @@ namespace CourseManager
         // add datagridview to selected tab index
         void CourseTabControlSelectedIndexChanged(object sender, EventArgs e)
         {
-            int index = courseTabControl.SelectedIndex;
-            courseDataGridView.DataSource = _courseModel.GetCourseInfosByIndex(index);
-            courseTabControl.Controls[index].Controls.Add(courseDataGridView);
+            int tabIndex = courseTabControl.SelectedIndex;
+            //courseDataGridView.DataSource = _courseModel.GetCourseInfos(tabIndex);
+            SetUpCourseDataGridView(tabIndex);
+            
+            courseTabControl.Controls[tabIndex].Controls.Add(courseDataGridView);
         }
 
         // show course result form
@@ -122,8 +106,19 @@ namespace CourseManager
         }
 
         // submit courses
-        private void submitButtonClick(object sender, EventArgs e)
+        private void SubmitButtonClick(object sender, EventArgs e)
         {
+            int courseConut = courseDataGridView.Rows.Count;
+            List<int> selectedIndexes = new List<int>();
+
+            for (int index = 0; index < courseConut; index++)
+            {
+                if (Convert.ToBoolean(courseDataGridView.Rows[index].Cells[0].Value))
+                {
+                    selectedIndexes.Add(index);
+                }
+            }
+
             MessageBox.Show("加選成功");
         }
     }
