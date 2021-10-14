@@ -6,23 +6,42 @@ namespace CourseManager
 {
     public class CourseModel
     {
+        private List<CourseTabPageInfo> _courseTabPageInfos;
+        private List<CourseInfo> _selectedCourseInfos;
+        private Dictionary<int, List<CourseInfo>> _courseInfosDictonary;
+
         public CourseModel()
         {
-            
+            _courseTabPageInfos = new List<CourseTabPageInfo>
+            {
+                new CourseTabPageInfo("computerScience3TabPage", "資工三", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433"),
+                new CourseTabPageInfo("electronicEngineering3ATabPage", "電子三甲", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423")
+            };
+
+            _selectedCourseInfos = new List<CourseInfo>();
+            _courseInfosDictonary = new Dictionary<int, List<CourseInfo>>();
         }
 
         // get tab page infos
         public List<CourseTabPageInfo> GetCourseTabPageInfos()
         {
-            return new List<CourseTabPageInfo>
+            return _courseTabPageInfos;
+        }
+
+        // get course info from selected tab
+        public List<CourseInfo> GetCourseInfosByIndex(int index)
+        {
+            if (!_courseInfosDictonary.ContainsKey(index))
             {
-                new CourseTabPageInfo("computerScience3TabPage", "資工三", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433"),
-                new CourseTabPageInfo("electronicEngineering3ATabPage", "電子三甲", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423")
-            };
+                List<CourseInfo> courseInfos = FetchCourseInfos(_courseTabPageInfos[index].CourseLink);
+                _courseInfosDictonary.Add(index, courseInfos);
+            }
+
+            return _courseInfosDictonary[index];
         }
 
         // get courses infos
-        public List<CourseInfo> GetCourseInfos(string courseLink)
+        public List<CourseInfo> FetchCourseInfos(string courseLink)
         {
             HtmlNodeCollection nodeTableRows = FetchCourseData(courseLink);
             List<CourseInfo> courseInfos = new List<CourseInfo>();
@@ -83,5 +102,4 @@ namespace CourseManager
                 courseDataList[(int)DataColumns.Experiment]);
         }
     }
-
 }

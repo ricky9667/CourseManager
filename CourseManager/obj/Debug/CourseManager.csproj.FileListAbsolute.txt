@@ -13,3 +13,4 @@ C:\Users\ricky\source\repos\CourseManager\CourseManager\bin\Debug\HtmlAgilityPac
 C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.StartUpForm.resources
 C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.CourseSelectingForm.resources
 C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.CourseManagementForm.resources
+C:\Users\ricky\source\repos\CourseManager\CourseManager\obj\Debug\CourseManager.CourseSelectionResultForm.resources

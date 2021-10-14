@@ -60,6 +60,12 @@
       <DependentUpon>CourseManagementForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CourseModel.cs" />
+    <Compile Include="CourseSelectionResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CourseSelectionResultForm.Designer.cs">
+      <DependentUpon>CourseSelectionResultForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CourseTabPageInfo.cs" />
     <Compile Include="DataColumns.cs" />
     <Compile Include="CourseSelectingForm.cs">
@@ -81,6 +87,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CourseSelectingForm.resx">
       <DependentUpon>CourseSelectingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CourseSelectionResultForm.resx">
+      <DependentUpon>CourseSelectionResultForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

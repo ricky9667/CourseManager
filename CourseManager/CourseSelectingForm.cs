@@ -12,13 +12,13 @@ namespace CourseManager
         public CourseSelectingForm(CourseModel courseModel)
         {
             _courseModel = courseModel;
+            _courseTabPageInfos = _courseModel.GetCourseTabPageInfos();
             InitializeComponent();
         }
 
         // load select course form
         private void CourseSelectingFormLoad(object sender, EventArgs e)
         {
-            _courseTabPageInfos = _courseModel.GetCourseTabPageInfos();
             int tabCount = _courseTabPageInfos.Count;
             for (int index = 0; index < tabCount; index++)
             {
@@ -33,7 +33,7 @@ namespace CourseManager
         // setup data grid view
         private void SetUpCourseDataGridView()
         {
-            courseDataGridView.DataSource = _courseModel.GetCourseInfos(_courseTabPageInfos[0].CourseLink);
+            courseDataGridView.DataSource = _courseModel.GetCourseInfosByIndex(0);
             SetUpCourseGridViewColumns();
             courseDataGridView.Columns.Insert(0, new DataGridViewCheckBoxColumn
             {
@@ -65,24 +65,6 @@ namespace CourseManager
             }
         }
 
-        // dynamically create course tab page 
-        private TabPage GetCourseTabPage(string tabName, string tabText, int tabIndex, string courseLink)
-        {
-            TabPage courseTabPage = new TabPage();
-            DataGridView courseDataGridView = new CourseDataGridView(tabName, _courseModel.GetCourseInfos(courseLink), _submitButton);
-
-            courseTabPage.Controls.Add(courseDataGridView);
-            courseTabPage.Location = new System.Drawing.Point(8, 39);
-            courseTabPage.Name = tabName;
-            courseTabPage.Padding = new Padding(3);
-            courseTabPage.Size = new System.Drawing.Size(1558, 543);
-            courseTabPage.TabIndex = tabIndex;
-            courseTabPage.Text = tabText;
-            courseTabPage.UseVisualStyleBackColor = true;
-
-            return courseTabPage;
-        }
-
         // triggers when checkboxes in datagridview has value change 
         private void CourseDataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -96,7 +78,7 @@ namespace CourseManager
                 }
             }
 
-            _submitButton.Enabled = selectedCourses > 0;
+            submitButton.Enabled = selectedCourses > 0;
         }
 
         // make datagridview data readonly
@@ -128,8 +110,21 @@ namespace CourseManager
         void CourseTabControlSelectedIndexChanged(object sender, EventArgs e)
         {
             int index = courseTabControl.SelectedIndex;
-            courseDataGridView.DataSource = _courseModel.GetCourseInfos(_courseTabPageInfos[index].CourseLink);
+            courseDataGridView.DataSource = _courseModel.GetCourseInfosByIndex(index);
             courseTabControl.Controls[index].Controls.Add(courseDataGridView);
+        }
+
+        // show course result form
+        private void CourseSelectionResultButtonClick(object sender, EventArgs e)
+        {
+            Form form = new CourseSelectionResultForm();
+            form.Show();
+        }
+
+        // submit courses
+        private void submitButtonClick(object sender, EventArgs e)
+        {
+            MessageBox.Show("加選成功");
         }
     }
 }
