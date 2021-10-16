@@ -105,14 +105,13 @@ namespace CourseManager
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
             Form form = new CourseSelectionResultForm(_courseModel);
-            form.Show();
+            form.ShowDialog();
         }
 
         // submit courses
         private void SubmitButtonClick(object sender, EventArgs e)
         {
             int tabIndex = courseTabControl.SelectedIndex;
-
             int courseConut = courseDataGridView.Rows.Count;
             List<int> selectedIndexes = new List<int>();
 
@@ -124,9 +123,16 @@ namespace CourseManager
                 }
             }
 
-            _courseModel.SelectCourses(courseTabControl.SelectedIndex, selectedIndexes);
-
-            MessageBox.Show("加選成功");
+            string selectCourseMessage = _courseModel.CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
+            if (selectCourseMessage == "")
+            {
+                _courseModel.SelectCourses(tabIndex, selectedIndexes);
+                MessageBox.Show("加選成功");
+            }
+            else
+            {
+                MessageBox.Show("加選失敗" + selectCourseMessage);
+            }
             LoadCourseDataGridView(tabIndex);
         }
     }

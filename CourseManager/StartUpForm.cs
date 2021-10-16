@@ -18,22 +18,22 @@ namespace CourseManager
         }
 
         // show course selecting system
-        private void courseSelectingSystemButtonClick(object sender, EventArgs e)
+        private void CourseSelectingSystemButtonClick(object sender, EventArgs e)
         {
             CourseModel courseModel = new CourseModel();
             Form form = new CourseSelectingForm(courseModel);
-            form.Show();
+            form.ShowDialog();
         }
 
         // show course management system
-        private void courseManagementSystemButtonClick(object sender, EventArgs e)
+        private void CourseManagementSystemButtonClick(object sender, EventArgs e)
         {
             Form form = new CourseManagementForm();
-            form.Show();
+            form.ShowDialog();
         }
 
         // exit application
-        private void exitButtonClick(object sender, EventArgs e)
+        private void ExitButtonClick(object sender, EventArgs e)
         {
             Application.Exit();
         }

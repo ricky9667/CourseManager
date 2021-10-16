@@ -44,7 +44,7 @@ namespace CourseManager
             this.courseSelectingSystemButton.TabIndex = 0;
             this.courseSelectingSystemButton.Text = "Course Selecting System";
             this.courseSelectingSystemButton.UseVisualStyleBackColor = true;
-            this.courseSelectingSystemButton.Click += new System.EventHandler(this.courseSelectingSystemButtonClick);
+            this.courseSelectingSystemButton.Click += new System.EventHandler(this.CourseSelectingSystemButtonClick);
             // 
             // courseManagementSystemButton
             // 
@@ -56,7 +56,7 @@ namespace CourseManager
             this.courseManagementSystemButton.TabIndex = 1;
             this.courseManagementSystemButton.Text = "Course Management System";
             this.courseManagementSystemButton.UseVisualStyleBackColor = true;
-            this.courseManagementSystemButton.Click += new System.EventHandler(this.courseManagementSystemButtonClick);
+            this.courseManagementSystemButton.Click += new System.EventHandler(this.CourseManagementSystemButtonClick);
             // 
             // exitButton
             // 
@@ -67,7 +67,7 @@ namespace CourseManager
             this.exitButton.TabIndex = 2;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = true;
-            this.exitButton.Click += new System.EventHandler(this.exitButtonClick);
+            this.exitButton.Click += new System.EventHandler(this.ExitButtonClick);
             // 
             // StartUpForm
             // 

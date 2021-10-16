@@ -10,7 +10,7 @@ namespace CourseManager
         private List<CourseTabPageInfo> _courseTabPageInfos;
         private Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
         private Dictionary<int, List<bool>> _isCourseSelected;
-        private List<Tuple<int, int>> _selectedIndexPair; // tabindex, courseIndex
+        private List<Tuple<int, int>> _selectedIndexPairs; // tabindex, courseIndex
 
         public CourseModel()
         {
@@ -22,7 +22,7 @@ namespace CourseManager
 
             _courseInfosDictionary = new Dictionary<int, List<CourseInfo>>();
             _isCourseSelected = new Dictionary<int, List<bool>>();
-            _selectedIndexPair = new List<Tuple<int, int>>();
+            _selectedIndexPairs = new List<Tuple<int, int>>();
         }
 
         // get tab page infos
@@ -52,11 +52,11 @@ namespace CourseManager
             List<CourseInfo> filteredCourseInfos = new List<CourseInfo>();
             List<bool> isSelected = _isCourseSelected[tabIndex];
             int isSelectedCount = isSelected.Count;
-            for (int index = 0; index < isSelectedCount; index++)
+            for (int courseIndex = 0; courseIndex < isSelectedCount; courseIndex++)
             {
-                if (!isSelected[index])
+                if (!isSelected[courseIndex])
                 {
-                    filteredCourseInfos.Add(_courseInfosDictionary[tabIndex][index]);
+                    filteredCourseInfos.Add(_courseInfosDictionary[tabIndex][courseIndex]);
                 }
             }
 
@@ -67,7 +67,7 @@ namespace CourseManager
         public List<CourseInfo> GetSelectedCourseInfos()
         {
             List<CourseInfo> selectedCourseInfos = new List<CourseInfo>();
-            foreach (Tuple<int, int> indexPair in _selectedIndexPair)
+            foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
             {
                 int tabIndex = indexPair.Item1;
                 int courseIndex = indexPair.Item2;
@@ -81,25 +81,101 @@ namespace CourseManager
         public void SelectCourses(int tabIndex, List<int> selectedIndexes)
         {
             int tabCount = _courseInfosDictionary[tabIndex].Count;
-            for (int index = 0; index < tabCount; index++)
+            for (int courseIndex = 0; courseIndex < tabCount; courseIndex++)
             {
-                if (selectedIndexes.Count > 0 && index == selectedIndexes[0])
+                if (selectedIndexes.Count > 0 && courseIndex == selectedIndexes[0])
                 {
-                    _isCourseSelected[tabIndex][index] = true;
-                    _selectedIndexPair.Add(new Tuple<int, int>(tabIndex, index));
+                    _selectedIndexPairs.Add(new Tuple<int, int>(tabIndex, courseIndex));
+                    _isCourseSelected[tabIndex][courseIndex] = true;
                     selectedIndexes.RemoveAt(0);
                 }
             }
         }
 
+        // check if courses are able to select and return message if not
+        public string CheckSelectCoursesWithMessage(int tabIndex, List<int> courseIndexes)
+        {
+            string sameNumberMessage = "";
+            string sameNameMessage = "";
+            string conflictTimeMessage = "";
+
+            foreach (int courseIndex in courseIndexes)
+            {
+                sameNumberMessage = CheckSameNumber(tabIndex, courseIndex);
+                sameNameMessage = CheckSameName(tabIndex, courseIndex);
+                conflictTimeMessage = CheckConflictTime(tabIndex, courseIndex);
+            }
+
+            string finalMessage = "";
+            finalMessage += (sameNumberMessage == "") ? "" : ("\n課號相同：" + sameNumberMessage);
+            finalMessage += (sameNameMessage == "") ? "" : ("\n課程名稱相同：" + sameNameMessage);
+            finalMessage += (conflictTimeMessage == "") ? "" : ("\n衝堂：" + conflictTimeMessage);
+
+            return finalMessage;
+        }
+
+        // check same course number
+        private string CheckSameNumber(int tabIndex, int courseIndex)
+        {
+            string message = "";
+
+            CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
+            foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
+            {
+                CourseInfo selectedCourseInfo = _courseInfosDictionary[indexPair.Item1][indexPair.Item2];
+                if (selectedCourseInfo.Number == courseInfo.Number)
+                {
+                    message += "「" + courseInfo.Number + " " + courseInfo.Name + "」";
+                }
+            }
+
+            return message;
+        }
+
+        // check same course name
+        private string CheckSameName(int tabIndex, int courseIndex)
+        {
+            string message = "";
+
+            CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
+            foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
+            {
+                CourseInfo selectedCourseInfo = _courseInfosDictionary[indexPair.Item1][indexPair.Item2];
+                if (selectedCourseInfo.Name == courseInfo.Name)
+                {
+                    message += "「" + courseInfo.Number + " " + courseInfo.Name + "」";
+                }
+            }
+
+            return message;
+        }
+
+        // check conflict courses
+        private string CheckConflictTime(int tabIndex, int courseIndex)
+        {
+            string message = "";
+
+            CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
+            foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
+            {
+                CourseInfo selectedCourseInfo = _courseInfosDictionary[indexPair.Item1][indexPair.Item2];
+                if (courseInfo.HasConflictClassTime(selectedCourseInfo))
+                {
+                    message += "「" + courseInfo.Number + " " + courseInfo.Name + "」";
+                }
+            }
+
+            return message;
+        }
+
         // remove course from selected courses
         public void RemoveCourse(int index)
         {
-            int tabIndex = _selectedIndexPair[index].Item1;
-            int courseIndex = _selectedIndexPair[index].Item2;
+            int tabIndex = _selectedIndexPairs[index].Item1;
+            int courseIndex = _selectedIndexPairs[index].Item2;
 
             _isCourseSelected[tabIndex][courseIndex] = false;
-            _selectedIndexPair.RemoveAt(index);
+            _selectedIndexPairs.RemoveAt(index);
         }
 
         // get courses infos

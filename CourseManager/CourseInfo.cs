@@ -1,4 +1,8 @@
-﻿namespace CourseManager
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CourseManager
 {
     public class CourseInfo
     {
@@ -37,6 +41,88 @@
         {
             return new string[] { Number, Name, Stage, Credit, Hour, CourseType, Teacher, ClassTime0, ClassTime1, ClassTime2, ClassTime3, ClassTime4, ClassTime5, ClassTime6,
                                   Classroom, NumberOfStudent, NumberOfDropStudent, TeachingAssistant, Language, Outline, Note, Audit, Experiment};
+        }
+
+        // get class time of course
+        public List<Tuple<int, int>> GetCourseClassTimes()
+        {
+            List<Tuple<int, int>> classTimes = new List<Tuple<int, int>>();
+
+            for (int day = 0; day < 7; day++)
+            {
+                classTimes.AddRange(GetSingleDayClassTime(day));
+            }
+
+            return classTimes;
+        }
+
+        // get single day class time
+        private List<Tuple<int, int>> GetSingleDayClassTime(int day)
+        {
+            List<Tuple<int, int>> classTimes = new List<Tuple<int, int>>();
+            string classString;
+
+            switch (day)
+            {
+                case 0: classString = ClassTime0; break;
+                case 1: classString = ClassTime1; break;
+                case 2: classString = ClassTime2; break;
+                case 3: classString = ClassTime3; break;
+                case 4: classString = ClassTime4; break;
+                case 5: classString = ClassTime5; break;
+                case 6: classString = ClassTime6; break;
+                default: return null;
+            }
+
+            if (classString != "")
+            {
+                string[] classChars = classString.Split(' ');
+                foreach (string classChar in classChars)
+                {
+                    classTimes.Add(new Tuple<int, int>(day, ConvertClassCharToInt(classChar[0])));
+                }
+            }
+            
+            return classTimes;
+        }
+
+        // convert class time char to index
+        private int ConvertClassCharToInt(char c)
+        {
+            switch (c)
+            {
+                case '1': return 0;
+                case '2': return 1;
+                case '3': return 2;
+                case '4': return 3;
+                case 'N': return 4;
+                case '5': return 5;
+                case '6': return 6;
+                case '7': return 7;
+                case '8': return 8;
+                case '9': return 9;
+                case 'A': return 10;
+                case 'B': return 11;
+                case 'C': return 12;
+                case 'D': return 13;
+                default: return -1;
+            }
+        }
+
+        // check if courses have class time overlap
+        public bool HasConflictClassTime(CourseInfo courseInfo)
+        {
+            foreach (Tuple<int, int> thisClassTime in GetCourseClassTimes())
+            {
+                foreach (Tuple<int, int> classTime in courseInfo.GetCourseClassTimes())
+                {
+                    if (classTime == thisClassTime)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public string Number
@@ -154,4 +240,3 @@
         }
     }
 }
-
