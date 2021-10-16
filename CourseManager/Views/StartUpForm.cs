@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CourseManager
@@ -20,7 +13,7 @@ namespace CourseManager
         // show course selecting system
         private void CourseSelectingSystemButtonClick(object sender, EventArgs e)
         {
-            CourseModel courseModel = new CourseModel();
+            Model courseModel = new Model();
             Form form = new CourseSelectingForm(courseModel);
             form.ShowDialog();
         }

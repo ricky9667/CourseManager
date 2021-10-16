@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CourseManager
 {
     public class CourseInfo
     {
         public CourseInfo(string number, string name, string stage, string credit, string hour, string courseType, string teacher,
-            string classTime0, string classTime1, string classTime2, string classTime3, string classTime4, string classTime5, string classTime6, 
-            string classroom, string numberOfStudent, string numberOfDropStudent, string teachingAssistant, 
+            string classTime0, string classTime1, string classTime2, string classTime3, string classTime4, string classTime5, string classTime6,
+            string classroom, string numberOfStudent, string numberOfDropStudent, string teachingAssistant,
             string language, string note, string outline, string audit, string experiment)
         {
             this.Number = number;
@@ -82,7 +81,7 @@ namespace CourseManager
                     classTimes.Add(new Tuple<int, int>(day, ConvertClassCharToInt(classChar[0])));
                 }
             }
-            
+
             return classTimes;
         }
 
@@ -125,7 +124,7 @@ namespace CourseManager
 
             return false;
         }
-        
+
         // output course data for testing
         public void PrintCourseData()
         {

@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CourseManager
 {
     public partial class CourseSelectionResultForm : Form
     {
-        CourseModel _courseModel;
-        public CourseSelectionResultForm(CourseModel courseModel)
+        Model _model;
+        public CourseSelectionResultForm(Model model)
         {
-            _courseModel = courseModel;
+            _model = model;
             InitializeComponent();
         }
 
@@ -28,10 +22,8 @@ namespace CourseManager
         // setup datagridview
         private void LoadSelectedCourseDataGridView()
         {
-            List<CourseInfo> selectedCourseInfos = _courseModel.GetSelectedCourseInfos();
-
+            List<CourseInfo> selectedCourseInfos = _model.GetSelectedCourseInfos();
             selectedCourseDataGridView.Rows.Clear();
-            // Fix: still has one blank row left
 
             foreach (CourseInfo info in selectedCourseInfos)
             {
@@ -41,11 +33,7 @@ namespace CourseManager
                     row.Cells.Add(new DataGridViewTextBoxCell { Value = cellValue });
                 }
 
-                row.Cells.Insert(0, new DataGridViewButtonCell
-                {
-                    Value = "退選",
-                });
-
+                row.Cells.Insert(0, new DataGridViewButtonCell { Value = "退選", });
                 selectedCourseDataGridView.Rows.Add(row);
             }
 
@@ -57,7 +45,7 @@ namespace CourseManager
         {
             if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
-                _courseModel.RemoveCourse(e.RowIndex);
+                _model.RemoveCourse(e.RowIndex);
             }
 
             LoadSelectedCourseDataGridView();

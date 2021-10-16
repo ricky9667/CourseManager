@@ -57,7 +57,7 @@
     <Compile Include="Views\CourseManagementForm.Designer.cs">
       <DependentUpon>CourseManagementForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\CourseModel.cs" />
+    <Compile Include="Models\Model.cs" />
     <Compile Include="Views\CourseSelectionResultForm.cs">
       <SubType>Form</SubType>
     </Compile>

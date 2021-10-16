@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace CourseManager
 {
     public partial class CourseSelectingForm : Form
     {
-        CourseModel _courseModel;
+        Model _model;
         List<CourseTabPageInfo> _courseTabPageInfos;
         List<int> _currentShowingIndexes;
 
-        public CourseSelectingForm(CourseModel courseModel)
+        public CourseSelectingForm(Model model)
         {
-            _courseModel = courseModel;
-            _courseTabPageInfos = _courseModel.GetCourseTabPageInfos();
+            _model = model;
+            _courseTabPageInfos = _model.GetCourseTabPageInfos();
             InitializeComponent();
         }
 
@@ -35,8 +35,8 @@ namespace CourseManager
         private void LoadCourseDataGridView(int tabIndex)
         {
             courseDataGridView.Rows.Clear();
-            List<CourseInfo> courseInfos = _courseModel.GetCourseInfos(tabIndex);
-            _currentShowingIndexes = _courseModel.GetShowingList(tabIndex);
+            List<CourseInfo> courseInfos = _model.GetCourseInfos(tabIndex);
+            _currentShowingIndexes = _model.GetShowingList(tabIndex);
 
             foreach (int index in _currentShowingIndexes)
             {
@@ -106,7 +106,7 @@ namespace CourseManager
         // show course result form
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
-            Form form = new CourseSelectionResultForm(_courseModel);
+            Form form = new CourseSelectionResultForm(_model);
             form.ShowDialog();
             LoadCourseDataGridView(courseTabControl.SelectedIndex);
         }
@@ -126,17 +126,17 @@ namespace CourseManager
                 }
             }
 
-            string selectCourseMessage = _courseModel.CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
+            string selectCourseMessage = _model.CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
             if (selectCourseMessage == "")
             {
-                _courseModel.SelectCourses(tabIndex, selectedIndexes);
+                _model.SelectCourses(tabIndex, selectedIndexes);
                 MessageBox.Show("加選成功");
             }
             else
             {
                 MessageBox.Show("加選失敗" + selectCourseMessage);
             }
-            
+
             LoadCourseDataGridView(tabIndex);
             submitButton.Enabled = false;
         }

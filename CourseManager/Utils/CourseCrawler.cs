@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using HtmlAgilityPack;
+using System.Collections.Generic;
 using System.Text;
-using HtmlAgilityPack;
 
 namespace CourseManager
 {

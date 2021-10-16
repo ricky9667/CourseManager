@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace CourseManager
 {
-    public class CourseModel
+    public class Model
     {
         private List<CourseTabPageInfo> _courseTabPageInfos;
         private Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
         private Dictionary<int, List<bool>> _isCourseSelected;
         private List<Tuple<int, int>> _selectedIndexPairs; // tabIndex, courseIndex
         private CourseCrawler _courseCrawler;
-        public CourseModel()
+        public Model()
         {
             _courseTabPageInfos = new List<CourseTabPageInfo>
             {
