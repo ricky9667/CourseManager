@@ -59,6 +59,7 @@ namespace CourseManager
             // 
             // selectedCourseDataGridView
             // 
+            this.selectedCourseDataGridView.AllowUserToAddRows = false;
             this.selectedCourseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.selectedCourseDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.selectedCourseDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;

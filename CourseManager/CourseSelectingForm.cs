@@ -8,6 +8,7 @@ namespace CourseManager
     {
         CourseModel _courseModel;
         List<CourseTabPageInfo> _courseTabPageInfos;
+        List<int> _currentShowingIndexes;
 
         public CourseSelectingForm(CourseModel courseModel)
         {
@@ -31,15 +32,16 @@ namespace CourseManager
         }
 
         // setup datagridview
-        private void LoadCourseDataGridView(int currentIndex)
+        private void LoadCourseDataGridView(int tabIndex)
         {
-            List<CourseInfo> courseInfos = _courseModel.GetCourseInfos(currentIndex);
             courseDataGridView.Rows.Clear();
+            List<CourseInfo> courseInfos = _courseModel.GetCourseInfos(tabIndex);
+            _currentShowingIndexes = _courseModel.GetShowingList(tabIndex);
 
-            foreach (CourseInfo info in courseInfos)
+            foreach (int index in _currentShowingIndexes)
             {
                 DataGridViewRow row = new DataGridViewRow();
-                foreach (string cellValue in info.GetCourseInfoStrings())
+                foreach (string cellValue in courseInfos[index].GetCourseInfoStrings())
                 {
                     row.Cells.Add(new DataGridViewTextBoxCell { Value = cellValue });
                 }
@@ -69,15 +71,17 @@ namespace CourseManager
         // make datagridview data readonly
         private void CourseDataGridViewCellClicked(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
+            int rowIndex = e.RowIndex;
+            int columnIndex = e.ColumnIndex;
+            if (rowIndex >= 0 && columnIndex == 0)
             {
-                if (Convert.ToBoolean(courseDataGridView.Rows[e.RowIndex].Cells[0].Value))
+                if (Convert.ToBoolean(courseDataGridView.Rows[rowIndex].Cells[0].Value))
                 {
-                    courseDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+                    courseDataGridView.Rows[rowIndex].Cells[columnIndex].Value = false;
                 }
                 else
                 {
-                    courseDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                    courseDataGridView.Rows[rowIndex].Cells[columnIndex].Value = true;
                 }
             }
         }
@@ -104,25 +108,23 @@ namespace CourseManager
         {
             Form form = new CourseSelectionResultForm(_courseModel);
             form.ShowDialog();
+            LoadCourseDataGridView(courseTabControl.SelectedIndex);
         }
 
         // submit courses
         private void SubmitButtonClick(object sender, EventArgs e)
         {
             int tabIndex = courseTabControl.SelectedIndex;
-            int courseConut = courseDataGridView.Rows.Count;
+            int count = courseDataGridView.Rows.Count;
             List<int> selectedIndexes = new List<int>();
 
-            for (int index = 0; index < courseConut; index++)
+            for (int index = 0; index < count; index++)
             {
                 if (Convert.ToBoolean(courseDataGridView.Rows[index].Cells[0].Value))
                 {
-                    selectedIndexes.Add(index);
-                    Console.WriteLine(index);
+                    selectedIndexes.Add(_currentShowingIndexes[index]);
                 }
             }
-
-            //MessageBox.Show("STOP");
 
             string selectCourseMessage = _courseModel.CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
             if (selectCourseMessage == "")
@@ -134,7 +136,9 @@ namespace CourseManager
             {
                 MessageBox.Show("加選失敗" + selectCourseMessage);
             }
+            
             LoadCourseDataGridView(tabIndex);
+            submitButton.Enabled = false;
         }
     }
 }

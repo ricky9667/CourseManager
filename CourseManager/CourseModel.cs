@@ -49,18 +49,22 @@ namespace CourseManager
                 _isCourseSelected.Add(tabIndex, seletedCourses);
             }
 
-            List<CourseInfo> filteredCourseInfos = new List<CourseInfo>();
-            List<bool> isSelected = _isCourseSelected[tabIndex];
-            int isSelectedCount = isSelected.Count;
-            for (int courseIndex = 0; courseIndex < isSelectedCount; courseIndex++)
+            return _courseInfosDictionary[tabIndex];
+        }
+
+        // get showing indexes of current datagridview
+        public List<int> GetShowingList(int tabIndex)
+        {
+            int count = _courseInfosDictionary[tabIndex].Count;
+            List<int> showingList = new List<int>();
+            for (int courseIndex = 0; courseIndex < count; courseIndex++)
             {
-                if (!isSelected[courseIndex])
+                if (!_isCourseSelected[tabIndex][courseIndex])
                 {
-                    filteredCourseInfos.Add(_courseInfosDictionary[tabIndex][courseIndex]);
+                    showingList.Add(courseIndex);
                 }
             }
-
-            return filteredCourseInfos;
+            return showingList;
         }
 
         // get selected course infos
