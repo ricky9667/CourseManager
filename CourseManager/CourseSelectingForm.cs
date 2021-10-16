@@ -34,9 +34,7 @@ namespace CourseManager
         private void LoadCourseDataGridView(int currentIndex)
         {
             List<CourseInfo> courseInfos = _courseModel.GetCourseInfos(currentIndex);
-
             courseDataGridView.Rows.Clear();
-            // Fix: still has one blank row left
 
             foreach (CourseInfo info in courseInfos)
             {
@@ -120,8 +118,11 @@ namespace CourseManager
                 if (Convert.ToBoolean(courseDataGridView.Rows[index].Cells[0].Value))
                 {
                     selectedIndexes.Add(index);
+                    Console.WriteLine(index);
                 }
             }
+
+            //MessageBox.Show("STOP");
 
             string selectCourseMessage = _courseModel.CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
             if (selectCourseMessage == "")

@@ -99,11 +99,12 @@ namespace CourseManager
             string sameNameMessage = "";
             string conflictTimeMessage = "";
 
+            conflictTimeMessage += CheckOwnConflictTime(tabIndex, courseIndexes);
             foreach (int courseIndex in courseIndexes)
             {
-                sameNumberMessage = CheckSameNumber(tabIndex, courseIndex);
-                sameNameMessage = CheckSameName(tabIndex, courseIndex);
-                conflictTimeMessage = CheckConflictTime(tabIndex, courseIndex);
+                sameNumberMessage += CheckSameNumber(tabIndex, courseIndex);
+                sameNameMessage += CheckSameName(tabIndex, courseIndex);
+                conflictTimeMessage += CheckConflictTime(tabIndex, courseIndex);
             }
 
             string finalMessage = "";
@@ -162,6 +163,29 @@ namespace CourseManager
                 if (courseInfo.HasConflictClassTime(selectedCourseInfo))
                 {
                     message += "「" + courseInfo.Number + " " + courseInfo.Name + "」";
+                }
+            }
+
+            return message;
+        }
+
+        // check if courses conflict each other
+        private string CheckOwnConflictTime(int tabIndex, List<int> courseIndexes)
+        {
+            string message = "";
+
+            int count = courseIndexes.Count;
+            for (int i = 0; i < count; i++)
+            {
+                CourseInfo firstCourseInfo = _courseInfosDictionary[tabIndex][courseIndexes[i]];
+                for (int j = i + 1; j < count; j++)
+                {
+                    CourseInfo secondCourseInfo = _courseInfosDictionary[tabIndex][courseIndexes[j]];
+                    if (firstCourseInfo.HasConflictClassTime(secondCourseInfo))
+                    {
+                        message += ("「" + firstCourseInfo.Number + " " + firstCourseInfo.Name + "」");
+                        message += ("「" + secondCourseInfo.Number + " " + secondCourseInfo.Name + "」");
+                    }
                 }
             }
 

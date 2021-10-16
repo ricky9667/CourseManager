@@ -116,13 +116,25 @@ namespace CourseManager
             {
                 foreach (Tuple<int, int> classTime in courseInfo.GetCourseClassTimes())
                 {
-                    if (classTime == thisClassTime)
+                    if (classTime.Item1 == thisClassTime.Item1 && classTime.Item2 == thisClassTime.Item2)
                     {
                         return true;
                     }
                 }
             }
+
             return false;
+        }
+        
+        // output course data for testing
+        public void PrintCourseData()
+        {
+            Console.WriteLine("[ " + Number + " - " + Name + " ]");
+            List<Tuple<int, int>> classTimes = GetCourseClassTimes();
+            foreach (Tuple<int, int> classTime in classTimes)
+            {
+                Console.WriteLine(classTime.Item1 + " : " + classTime.Item2);
+            }
         }
 
         public string Number

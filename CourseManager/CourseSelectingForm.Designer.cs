@@ -34,7 +34,6 @@ namespace CourseManager
             this.courseTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.courseDataGridView = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,6 +58,7 @@ namespace CourseManager
             this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Audit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Experiment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.courseTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.courseDataGridView)).BeginInit();
@@ -66,10 +66,10 @@ namespace CourseManager
             // 
             // courseSelectionResultButton
             // 
-            this.courseSelectionResultButton.Location = new System.Drawing.Point(576, 298);
-            this.courseSelectionResultButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.courseSelectionResultButton.Location = new System.Drawing.Point(1248, 596);
+            this.courseSelectionResultButton.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.courseSelectionResultButton.Name = "courseSelectionResultButton";
-            this.courseSelectionResultButton.Size = new System.Drawing.Size(148, 60);
+            this.courseSelectionResultButton.Size = new System.Drawing.Size(321, 120);
             this.courseSelectionResultButton.TabIndex = 0;
             this.courseSelectionResultButton.Text = "查看選課結果";
             this.courseSelectionResultButton.UseVisualStyleBackColor = true;
@@ -78,10 +78,10 @@ namespace CourseManager
             // submitButton
             // 
             this.submitButton.Enabled = false;
-            this.submitButton.Location = new System.Drawing.Point(426, 298);
-            this.submitButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.submitButton.Location = new System.Drawing.Point(923, 596);
+            this.submitButton.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.submitButton.Name = "submitButton";
-            this.submitButton.Size = new System.Drawing.Size(148, 60);
+            this.submitButton.Size = new System.Drawing.Size(321, 120);
             this.submitButton.TabIndex = 1;
             this.submitButton.Text = "確認送出";
             this.submitButton.UseVisualStyleBackColor = true;
@@ -93,27 +93,28 @@ namespace CourseManager
             this.courseTabControl.Controls.Add(this.tabPage2);
             this.courseTabControl.Dock = System.Windows.Forms.DockStyle.Top;
             this.courseTabControl.Location = new System.Drawing.Point(0, 0);
-            this.courseTabControl.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.courseTabControl.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.courseTabControl.Name = "courseTabControl";
             this.courseTabControl.Padding = new System.Drawing.Point(3, 3);
             this.courseTabControl.SelectedIndex = 0;
-            this.courseTabControl.Size = new System.Drawing.Size(726, 295);
+            this.courseTabControl.Size = new System.Drawing.Size(1573, 590);
             this.courseTabControl.TabIndex = 3;
             this.courseTabControl.SelectedIndexChanged += new System.EventHandler(this.CourseTabControlSelectedIndexChanged);
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.courseDataGridView);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.tabPage1.Location = new System.Drawing.Point(8, 39);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(718, 269);
+            this.tabPage1.Size = new System.Drawing.Size(1557, 543);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // courseDataGridView
             // 
+            this.courseDataGridView.AllowUserToAddRows = false;
             this.courseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.courseDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.courseDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -144,207 +145,231 @@ namespace CourseManager
             this.Experiment});
             this.courseDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.courseDataGridView.Location = new System.Drawing.Point(0, 0);
-            this.courseDataGridView.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.courseDataGridView.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             this.courseDataGridView.Name = "courseDataGridView";
             this.courseDataGridView.ReadOnly = true;
             this.courseDataGridView.RowHeadersVisible = false;
             this.courseDataGridView.RowHeadersWidth = 100;
             this.courseDataGridView.RowTemplate.Height = 20;
-            this.courseDataGridView.Size = new System.Drawing.Size(718, 269);
+            this.courseDataGridView.Size = new System.Drawing.Size(1557, 543);
             this.courseDataGridView.TabIndex = 0;
             this.courseDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CourseDataGridViewCellClicked);
             this.courseDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CourseDataGridViewCellValueChanged);
             this.courseDataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.CourseDataGridViewCurrentCellDirtyStateChanged);
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(718, 269);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // Select
             // 
             this.Select.HeaderText = "選";
+            this.Select.MinimumWidth = 10;
             this.Select.Name = "Select";
             this.Select.ReadOnly = true;
-            this.Select.Width = 23;
+            this.Select.Width = 40;
             // 
             // Number
             // 
             this.Number.HeaderText = "課號";
+            this.Number.MinimumWidth = 10;
             this.Number.Name = "Number";
             this.Number.ReadOnly = true;
-            this.Number.Width = 54;
+            this.Number.Width = 103;
             // 
             // Name
             // 
             this.Name.HeaderText = "課程名稱";
+            this.Name.MinimumWidth = 10;
             this.Name.Name = "Name";
             this.Name.ReadOnly = true;
-            this.Name.Width = 78;
+            this.Name.Width = 151;
             // 
             // Stage
             // 
             this.Stage.HeaderText = "階段";
+            this.Stage.MinimumWidth = 10;
             this.Stage.Name = "Stage";
             this.Stage.ReadOnly = true;
-            this.Stage.Width = 54;
+            this.Stage.Width = 103;
             // 
             // Credit
             // 
             this.Credit.HeaderText = "學分";
+            this.Credit.MinimumWidth = 10;
             this.Credit.Name = "Credit";
             this.Credit.ReadOnly = true;
-            this.Credit.Width = 54;
+            this.Credit.Width = 103;
             // 
             // Hour
             // 
             this.Hour.HeaderText = "時數";
+            this.Hour.MinimumWidth = 10;
             this.Hour.Name = "Hour";
             this.Hour.ReadOnly = true;
-            this.Hour.Width = 54;
+            this.Hour.Width = 103;
             // 
             // CourseType
             // 
             this.CourseType.HeaderText = "修";
+            this.CourseType.MinimumWidth = 10;
             this.CourseType.Name = "CourseType";
             this.CourseType.ReadOnly = true;
-            this.CourseType.Width = 42;
+            this.CourseType.Width = 79;
             // 
             // Teacher
             // 
             this.Teacher.HeaderText = "教師";
+            this.Teacher.MinimumWidth = 10;
             this.Teacher.Name = "Teacher";
             this.Teacher.ReadOnly = true;
-            this.Teacher.Width = 54;
+            this.Teacher.Width = 103;
             // 
             // ClassTime0
             // 
             this.ClassTime0.HeaderText = "日";
+            this.ClassTime0.MinimumWidth = 10;
             this.ClassTime0.Name = "ClassTime0";
             this.ClassTime0.ReadOnly = true;
-            this.ClassTime0.Width = 42;
+            this.ClassTime0.Width = 79;
             // 
             // ClassTime1
             // 
             this.ClassTime1.HeaderText = "一";
+            this.ClassTime1.MinimumWidth = 10;
             this.ClassTime1.Name = "ClassTime1";
             this.ClassTime1.ReadOnly = true;
-            this.ClassTime1.Width = 42;
+            this.ClassTime1.Width = 79;
             // 
             // ClassTime2
             // 
             this.ClassTime2.HeaderText = "二";
+            this.ClassTime2.MinimumWidth = 10;
             this.ClassTime2.Name = "ClassTime2";
             this.ClassTime2.ReadOnly = true;
-            this.ClassTime2.Width = 42;
+            this.ClassTime2.Width = 79;
             // 
             // ClassTime3
             // 
             this.ClassTime3.HeaderText = "三";
+            this.ClassTime3.MinimumWidth = 10;
             this.ClassTime3.Name = "ClassTime3";
             this.ClassTime3.ReadOnly = true;
-            this.ClassTime3.Width = 42;
+            this.ClassTime3.Width = 79;
             // 
             // ClassTime4
             // 
             this.ClassTime4.HeaderText = "四";
+            this.ClassTime4.MinimumWidth = 10;
             this.ClassTime4.Name = "ClassTime4";
             this.ClassTime4.ReadOnly = true;
-            this.ClassTime4.Width = 42;
+            this.ClassTime4.Width = 79;
             // 
             // ClassTime5
             // 
             this.ClassTime5.HeaderText = "五";
+            this.ClassTime5.MinimumWidth = 10;
             this.ClassTime5.Name = "ClassTime5";
             this.ClassTime5.ReadOnly = true;
-            this.ClassTime5.Width = 42;
+            this.ClassTime5.Width = 79;
             // 
             // ClassTime6
             // 
             this.ClassTime6.HeaderText = "六";
+            this.ClassTime6.MinimumWidth = 10;
             this.ClassTime6.Name = "ClassTime6";
             this.ClassTime6.ReadOnly = true;
-            this.ClassTime6.Width = 42;
+            this.ClassTime6.Width = 79;
             // 
             // Classroom
             // 
             this.Classroom.HeaderText = "教室";
+            this.Classroom.MinimumWidth = 10;
             this.Classroom.Name = "Classroom";
             this.Classroom.ReadOnly = true;
-            this.Classroom.Width = 54;
+            this.Classroom.Width = 103;
             // 
             // NumberOfStudents
             // 
             this.NumberOfStudents.HeaderText = "人";
+            this.NumberOfStudents.MinimumWidth = 10;
             this.NumberOfStudents.Name = "NumberOfStudents";
             this.NumberOfStudents.ReadOnly = true;
-            this.NumberOfStudents.Width = 42;
+            this.NumberOfStudents.Width = 79;
             // 
             // NumberOfDropStudents
             // 
             this.NumberOfDropStudents.HeaderText = "撤";
+            this.NumberOfDropStudents.MinimumWidth = 10;
             this.NumberOfDropStudents.Name = "NumberOfDropStudents";
             this.NumberOfDropStudents.ReadOnly = true;
-            this.NumberOfDropStudents.Width = 42;
+            this.NumberOfDropStudents.Width = 79;
             // 
             // TeachingAssistant
             // 
             this.TeachingAssistant.HeaderText = "教學助理";
+            this.TeachingAssistant.MinimumWidth = 10;
             this.TeachingAssistant.Name = "TeachingAssistant";
             this.TeachingAssistant.ReadOnly = true;
-            this.TeachingAssistant.Width = 78;
+            this.TeachingAssistant.Width = 151;
             // 
             // Language
             // 
             this.Language.HeaderText = "授課語言";
+            this.Language.MinimumWidth = 10;
             this.Language.Name = "Language";
             this.Language.ReadOnly = true;
-            this.Language.Width = 78;
+            this.Language.Width = 151;
             // 
             // Outline
             // 
             this.Outline.HeaderText = "教學大綱";
+            this.Outline.MinimumWidth = 10;
             this.Outline.Name = "Outline";
             this.Outline.ReadOnly = true;
-            this.Outline.Width = 78;
+            this.Outline.Width = 151;
             // 
             // Note
             // 
             this.Note.HeaderText = "備註";
+            this.Note.MinimumWidth = 10;
             this.Note.Name = "Note";
             this.Note.ReadOnly = true;
-            this.Note.Width = 54;
+            this.Note.Width = 103;
             // 
             // Audit
             // 
             this.Audit.HeaderText = "隨班附讀";
+            this.Audit.MinimumWidth = 10;
             this.Audit.Name = "Audit";
             this.Audit.ReadOnly = true;
-            this.Audit.Width = 78;
+            this.Audit.Width = 151;
             // 
             // Experiment
             // 
             this.Experiment.HeaderText = "實驗實習";
+            this.Experiment.MinimumWidth = 10;
             this.Experiment.Name = "Experiment";
             this.Experiment.ReadOnly = true;
-            this.Experiment.Width = 78;
+            this.Experiment.Width = 151;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(8, 39);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(1557, 543);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // CourseSelectingForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(726, 364);
+            this.ClientSize = new System.Drawing.Size(1573, 728);
             this.Controls.Add(this.courseTabControl);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.courseSelectionResultButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             //this.Name = "CourseSelectingForm";
             this.Text = "選課";
             this.Load += new System.EventHandler(this.CourseSelectingFormLoad);
