@@ -60,7 +60,6 @@ namespace CourseManager
                 _courseModel.RemoveCourse(e.RowIndex);
             }
 
-            MessageBox.Show("退選成功");
             LoadSelectedCourseDataGridView();
         }
     }

@@ -8,8 +8,9 @@ namespace CourseManager
     public class CourseModel
     {
         private List<CourseTabPageInfo> _courseTabPageInfos;
-        private List<CourseInfo> _selectedCourseInfos;
         private Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
+        private Dictionary<int, List<bool>> _isCourseSelected;
+        private List<Tuple<int, int>> _selectedIndexPair; // tabindex, courseIndex
 
         public CourseModel()
         {
@@ -19,8 +20,9 @@ namespace CourseManager
                 new CourseTabPageInfo("electronicEngineering3ATabPage", "電子三甲", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423")
             };
 
-            _selectedCourseInfos = new List<CourseInfo>();
             _courseInfosDictionary = new Dictionary<int, List<CourseInfo>>();
+            _isCourseSelected = new Dictionary<int, List<bool>>();
+            _selectedIndexPair = new List<Tuple<int, int>>();
         }
 
         // get tab page infos
@@ -35,47 +37,69 @@ namespace CourseManager
             if (!_courseInfosDictionary.ContainsKey(tabIndex))
             {
                 List<CourseInfo> courseInfos = FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
+                List<bool> seletedCourses = new List<bool>();
+
                 _courseInfosDictionary.Add(tabIndex, courseInfos);
+
+                int courseCount = courseInfos.Count;
+                while (courseCount-- > 0)
+                {
+                    seletedCourses.Add(false);
+                }
+                _isCourseSelected.Add(tabIndex, seletedCourses);
             }
 
-            return _courseInfosDictionary[tabIndex];
+            List<CourseInfo> filteredCourseInfos = new List<CourseInfo>();
+            List<bool> isSelected = _isCourseSelected[tabIndex];
+            int isSelectedCount = isSelected.Count;
+            for (int index = 0; index < isSelectedCount; index++)
+            {
+                if (!isSelected[index])
+                {
+                    filteredCourseInfos.Add(_courseInfosDictionary[tabIndex][index]);
+                }
+            }
+
+            return filteredCourseInfos;
         }
 
         // get selected course infos
         public List<CourseInfo> GetSelectedCourseInfos()
         {
-            return _selectedCourseInfos;
+            List<CourseInfo> selectedCourseInfos = new List<CourseInfo>();
+            foreach (Tuple<int, int> indexPair in _selectedIndexPair)
+            {
+                int tabIndex = indexPair.Item1;
+                int courseIndex = indexPair.Item2;
+                selectedCourseInfos.Add(_courseInfosDictionary[tabIndex][courseIndex]);
+            }
+
+            return selectedCourseInfos;
         }
 
         // add checked courses to selected courses
         public void SelectCourses(int tabIndex, List<int> selectedIndexes)
         {
-            List<CourseInfo> selectedCourses = new List<CourseInfo>();
-            List<CourseInfo> notSelectedCourses = new List<CourseInfo>();
-
-            int tabCourseCount = _courseInfosDictionary[tabIndex].Count;
-            for (int index = 0; index < tabCourseCount; index++)
+            int tabCount = _courseInfosDictionary[tabIndex].Count;
+            for (int index = 0; index < tabCount; index++)
             {
-                
                 if (selectedIndexes.Count > 0 && index == selectedIndexes[0])
                 {
-                    selectedCourses.Add(_courseInfosDictionary[tabIndex][index]);
+                    _isCourseSelected[tabIndex][index] = true;
+                    _selectedIndexPair.Add(new Tuple<int, int>(tabIndex, index));
                     selectedIndexes.RemoveAt(0);
                 }
-                else
-                {
-                    notSelectedCourses.Add(_courseInfosDictionary[tabIndex][index]);
-                }
             }
-
-            _selectedCourseInfos.AddRange(selectedCourses);
-            _courseInfosDictionary[tabIndex] = notSelectedCourses;
         }
 
         // remove course from selected courses
         public void RemoveCourse(int index)
         {
-            _selectedCourseInfos.RemoveAt(index);
+            int tabIndex = _selectedIndexPair[index].Item1;
+            int courseIndex = _selectedIndexPair[index].Item2;
+
+            _isCourseSelected[tabIndex][courseIndex] = false;
+            _selectedIndexPair.RemoveAt(index);
         }
 
         // get courses infos
