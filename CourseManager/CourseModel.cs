@@ -29,7 +29,7 @@ namespace CourseManager
             return _courseTabPageInfos;
         }
 
-        // get course info from selected tab
+        // get course infos from selected tab
         public List<CourseInfo> GetCourseInfos(int tabIndex)
         {
             if (!_courseInfosDictionary.ContainsKey(tabIndex))
@@ -39,6 +39,43 @@ namespace CourseManager
             }
 
             return _courseInfosDictionary[tabIndex];
+        }
+
+        // get selected course infos
+        public List<CourseInfo> GetSelectedCourseInfos()
+        {
+            return _selectedCourseInfos;
+        }
+
+        // add checked courses to selected courses
+        public void SelectCourses(int tabIndex, List<int> selectedIndexes)
+        {
+            List<CourseInfo> selectedCourses = new List<CourseInfo>();
+            List<CourseInfo> notSelectedCourses = new List<CourseInfo>();
+
+            int tabCourseCount = _courseInfosDictionary[tabIndex].Count;
+            for (int index = 0; index < tabCourseCount; index++)
+            {
+                
+                if (selectedIndexes.Count > 0 && index == selectedIndexes[0])
+                {
+                    selectedCourses.Add(_courseInfosDictionary[tabIndex][index]);
+                    selectedIndexes.RemoveAt(0);
+                }
+                else
+                {
+                    notSelectedCourses.Add(_courseInfosDictionary[tabIndex][index]);
+                }
+            }
+
+            _selectedCourseInfos.AddRange(selectedCourses);
+            _courseInfosDictionary[tabIndex] = notSelectedCourses;
+        }
+
+        // remove course from selected courses
+        public void RemoveCourse(int index)
+        {
+            _selectedCourseInfos.RemoveAt(index);
         }
 
         // get courses infos

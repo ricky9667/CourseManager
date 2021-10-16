@@ -27,14 +27,17 @@ namespace CourseManager
                 courseTabControl.Controls[index].Text = tabPageInfo.TabText;
             }
 
-            SetUpCourseDataGridView(0);
+            LoadCourseDataGridView(0);
         }
 
         // setup datagridview
-        private void SetUpCourseDataGridView(int currentIndex)
+        private void LoadCourseDataGridView(int currentIndex)
         {
             List<CourseInfo> courseInfos = _courseModel.GetCourseInfos(currentIndex);
+
             courseDataGridView.Rows.Clear();
+            // Fix: still has one blank row left
+
             foreach (CourseInfo info in courseInfos)
             {
                 DataGridViewRow row = new DataGridViewRow();
@@ -45,6 +48,8 @@ namespace CourseManager
                 row.Cells.Insert(0, new DataGridViewCheckBoxCell());
                 courseDataGridView.Rows.Add(row);
             }
+
+            courseDataGridView.Refresh();
         }
 
         // triggers when checkboxes in datagridview has value change 
@@ -92,22 +97,22 @@ namespace CourseManager
         void CourseTabControlSelectedIndexChanged(object sender, EventArgs e)
         {
             int tabIndex = courseTabControl.SelectedIndex;
-            //courseDataGridView.DataSource = _courseModel.GetCourseInfos(tabIndex);
-            SetUpCourseDataGridView(tabIndex);
-            
+            LoadCourseDataGridView(tabIndex);
             courseTabControl.Controls[tabIndex].Controls.Add(courseDataGridView);
         }
 
         // show course result form
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
-            Form form = new CourseSelectionResultForm();
+            Form form = new CourseSelectionResultForm(_courseModel);
             form.Show();
         }
 
         // submit courses
         private void SubmitButtonClick(object sender, EventArgs e)
         {
+            int tabIndex = courseTabControl.SelectedIndex;
+
             int courseConut = courseDataGridView.Rows.Count;
             List<int> selectedIndexes = new List<int>();
 
@@ -119,7 +124,10 @@ namespace CourseManager
                 }
             }
 
+            _courseModel.SelectCourses(courseTabControl.SelectedIndex, selectedIndexes);
+
             MessageBox.Show("加選成功");
+            LoadCourseDataGridView(tabIndex);
         }
     }
 }
