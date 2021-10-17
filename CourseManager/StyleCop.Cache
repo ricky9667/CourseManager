@@ -195,79 +195,12 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/17 16:49:13.659</sourceFile>
+      <sourceFile>2021/10/17 20:36:41.586</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
     </timestamps>
-    <violations>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
-        <context>Literal constants(字面常數)-"computerScience3TabPage"</context>
-        <line>15</line>
-        <index>526</index>
-        <endIndex>550</endIndex>
-        <startLine>15</startLine>
-        <startColumn>48</startColumn>
-        <endLine>15</endLine>
-        <endColumn>72</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
-        <context>Literal constants(字面常數)-"electronicEngineering3ATabPage"</context>
-        <line>15</line>
-        <index>553</index>
-        <endIndex>584</endIndex>
-        <startLine>15</startLine>
-        <startColumn>75</startColumn>
-        <endLine>15</endLine>
-        <endColumn>106</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
-        <context>Literal constants(字面常數)-"資工三"</context>
-        <line>16</line>
-        <index>637</index>
-        <endIndex>641</endIndex>
-        <startLine>16</startLine>
-        <startColumn>48</startColumn>
-        <endLine>16</endLine>
-        <endColumn>52</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
-        <context>Literal constants(字面常數)-"電子三甲"</context>
-        <line>16</line>
-        <index>644</index>
-        <endIndex>649</endIndex>
-        <startLine>16</startLine>
-        <startColumn>55</startColumn>
-        <endLine>16</endLine>
-        <endColumn>60</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
-        <context>Literal constants(字面常數)-"https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&amp;year=110&amp;sem=1&amp;code=2433"</context>
-        <line>17</line>
-        <index>702</index>
-        <endIndex>780</endIndex>
-        <startLine>17</startLine>
-        <startColumn>48</startColumn>
-        <endLine>17</endLine>
-        <endColumn>126</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
-        <context>Literal constants(字面常數)-"https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&amp;year=110&amp;sem=1&amp;code=2423"</context>
-        <line>17</line>
-        <index>783</index>
-        <endIndex>861</endIndex>
-        <startLine>17</startLine>
-        <startColumn>129</startColumn>
-        <endLine>17</endLine>
-        <endColumn>207</endColumn>
-        <warning>False</warning>
-      </violation>
-    </violations>
+    <violations />
   </sourcecode>
   <sourcecode name="Program.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
@@ -372,7 +305,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/17 16:37:17.952</sourceFile>
+      <sourceFile>2021/10/17 20:24:47.009</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -383,7 +316,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/17 14:22:11.804</sourceFile>
+      <sourceFile>2021/10/17 20:24:47.008</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -405,7 +338,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/17 14:25:29.335</sourceFile>
+      <sourceFile>2021/10/17 20:24:47.106</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>

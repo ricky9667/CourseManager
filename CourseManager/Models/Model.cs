@@ -12,20 +12,28 @@ namespace CourseManager
         private CourseCrawler _courseCrawler;
         public Model()
         {
-            string[] tabNames = new string[] { "computerScience3TabPage", "electronicEngineering3ATabPage" };
-            string[] tabTexts = new string[] { "資工三", "電子三甲" };
-            string[] tabLinks = new string[] { "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423" };
-
-            _courseTabPageInfos = new List<CourseTabPageInfo>
-            {
-                new CourseTabPageInfo(tabNames[0], tabTexts[0], tabLinks[0]),
-                new CourseTabPageInfo(tabNames[1], tabTexts[1], tabLinks[1]),
-            };
-
+            SetUpTabPageInfo();
             _courseInfosDictionary = new Dictionary<int, List<CourseInfo>>();
             _isCourseSelected = new Dictionary<int, List<bool>>();
             _selectedIndexPairs = new List<Tuple<int, int>>();
             _courseCrawler = new CourseCrawler();
+        }
+
+        // setup hard data
+        private void SetUpTabPageInfo()
+        {
+            const string COMPUTER_SCIENCE_3_TAB_NAME = "computerScience3TabPage";
+            const string COMPUTER_SCIENCE_3_TAB_TEXT = "資工三";
+            const string COMPUTER_SCIENCE_3_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433";
+            const string ELECTRONIC_ENGINEERING_3A_TAB_NAME = "electronicEngineering3ATabPage";
+            const string ELECTRONIC_ENGINEERING_3A_TAB_TEXT = "電子三甲";
+            const string ELECTRONIC_ENGINEERING_3A_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423";
+
+            _courseTabPageInfos = new List<CourseTabPageInfo>
+            {
+                new CourseTabPageInfo(COMPUTER_SCIENCE_3_TAB_NAME, COMPUTER_SCIENCE_3_TAB_TEXT, COMPUTER_SCIENCE_3_COURSE_LINK),
+                new CourseTabPageInfo(ELECTRONIC_ENGINEERING_3A_TAB_NAME, ELECTRONIC_ENGINEERING_3A_TAB_TEXT, ELECTRONIC_ENGINEERING_3A_COURSE_LINK)
+            };
         }
 
         // get tab page infos

@@ -64,20 +64,10 @@ namespace CourseManager
         // triggers when checkboxes in datagridview has value change 
         private void CourseDataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            int selectedCourses = 0;
-
-            foreach (DataGridViewRow row in _courseDataGridView.Rows)
-            {
-                if (Convert.ToBoolean(row.Cells[0].Value))
-                {
-                    selectedCourses++;
-                }
-            }
-
-            _submitButton.Enabled = selectedCourses > 0;
+            HandleSubmitButtonEnabled();
         }
 
-        // make datagridview data readonly
+        // change checkbox cell value when clicked
         private void CourseDataGridViewCellClicked(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
@@ -93,10 +83,25 @@ namespace CourseManager
                     _courseDataGridView.Rows[rowIndex].Cells[columnIndex].Value = true;
                 }
             }
+            HandleSubmitButtonEnabled();
+        }
+
+        // handle button state when event occurs
+        private void HandleSubmitButtonEnabled()
+        {
+            int selectedCourses = 0;
+            foreach (DataGridViewRow row in _courseDataGridView.Rows)
+            {
+                if (Convert.ToBoolean(row.Cells[0].Value))
+                {
+                    selectedCourses++;
+                }
+            }
+            _submitButton.Enabled = selectedCourses > 0;
         }
 
         // handle dirty state change
-        void CourseDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
+        private void CourseDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             if (_courseDataGridView.IsCurrentCellDirty)
             {
@@ -105,7 +110,7 @@ namespace CourseManager
         }
 
         // add datagridview to selected tab index
-        void CourseTabControlSelectedIndexChanged(object sender, EventArgs e)
+        private void CourseTabControlSelectedIndexChanged(object sender, EventArgs e)
         {
             int tabIndex = _courseTabControl.SelectedIndex;
             LoadCourseDataGridView(tabIndex);

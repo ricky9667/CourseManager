@@ -63,13 +63,13 @@ namespace CourseManager
         // get check select course message final result
         private string GetCheckSelectCoursesMessage(string sameNumberMessage, string sameNameMessage, string conflictTimeMessage)
         {
-            const string SAME_NUMBER_MESSAGE_FRONT = "\n課號相同：";
-            const string SAME_NAME_MESSAGE_FRONT = "\n課程名稱相同：";
-            const string CONFLICT_TIME_FRONT = "\n衝堂：";
+            const string SAME_NUMBER_MESSAGE_FRONT = "\n\n課號相同：";
+            const string SAME_NAME_MESSAGE_FRONT = "\n\n課程名稱相同：";
+            const string CONFLICT_TIME_FRONT = "\n\n衝堂：";
 
             sameNumberMessage = (sameNumberMessage == "") ? "" : (SAME_NUMBER_MESSAGE_FRONT + sameNumberMessage);
             sameNameMessage = (sameNameMessage == "") ? "" : (SAME_NAME_MESSAGE_FRONT + sameNameMessage);
-            conflictTimeMessage += (conflictTimeMessage == "") ? "" : (CONFLICT_TIME_FRONT + conflictTimeMessage);
+            conflictTimeMessage = (conflictTimeMessage == "") ? "" : (CONFLICT_TIME_FRONT + conflictTimeMessage);
 
             return sameNumberMessage + sameNameMessage + conflictTimeMessage;
         }
