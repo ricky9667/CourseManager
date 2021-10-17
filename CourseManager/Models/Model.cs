@@ -30,54 +30,58 @@ namespace CourseManager
             return _courseTabPageInfos;
         }
 
+        // get single course info
+        public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
+        {
+            return _courseInfosDictionary[tabIndex][courseIndex];
+        }
+
         // get course infos from selected tab
         public List<CourseInfo> GetCourseInfos(int tabIndex)
         {
             if (!_courseInfosDictionary.ContainsKey(tabIndex))
             {
-                List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
-                List<bool> seletedCourses = new List<bool>();
-
-                _courseInfosDictionary.Add(tabIndex, courseInfos);
-
-                int courseCount = courseInfos.Count;
-                while (courseCount-- > 0)
-                {
-                    seletedCourses.Add(false);
-                }
-                _isCourseSelected.Add(tabIndex, seletedCourses);
+                LoadCourses(tabIndex);
             }
-
             return _courseInfosDictionary[tabIndex];
         }
 
-        // get showing indexes of current datagridview
-        public List<int> GetShowingList(int tabIndex)
+        // get count of specific course list
+        public int GetCourseCount(int tabIndex)
         {
-            int count = _courseInfosDictionary[tabIndex].Count;
-            List<int> showingList = new List<int>();
-            for (int courseIndex = 0; courseIndex < count; courseIndex++)
+            if (!_courseInfosDictionary.ContainsKey(tabIndex))
             {
-                if (!_isCourseSelected[tabIndex][courseIndex])
-                {
-                    showingList.Add(courseIndex);
-                }
+                LoadCourses(tabIndex);
             }
-            return showingList;
+            return _courseInfosDictionary[tabIndex].Count;
         }
 
-        // get selected course infos
-        public List<CourseInfo> GetSelectedCourseInfos()
+        // fetch course data from crawler
+        private void LoadCourses(int tabIndex)
         {
-            List<CourseInfo> selectedCourseInfos = new List<CourseInfo>();
-            foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
+            List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
+            List<bool> seletedCourses = new List<bool>();
+
+            int courseCount = courseInfos.Count;
+            while (courseCount-- > 0)
             {
-                int tabIndex = indexPair.Item1;
-                int courseIndex = indexPair.Item2;
-                selectedCourseInfos.Add(_courseInfosDictionary[tabIndex][courseIndex]);
+                seletedCourses.Add(false);
             }
 
-            return selectedCourseInfos;
+            _courseInfosDictionary.Add(tabIndex, courseInfos);
+            _isCourseSelected.Add(tabIndex, seletedCourses);
+        }
+
+        // get is selected courses bool list
+        public List<bool> GetIsSelectedList(int tabIndex)
+        {
+            return _isCourseSelected[tabIndex];
+        }
+
+        // get selected courses index pairs
+        public List<Tuple<int, int>> GetSelectedIndexPairs()
+        {
+            return _selectedIndexPairs;
         }
 
         // add checked courses to selected courses
@@ -95,31 +99,18 @@ namespace CourseManager
             }
         }
 
-        // check if courses are able to select and return message if not
-        public string CheckSelectCoursesWithMessage(int tabIndex, List<int> courseIndexes)
+        // remove course from selected courses
+        public void RemoveCourse(int index)
         {
-            string sameNumberMessage = "";
-            string sameNameMessage = "";
-            string conflictTimeMessage = "";
+            int tabIndex = _selectedIndexPairs[index].Item1;
+            int courseIndex = _selectedIndexPairs[index].Item2;
 
-            conflictTimeMessage += CheckOwnConflictTime(tabIndex, courseIndexes);
-            foreach (int courseIndex in courseIndexes)
-            {
-                sameNumberMessage += CheckSameNumber(tabIndex, courseIndex);
-                sameNameMessage += CheckSameName(tabIndex, courseIndex);
-                conflictTimeMessage += CheckConflictTime(tabIndex, courseIndex);
-            }
-
-            string finalMessage = "";
-            finalMessage += (sameNumberMessage == "") ? "" : ("\n課號相同：" + sameNumberMessage);
-            finalMessage += (sameNameMessage == "") ? "" : ("\n課程名稱相同：" + sameNameMessage);
-            finalMessage += (conflictTimeMessage == "") ? "" : ("\n衝堂：" + conflictTimeMessage);
-
-            return finalMessage;
+            _isCourseSelected[tabIndex][courseIndex] = false;
+            _selectedIndexPairs.RemoveAt(index);
         }
 
         // check same course number
-        private string CheckSameNumber(int tabIndex, int courseIndex)
+        public string CheckSameNumber(int tabIndex, int courseIndex)
         {
             string message = "";
 
@@ -137,7 +128,7 @@ namespace CourseManager
         }
 
         // check same course name
-        private string CheckSameName(int tabIndex, int courseIndex)
+        public string CheckSameName(int tabIndex, int courseIndex)
         {
             string message = "";
 
@@ -155,7 +146,7 @@ namespace CourseManager
         }
 
         // check conflict courses
-        private string CheckConflictTime(int tabIndex, int courseIndex)
+        public string CheckConflictTime(int tabIndex, int courseIndex)
         {
             string message = "";
 
@@ -173,7 +164,7 @@ namespace CourseManager
         }
 
         // check if courses conflict each other
-        private string CheckOwnConflictTime(int tabIndex, List<int> courseIndexes)
+        public string CheckOwnConflictTime(int tabIndex, List<int> courseIndexes)
         {
             string message = "";
 
@@ -193,16 +184,6 @@ namespace CourseManager
             }
 
             return message;
-        }
-
-        // remove course from selected courses
-        public void RemoveCourse(int index)
-        {
-            int tabIndex = _selectedIndexPairs[index].Item1;
-            int courseIndex = _selectedIndexPairs[index].Item2;
-
-            _isCourseSelected[tabIndex][courseIndex] = false;
-            _selectedIndexPairs.RemoveAt(index);
         }
     }
 }

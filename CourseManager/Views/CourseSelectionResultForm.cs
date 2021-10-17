@@ -6,10 +6,10 @@ namespace CourseManager
 {
     public partial class CourseSelectionResultForm : Form
     {
-        Model _model;
-        public CourseSelectionResultForm(Model model)
+        CourseSelectionResultFormViewModel _viewModel;
+        public CourseSelectionResultForm(CourseSelectionResultFormViewModel viewModel)
         {
-            _model = model;
+            _viewModel = viewModel;
             InitializeComponent();
         }
 
@@ -22,7 +22,7 @@ namespace CourseManager
         // setup datagridview
         private void LoadSelectedCourseDataGridView()
         {
-            List<CourseInfo> selectedCourseInfos = _model.GetSelectedCourseInfos();
+            List<CourseInfo> selectedCourseInfos = _viewModel.GetSelectedCourseInfos();
             selectedCourseDataGridView.Rows.Clear();
 
             foreach (CourseInfo info in selectedCourseInfos)
@@ -45,7 +45,7 @@ namespace CourseManager
         {
             if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
-                _model.RemoveCourse(e.RowIndex);
+                _viewModel.RemoveCourse(e.RowIndex);
             }
 
             LoadSelectedCourseDataGridView();
