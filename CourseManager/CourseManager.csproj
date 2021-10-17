@@ -49,19 +49,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CourseInfo.cs" />
-    <Compile Include="CourseModel.cs" />
-    <Compile Include="DataColumns.cs" />
-    <Compile Include="SelectCourseForm.cs">
+    <Compile Include="Dtos\CourseInfo.cs" />
+    <Compile Include="Utils\CourseCrawler.cs" />
+    <Compile Include="ViewModels\CourseSelectingFormViewModel.cs" />
+    <Compile Include="ViewModels\CourseSelectionResultFormViewModel.cs" />
+    <Compile Include="Views\CourseManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SelectCourseForm.Designer.cs">
-      <DependentUpon>SelectCourseForm.cs</DependentUpon>
+    <Compile Include="Views\CourseManagementForm.Designer.cs">
+      <DependentUpon>CourseManagementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Views\CourseSelectionResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CourseSelectionResultForm.Designer.cs">
+      <DependentUpon>CourseSelectionResultForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dtos\CourseTabPageInfo.cs" />
+    <Compile Include="Views\CourseSelectingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CourseSelectingForm.Designer.cs">
+      <DependentUpon>CourseSelectingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="SelectCourseForm.resx">
-      <DependentUpon>SelectCourseForm.cs</DependentUpon>
+    <Compile Include="Views\StartUpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\StartUpForm.Designer.cs">
+      <DependentUpon>StartUpForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\CourseManagementForm.resx">
+      <DependentUpon>CourseManagementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CourseSelectingForm.resx">
+      <DependentUpon>CourseSelectingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CourseSelectionResultForm.resx">
+      <DependentUpon>CourseSelectionResultForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -72,6 +99,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\StartUpForm.resx">
+      <DependentUpon>StartUpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -86,5 +116,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

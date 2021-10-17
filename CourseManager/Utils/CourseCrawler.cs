@@ -1,21 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using HtmlAgilityPack;
+using System.Collections.Generic;
 using System.Text;
-using HtmlAgilityPack;
 
 namespace CourseManager
 {
-    public class CourseModel
+    public class CourseCrawler
     {
-        public CourseModel()
-        {            
-
-        }
-
         // get courses infos
-        public List<CourseInfo> GetCourseInfos()
+        public List<CourseInfo> FetchCourseInfos(string courseLink)
         {
-            const string COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433";
-            HtmlNodeCollection nodeTableRows = FetchCourseData(COURSE_LINK);
+            HtmlNodeCollection nodeTableRows = FetchCourseData(courseLink);
             List<CourseInfo> courseInfos = new List<CourseInfo>();
             foreach (var row in nodeTableRows)
             {
@@ -36,7 +30,7 @@ namespace CourseManager
         {
             HtmlWeb webClient = new HtmlWeb();
             webClient.OverrideEncoding = Encoding.Default;
-            HtmlAgilityPack.HtmlDocument document = webClient.Load(courseLink);
+            HtmlDocument document = webClient.Load(courseLink);
 
             const string NODE_PATH = "//body/table";
             HtmlNode nodeTable = document.DocumentNode.SelectSingleNode(NODE_PATH);
@@ -60,9 +54,9 @@ namespace CourseManager
         private CourseInfo CreateCourseInfo(List<string> courseDataList)
         {
             return new CourseInfo(
-                courseDataList[(int)DataColumns.Number], courseDataList[(int)DataColumns.Name], 
+                courseDataList[(int)DataColumns.Number], courseDataList[(int)DataColumns.Name],
                 courseDataList[(int)DataColumns.Stage], courseDataList[(int)DataColumns.Credit],
-                courseDataList[(int)DataColumns.Hour], courseDataList[(int)DataColumns.CourseType], 
+                courseDataList[(int)DataColumns.Hour], courseDataList[(int)DataColumns.CourseType],
                 courseDataList[(int)DataColumns.Teacher], courseDataList[(int)DataColumns.ClassTime0],
                 courseDataList[(int)DataColumns.ClassTime1], courseDataList[(int)DataColumns.ClassTime2],
                 courseDataList[(int)DataColumns.ClassTime3], courseDataList[(int)DataColumns.ClassTime4],
@@ -70,9 +64,35 @@ namespace CourseManager
                 courseDataList[(int)DataColumns.Classroom], courseDataList[(int)DataColumns.NumberOfStudents],
                 courseDataList[(int)DataColumns.NumberOfDropStudents], courseDataList[(int)DataColumns.TeachingAssistant],
                 courseDataList[(int)DataColumns.Language], courseDataList[(int)DataColumns.Outline],
-                courseDataList[(int)DataColumns.Note], courseDataList[(int)DataColumns.Audit], 
+                courseDataList[(int)DataColumns.Note], courseDataList[(int)DataColumns.Audit],
                 courseDataList[(int)DataColumns.Experiment]);
         }
     }
 
+    enum DataColumns
+    {
+        Number,
+        Name,
+        Stage,
+        Credit,
+        Hour,
+        CourseType,
+        Teacher,
+        ClassTime0,
+        ClassTime1,
+        ClassTime2,
+        ClassTime3,
+        ClassTime4,
+        ClassTime5,
+        ClassTime6,
+        Classroom,
+        NumberOfStudents,
+        NumberOfDropStudents,
+        TeachingAssistant,
+        Language,
+        Outline,
+        Note,
+        Audit,
+        Experiment
+    }
 }
