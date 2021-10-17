@@ -300,8 +300,9 @@ namespace CourseManager
             this.ClientSize = new System.Drawing.Size(1574, 729);
             this.Controls.Add(this._selectedCourseDataGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            //this.Name = "CourseSelectionResultForm";
+            this.Name = "CourseSelectionResultForm";
             this.Text = "選課結果";
+            this.MaximizeBox = false;
             this.Load += new System.EventHandler(this.CourseSelectionResultFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this._selectedCourseDataGridView)).EndInit();
             this.ResumeLayout(false);

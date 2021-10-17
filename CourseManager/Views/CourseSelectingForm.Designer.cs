@@ -370,8 +370,9 @@ namespace CourseManager
             this.Controls.Add(this._courseSelectionResultButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            //this.Name = "CourseSelectingForm";
+            this.Name = "CourseSelectingForm";
             this.Text = "選課";
+            this.MaximizeBox = false;
             this.Load += new System.EventHandler(this.CourseSelectingFormLoad);
             this._courseTabControl.ResumeLayout(false);
             this._tabPage1.ResumeLayout(false);
