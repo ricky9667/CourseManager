@@ -29,27 +29,27 @@ namespace CourseManager
         /// </summary>
         private void InitializeComponent()
         {
-            this.comingSoonLabel = new System.Windows.Forms.Label();
+            this._comingSoonLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // comingSoonLabel
             // 
-            this.comingSoonLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.comingSoonLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comingSoonLabel.Font = new System.Drawing.Font("Consolas", 19.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comingSoonLabel.Location = new System.Drawing.Point(0, 0);
-            this.comingSoonLabel.Name = "comingSoonLabel";
-            this.comingSoonLabel.Size = new System.Drawing.Size(800, 450);
-            this.comingSoonLabel.TabIndex = 0;
-            this.comingSoonLabel.Text = "Coming Soon";
-            this.comingSoonLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._comingSoonLabel.BackColor = System.Drawing.SystemColors.Control;
+            this._comingSoonLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._comingSoonLabel.Font = new System.Drawing.Font("Consolas", 19.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._comingSoonLabel.Location = new System.Drawing.Point(0, 0);
+            this._comingSoonLabel.Name = "comingSoonLabel";
+            this._comingSoonLabel.Size = new System.Drawing.Size(800, 450);
+            this._comingSoonLabel.TabIndex = 0;
+            this._comingSoonLabel.Text = "Coming Soon";
+            this._comingSoonLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CourseManagementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.comingSoonLabel);
+            this.Controls.Add(this._comingSoonLabel);
             this.Name = "CourseManagementForm";
             this.Text = "CourseManagementForm";
             this.ResumeLayout(false);
@@ -58,6 +58,6 @@ namespace CourseManager
 
         #endregion
 
-        private System.Windows.Forms.Label comingSoonLabel;
+        private System.Windows.Forms.Label _comingSoonLabel;
     }
 }

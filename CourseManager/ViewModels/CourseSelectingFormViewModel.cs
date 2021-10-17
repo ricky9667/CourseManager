@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CourseManager
 {
@@ -33,55 +29,49 @@ namespace CourseManager
         }
 
         // get showing indexes of current datagridview
-        public List<int> GetShowingList(int tabIndex)
+        public List<int> GetShowingIndexes(int tabIndex)
         {
-            List<int> showingList = new List<int>();
-            List<CourseInfo> courseInfos = _model.GetCourseInfos(tabIndex);
-            List<bool> isSelectedList = _model.GetIsSelectedList(tabIndex);
-            for (int index = 0; index < courseInfos.Count; index++)
-            {
-                if (!isSelectedList[index])
-                {
-                    showingList.Add(index);
-                }
-            }
-            return showingList;
+            return _model.GetShowingIndexes(tabIndex);
         }
 
         // select courses if success and return select course result
         public string SelectCoursesAndGetMessage(int tabIndex, List<int> selectedIndexes)
         {
+            const string SELECT_SUCCESS_MESSAGE = "加選成功";
+            const string SELECT_FAIL_MESSAGE = "加選失敗";
+
             string resultMessage = CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
             if (resultMessage == "")
             {
                 _model.SelectCourses(tabIndex, selectedIndexes);
-                return "加選成功";
+                return SELECT_SUCCESS_MESSAGE;
             }
 
-            return "加選失敗" + resultMessage;
+            return SELECT_FAIL_MESSAGE + resultMessage;
         }
 
         // check if courses are able to select and return message if not
         private string CheckSelectCoursesWithMessage(int tabIndex, List<int> courseIndexes)
         {
-            string sameNumberMessage = "";
-            string sameNameMessage = "";
-            string conflictTimeMessage = "";
+            string sameNumberMessage = _model.CheckSameNumbers(tabIndex, courseIndexes);
+            string sameNameMessage = _model.CheckSameNames(tabIndex, courseIndexes);
+            string conflictTimeMessage = _model.CheckConflictTimes(tabIndex, courseIndexes);
 
-            conflictTimeMessage += _model.CheckOwnConflictTime(tabIndex, courseIndexes);
-            foreach (int courseIndex in courseIndexes)
-            {
-                sameNumberMessage += _model.CheckSameNumber(tabIndex, courseIndex);
-                sameNameMessage += _model.CheckSameName(tabIndex, courseIndex);
-                conflictTimeMessage += _model.CheckConflictTime(tabIndex, courseIndex);
-            }
+            return GetCheckSelectCoursesMessage(sameNumberMessage, sameNameMessage, conflictTimeMessage);
+        }
 
-            string finalMessage = "";
-            finalMessage += (sameNumberMessage == "") ? "" : ("\n課號相同：" + sameNumberMessage);
-            finalMessage += (sameNameMessage == "") ? "" : ("\n課程名稱相同：" + sameNameMessage);
-            finalMessage += (conflictTimeMessage == "") ? "" : ("\n衝堂：" + conflictTimeMessage);
+        // get check select course message final result
+        private string GetCheckSelectCoursesMessage(string sameNumberMessage, string sameNameMessage, string conflictTimeMessage)
+        {
+            const string SAME_NUMBER_MESSAGE_FRONT = "\n課號相同：";
+            const string SAME_NAME_MESSAGE_FRONT = "\n課程名稱相同：";
+            const string CONFLICT_TIME_FRONT = "\n衝堂：";
 
-            return finalMessage;
+            sameNumberMessage = (sameNumberMessage == "") ? "" : (SAME_NUMBER_MESSAGE_FRONT + sameNumberMessage);
+            sameNameMessage = (sameNameMessage == "") ? "" : (SAME_NAME_MESSAGE_FRONT + sameNameMessage);
+            conflictTimeMessage += (conflictTimeMessage == "") ? "" : (CONFLICT_TIME_FRONT + conflictTimeMessage);
+
+            return sameNumberMessage + sameNameMessage + conflictTimeMessage;
         }
     }
 }

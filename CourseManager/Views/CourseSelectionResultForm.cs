@@ -23,21 +23,32 @@ namespace CourseManager
         private void LoadSelectedCourseDataGridView()
         {
             List<CourseInfo> selectedCourseInfos = _viewModel.GetSelectedCourseInfos();
-            selectedCourseDataGridView.Rows.Clear();
+            _selectedCourseDataGridView.Rows.Clear();
 
-            foreach (CourseInfo info in selectedCourseInfos)
+            foreach (CourseInfo courseInfo in selectedCourseInfos)
             {
-                DataGridViewRow row = new DataGridViewRow();
-                foreach (string cellValue in info.GetCourseInfoStrings())
-                {
-                    row.Cells.Add(new DataGridViewTextBoxCell { Value = cellValue });
-                }
-
-                row.Cells.Insert(0, new DataGridViewButtonCell { Value = "退選", });
-                selectedCourseDataGridView.Rows.Add(row);
+                _selectedCourseDataGridView.Rows.Add(CreateSelectionResultCourseRow(courseInfo));
             }
 
-            selectedCourseDataGridView.Refresh();
+            _selectedCourseDataGridView.Refresh();
+        }
+
+        // create data grid view row
+        private DataGridViewRow CreateSelectionResultCourseRow(CourseInfo courseInfo)
+        {
+            DataGridViewRow row = new DataGridViewRow();
+            foreach (string cellValue in courseInfo.GetCourseInfoStrings())
+            {
+                row.Cells.Add(new DataGridViewTextBoxCell
+                {
+                    Value = cellValue
+                });
+            }
+            row.Cells.Insert(0, new DataGridViewButtonCell
+            {
+                Value = "退選",
+            });
+            return row;
         }
 
         // handle drop out button

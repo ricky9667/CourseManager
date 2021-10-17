@@ -12,10 +12,14 @@ namespace CourseManager
         private CourseCrawler _courseCrawler;
         public Model()
         {
+            string[] tabNames = new string[] { "computerScience3TabPage", "electronicEngineering3ATabPage" };
+            string[] tabTexts = new string[] { "資工三", "電子三甲" };
+            string[] tabLinks = new string[] { "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423" };
+
             _courseTabPageInfos = new List<CourseTabPageInfo>
             {
-                new CourseTabPageInfo("computerScience3TabPage", "資工三", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433"),
-                new CourseTabPageInfo("electronicEngineering3ATabPage", "電子三甲", "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423")
+                new CourseTabPageInfo(tabNames[0], tabTexts[0], tabLinks[0]),
+                new CourseTabPageInfo(tabNames[1], tabTexts[1], tabLinks[1]),
             };
 
             _courseInfosDictionary = new Dictionary<int, List<CourseInfo>>();
@@ -60,22 +64,31 @@ namespace CourseManager
         private void LoadCourses(int tabIndex)
         {
             List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
-            List<bool> seletedCourses = new List<bool>();
+            List<bool> selectedCourses = new List<bool>();
 
             int courseCount = courseInfos.Count;
             while (courseCount-- > 0)
             {
-                seletedCourses.Add(false);
+                selectedCourses.Add(false);
             }
 
             _courseInfosDictionary.Add(tabIndex, courseInfos);
-            _isCourseSelected.Add(tabIndex, seletedCourses);
+            _isCourseSelected.Add(tabIndex, selectedCourses);
         }
 
-        // get is selected courses bool list
-        public List<bool> GetIsSelectedList(int tabIndex)
+        // get showing indexes of current datagridview
+        public List<int> GetShowingIndexes(int tabIndex)
         {
-            return _isCourseSelected[tabIndex];
+            List<int> showingList = new List<int>();
+            int count = _courseInfosDictionary[tabIndex].Count;
+            for (int courseIndex = 0; courseIndex < count; courseIndex++)
+            {
+                if (!_isCourseSelected[tabIndex][courseIndex])
+                {
+                    showingList.Add(courseIndex);
+                }
+            }
+            return showingList;
         }
 
         // get selected courses index pairs
@@ -109,65 +122,59 @@ namespace CourseManager
             _selectedIndexPairs.RemoveAt(index);
         }
 
-        // check same course number
-        public string CheckSameNumber(int tabIndex, int courseIndex)
+        // check same course numbers
+        public string CheckSameNumbers(int tabIndex, List<int> courseIndexes)
         {
             string message = "";
-
-            CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
-            foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
+            foreach (int courseIndex in courseIndexes)
             {
-                CourseInfo selectedCourseInfo = _courseInfosDictionary[indexPair.Item1][indexPair.Item2];
-                if (selectedCourseInfo.Number == courseInfo.Number)
+                CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
+                foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
                 {
-                    message += "「" + courseInfo.Number + " " + courseInfo.Name + "」";
+                    CourseInfo selectedCourseInfo = _courseInfosDictionary[indexPair.Item1][indexPair.Item2];
+                    message += courseInfo.GetCompareSameNumberMessage(selectedCourseInfo);
                 }
             }
-
+            
             return message;
         }
 
-        // check same course name
-        public string CheckSameName(int tabIndex, int courseIndex)
+        // check same course names
+        public string CheckSameNames(int tabIndex, List<int> courseIndexes)
         {
             string message = "";
-
-            CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
-            foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
+            foreach (int courseIndex in courseIndexes)
             {
-                CourseInfo selectedCourseInfo = _courseInfosDictionary[indexPair.Item1][indexPair.Item2];
-                if (selectedCourseInfo.Name == courseInfo.Name)
+                CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
+                foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
                 {
-                    message += "「" + courseInfo.Number + " " + courseInfo.Name + "」";
+                    CourseInfo selectedCourseInfo = _courseInfosDictionary[indexPair.Item1][indexPair.Item2];
+                    message += courseInfo.GetCompareSameNameMessage(selectedCourseInfo);
                 }
             }
-
             return message;
         }
 
-        // check conflict courses
-        public string CheckConflictTime(int tabIndex, int courseIndex)
+        // check conflict course times
+        public string CheckConflictTimes(int tabIndex, List<int> courseIndexes)
         {
-            string message = "";
-
-            CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
-            foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
-            {
-                CourseInfo selectedCourseInfo = _courseInfosDictionary[indexPair.Item1][indexPair.Item2];
-                if (courseInfo.HasConflictClassTime(selectedCourseInfo))
+            string message = CheckOwnConflictTime(tabIndex, courseIndexes);
+            foreach (int courseIndex in courseIndexes)
+            { 
+                CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
+                foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
                 {
-                    message += "「" + courseInfo.Number + " " + courseInfo.Name + "」";
+                    CourseInfo selectedCourseInfo = _courseInfosDictionary[indexPair.Item1][indexPair.Item2];
+                    message += courseInfo.GetCompareClassTimeMessage(selectedCourseInfo);
                 }
             }
-
             return message;
         }
 
         // check if courses conflict each other
-        public string CheckOwnConflictTime(int tabIndex, List<int> courseIndexes)
+        private string CheckOwnConflictTime(int tabIndex, List<int> courseIndexes)
         {
             string message = "";
-
             int count = courseIndexes.Count;
             for (int i = 0; i < count; i++)
             {
@@ -175,14 +182,9 @@ namespace CourseManager
                 for (int j = i + 1; j < count; j++)
                 {
                     CourseInfo secondCourseInfo = _courseInfosDictionary[tabIndex][courseIndexes[j]];
-                    if (firstCourseInfo.HasConflictClassTime(secondCourseInfo))
-                    {
-                        message += ("「" + firstCourseInfo.Number + " " + firstCourseInfo.Name + "」");
-                        message += ("「" + secondCourseInfo.Number + " " + secondCourseInfo.Name + "」");
-                    }
+                    message += firstCourseInfo.GetBothCompareClassTimeMessage(secondCourseInfo);
                 }
             }
-
             return message;
         }
     }

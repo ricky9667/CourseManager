@@ -15,9 +15,9 @@ namespace CourseManager
         // set button enabled property
         private void SetEnabled(bool enabled)
         {
-            courseSelectingSystemButton.Enabled = enabled;
-            courseManagementSystemButton.Enabled = enabled;
-            exitButton.Enabled = enabled;
+            _courseSelectingSystemButton.Enabled = enabled;
+            _courseManagementSystemButton.Enabled = enabled;
+            _exitButton.Enabled = enabled;
         }
 
         // show course selecting system

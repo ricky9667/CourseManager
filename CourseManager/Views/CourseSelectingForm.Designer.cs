@@ -29,335 +29,335 @@ namespace CourseManager
         /// </summary>
         private void InitializeComponent()
         {
-            this.courseSelectionResultButton = new System.Windows.Forms.Button();
-            this.submitButton = new System.Windows.Forms.Button();
-            this.courseTabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.courseDataGridView = new System.Windows.Forms.DataGridView();
-            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Stage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hour = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CourseType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Teacher = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassTime0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassTime1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassTime3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassTime4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassTime5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassTime6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Classroom = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NumberOfStudents = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NumberOfDropStudents = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TeachingAssistant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Language = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Outline = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Audit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Experiment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.courseTabControl.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.courseDataGridView)).BeginInit();
+            this._courseSelectionResultButton = new System.Windows.Forms.Button();
+            this._submitButton = new System.Windows.Forms.Button();
+            this._courseTabControl = new System.Windows.Forms.TabControl();
+            this._tabPage1 = new System.Windows.Forms.TabPage();
+            this._courseDataGridView = new System.Windows.Forms.DataGridView();
+            this._select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this._number = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._stage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._hour = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._courseType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._teacher = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._classTime0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._classTime1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._classTime2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._classTime3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._classTime4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._classTime5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._classTime6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._classroom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._numberOfStudents = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._numberOfDropStudents = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._teachingAssistant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._language = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._outline = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._audit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._experiment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._tabPage2 = new System.Windows.Forms.TabPage();
+            this._courseTabControl.SuspendLayout();
+            this._tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._courseDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // courseSelectionResultButton
             // 
-            this.courseSelectionResultButton.Location = new System.Drawing.Point(1248, 596);
-            this.courseSelectionResultButton.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.courseSelectionResultButton.Name = "courseSelectionResultButton";
-            this.courseSelectionResultButton.Size = new System.Drawing.Size(321, 120);
-            this.courseSelectionResultButton.TabIndex = 0;
-            this.courseSelectionResultButton.Text = "查看選課結果";
-            this.courseSelectionResultButton.UseVisualStyleBackColor = true;
-            this.courseSelectionResultButton.Click += new System.EventHandler(this.CourseSelectionResultButtonClick);
+            this._courseSelectionResultButton.Location = new System.Drawing.Point(1248, 596);
+            this._courseSelectionResultButton.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this._courseSelectionResultButton.Name = "courseSelectionResultButton";
+            this._courseSelectionResultButton.Size = new System.Drawing.Size(321, 120);
+            this._courseSelectionResultButton.TabIndex = 0;
+            this._courseSelectionResultButton.Text = "查看選課結果";
+            this._courseSelectionResultButton.UseVisualStyleBackColor = true;
+            this._courseSelectionResultButton.Click += new System.EventHandler(this.CourseSelectionResultButtonClick);
             // 
             // submitButton
             // 
-            this.submitButton.Enabled = false;
-            this.submitButton.Location = new System.Drawing.Point(923, 596);
-            this.submitButton.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.submitButton.Name = "submitButton";
-            this.submitButton.Size = new System.Drawing.Size(321, 120);
-            this.submitButton.TabIndex = 1;
-            this.submitButton.Text = "確認送出";
-            this.submitButton.UseVisualStyleBackColor = true;
-            this.submitButton.Click += new System.EventHandler(this.SubmitButtonClick);
+            this._submitButton.Enabled = false;
+            this._submitButton.Location = new System.Drawing.Point(923, 596);
+            this._submitButton.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this._submitButton.Name = "submitButton";
+            this._submitButton.Size = new System.Drawing.Size(321, 120);
+            this._submitButton.TabIndex = 1;
+            this._submitButton.Text = "確認送出";
+            this._submitButton.UseVisualStyleBackColor = true;
+            this._submitButton.Click += new System.EventHandler(this.SubmitButtonClick);
             // 
             // courseTabControl
             // 
-            this.courseTabControl.Controls.Add(this.tabPage1);
-            this.courseTabControl.Controls.Add(this.tabPage2);
-            this.courseTabControl.Dock = System.Windows.Forms.DockStyle.Top;
-            this.courseTabControl.Location = new System.Drawing.Point(0, 0);
-            this.courseTabControl.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.courseTabControl.Name = "courseTabControl";
-            this.courseTabControl.Padding = new System.Drawing.Point(3, 3);
-            this.courseTabControl.SelectedIndex = 0;
-            this.courseTabControl.Size = new System.Drawing.Size(1573, 590);
-            this.courseTabControl.TabIndex = 3;
-            this.courseTabControl.SelectedIndexChanged += new System.EventHandler(this.CourseTabControlSelectedIndexChanged);
+            this._courseTabControl.Controls.Add(this._tabPage1);
+            this._courseTabControl.Controls.Add(this._tabPage2);
+            this._courseTabControl.Dock = System.Windows.Forms.DockStyle.Top;
+            this._courseTabControl.Location = new System.Drawing.Point(0, 0);
+            this._courseTabControl.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this._courseTabControl.Name = "courseTabControl";
+            this._courseTabControl.Padding = new System.Drawing.Point(3, 3);
+            this._courseTabControl.SelectedIndex = 0;
+            this._courseTabControl.Size = new System.Drawing.Size(1573, 590);
+            this._courseTabControl.TabIndex = 3;
+            this._courseTabControl.SelectedIndexChanged += new System.EventHandler(this.CourseTabControlSelectedIndexChanged);
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.courseDataGridView);
-            this.tabPage1.Location = new System.Drawing.Point(8, 39);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1557, 543);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this._tabPage1.Controls.Add(this._courseDataGridView);
+            this._tabPage1.Location = new System.Drawing.Point(8, 39);
+            this._tabPage1.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this._tabPage1.Name = "tabPage1";
+            this._tabPage1.Size = new System.Drawing.Size(1557, 543);
+            this._tabPage1.TabIndex = 0;
+            this._tabPage1.Text = "tabPage1";
+            this._tabPage1.UseVisualStyleBackColor = true;
             // 
             // courseDataGridView
             // 
-            this.courseDataGridView.AllowUserToAddRows = false;
-            this.courseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.courseDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.courseDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.courseDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Select,
-            this.Number,
-            this.Name,
-            this.Stage,
-            this.Credit,
-            this.Hour,
-            this.CourseType,
-            this.Teacher,
-            this.ClassTime0,
-            this.ClassTime1,
-            this.ClassTime2,
-            this.ClassTime3,
-            this.ClassTime4,
-            this.ClassTime5,
-            this.ClassTime6,
-            this.Classroom,
-            this.NumberOfStudents,
-            this.NumberOfDropStudents,
-            this.TeachingAssistant,
-            this.Language,
-            this.Outline,
-            this.Note,
-            this.Audit,
-            this.Experiment});
-            this.courseDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.courseDataGridView.Location = new System.Drawing.Point(0, 0);
-            this.courseDataGridView.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.courseDataGridView.Name = "courseDataGridView";
-            this.courseDataGridView.ReadOnly = true;
-            this.courseDataGridView.RowHeadersVisible = false;
-            this.courseDataGridView.RowHeadersWidth = 100;
-            this.courseDataGridView.RowTemplate.Height = 20;
-            this.courseDataGridView.Size = new System.Drawing.Size(1557, 543);
-            this.courseDataGridView.TabIndex = 0;
-            this.courseDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CourseDataGridViewCellClicked);
-            this.courseDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CourseDataGridViewCellValueChanged);
-            this.courseDataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.CourseDataGridViewCurrentCellDirtyStateChanged);
+            this._courseDataGridView.AllowUserToAddRows = false;
+            this._courseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this._courseDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this._courseDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._courseDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this._select,
+            this._number,
+            this._name,
+            this._stage,
+            this._credit,
+            this._hour,
+            this._courseType,
+            this._teacher,
+            this._classTime0,
+            this._classTime1,
+            this._classTime2,
+            this._classTime3,
+            this._classTime4,
+            this._classTime5,
+            this._classTime6,
+            this._classroom,
+            this._numberOfStudents,
+            this._numberOfDropStudents,
+            this._teachingAssistant,
+            this._language,
+            this._outline,
+            this._note,
+            this._audit,
+            this._experiment});
+            this._courseDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._courseDataGridView.Location = new System.Drawing.Point(0, 0);
+            this._courseDataGridView.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this._courseDataGridView.Name = "courseDataGridView";
+            this._courseDataGridView.ReadOnly = true;
+            this._courseDataGridView.RowHeadersVisible = false;
+            this._courseDataGridView.RowHeadersWidth = 100;
+            this._courseDataGridView.RowTemplate.Height = 20;
+            this._courseDataGridView.Size = new System.Drawing.Size(1557, 543);
+            this._courseDataGridView.TabIndex = 0;
+            this._courseDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CourseDataGridViewCellClicked);
+            this._courseDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CourseDataGridViewCellValueChanged);
+            this._courseDataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.CourseDataGridViewCurrentCellDirtyStateChanged);
             // 
             // Select
             // 
-            this.Select.HeaderText = "選";
-            this.Select.MinimumWidth = 10;
-            this.Select.Name = "Select";
-            this.Select.ReadOnly = true;
-            this.Select.Width = 40;
+            this._select.HeaderText = "選";
+            this._select.MinimumWidth = 10;
+            this._select.Name = "Select";
+            this._select.ReadOnly = true;
+            this._select.Width = 40;
             // 
             // Number
             // 
-            this.Number.HeaderText = "課號";
-            this.Number.MinimumWidth = 10;
-            this.Number.Name = "Number";
-            this.Number.ReadOnly = true;
-            this.Number.Width = 103;
+            this._number.HeaderText = "課號";
+            this._number.MinimumWidth = 10;
+            this._number.Name = "Number";
+            this._number.ReadOnly = true;
+            this._number.Width = 103;
             // 
             // Name
             // 
-            this.Name.HeaderText = "課程名稱";
-            this.Name.MinimumWidth = 10;
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
-            this.Name.Width = 151;
+            this._name.HeaderText = "課程名稱";
+            this._name.MinimumWidth = 10;
+            this._name.Name = "Name";
+            this._name.ReadOnly = true;
+            this._name.Width = 151;
             // 
             // Stage
             // 
-            this.Stage.HeaderText = "階段";
-            this.Stage.MinimumWidth = 10;
-            this.Stage.Name = "Stage";
-            this.Stage.ReadOnly = true;
-            this.Stage.Width = 103;
+            this._stage.HeaderText = "階段";
+            this._stage.MinimumWidth = 10;
+            this._stage.Name = "Stage";
+            this._stage.ReadOnly = true;
+            this._stage.Width = 103;
             // 
             // Credit
             // 
-            this.Credit.HeaderText = "學分";
-            this.Credit.MinimumWidth = 10;
-            this.Credit.Name = "Credit";
-            this.Credit.ReadOnly = true;
-            this.Credit.Width = 103;
+            this._credit.HeaderText = "學分";
+            this._credit.MinimumWidth = 10;
+            this._credit.Name = "Credit";
+            this._credit.ReadOnly = true;
+            this._credit.Width = 103;
             // 
             // Hour
             // 
-            this.Hour.HeaderText = "時數";
-            this.Hour.MinimumWidth = 10;
-            this.Hour.Name = "Hour";
-            this.Hour.ReadOnly = true;
-            this.Hour.Width = 103;
+            this._hour.HeaderText = "時數";
+            this._hour.MinimumWidth = 10;
+            this._hour.Name = "Hour";
+            this._hour.ReadOnly = true;
+            this._hour.Width = 103;
             // 
             // CourseType
             // 
-            this.CourseType.HeaderText = "修";
-            this.CourseType.MinimumWidth = 10;
-            this.CourseType.Name = "CourseType";
-            this.CourseType.ReadOnly = true;
-            this.CourseType.Width = 79;
+            this._courseType.HeaderText = "修";
+            this._courseType.MinimumWidth = 10;
+            this._courseType.Name = "CourseType";
+            this._courseType.ReadOnly = true;
+            this._courseType.Width = 79;
             // 
             // Teacher
             // 
-            this.Teacher.HeaderText = "教師";
-            this.Teacher.MinimumWidth = 10;
-            this.Teacher.Name = "Teacher";
-            this.Teacher.ReadOnly = true;
-            this.Teacher.Width = 103;
+            this._teacher.HeaderText = "教師";
+            this._teacher.MinimumWidth = 10;
+            this._teacher.Name = "Teacher";
+            this._teacher.ReadOnly = true;
+            this._teacher.Width = 103;
             // 
             // ClassTime0
             // 
-            this.ClassTime0.HeaderText = "日";
-            this.ClassTime0.MinimumWidth = 10;
-            this.ClassTime0.Name = "ClassTime0";
-            this.ClassTime0.ReadOnly = true;
-            this.ClassTime0.Width = 79;
+            this._classTime0.HeaderText = "日";
+            this._classTime0.MinimumWidth = 10;
+            this._classTime0.Name = "ClassTime0";
+            this._classTime0.ReadOnly = true;
+            this._classTime0.Width = 79;
             // 
             // ClassTime1
             // 
-            this.ClassTime1.HeaderText = "一";
-            this.ClassTime1.MinimumWidth = 10;
-            this.ClassTime1.Name = "ClassTime1";
-            this.ClassTime1.ReadOnly = true;
-            this.ClassTime1.Width = 79;
+            this._classTime1.HeaderText = "一";
+            this._classTime1.MinimumWidth = 10;
+            this._classTime1.Name = "ClassTime1";
+            this._classTime1.ReadOnly = true;
+            this._classTime1.Width = 79;
             // 
             // ClassTime2
             // 
-            this.ClassTime2.HeaderText = "二";
-            this.ClassTime2.MinimumWidth = 10;
-            this.ClassTime2.Name = "ClassTime2";
-            this.ClassTime2.ReadOnly = true;
-            this.ClassTime2.Width = 79;
+            this._classTime2.HeaderText = "二";
+            this._classTime2.MinimumWidth = 10;
+            this._classTime2.Name = "ClassTime2";
+            this._classTime2.ReadOnly = true;
+            this._classTime2.Width = 79;
             // 
             // ClassTime3
             // 
-            this.ClassTime3.HeaderText = "三";
-            this.ClassTime3.MinimumWidth = 10;
-            this.ClassTime3.Name = "ClassTime3";
-            this.ClassTime3.ReadOnly = true;
-            this.ClassTime3.Width = 79;
+            this._classTime3.HeaderText = "三";
+            this._classTime3.MinimumWidth = 10;
+            this._classTime3.Name = "ClassTime3";
+            this._classTime3.ReadOnly = true;
+            this._classTime3.Width = 79;
             // 
             // ClassTime4
             // 
-            this.ClassTime4.HeaderText = "四";
-            this.ClassTime4.MinimumWidth = 10;
-            this.ClassTime4.Name = "ClassTime4";
-            this.ClassTime4.ReadOnly = true;
-            this.ClassTime4.Width = 79;
+            this._classTime4.HeaderText = "四";
+            this._classTime4.MinimumWidth = 10;
+            this._classTime4.Name = "ClassTime4";
+            this._classTime4.ReadOnly = true;
+            this._classTime4.Width = 79;
             // 
             // ClassTime5
             // 
-            this.ClassTime5.HeaderText = "五";
-            this.ClassTime5.MinimumWidth = 10;
-            this.ClassTime5.Name = "ClassTime5";
-            this.ClassTime5.ReadOnly = true;
-            this.ClassTime5.Width = 79;
+            this._classTime5.HeaderText = "五";
+            this._classTime5.MinimumWidth = 10;
+            this._classTime5.Name = "ClassTime5";
+            this._classTime5.ReadOnly = true;
+            this._classTime5.Width = 79;
             // 
             // ClassTime6
             // 
-            this.ClassTime6.HeaderText = "六";
-            this.ClassTime6.MinimumWidth = 10;
-            this.ClassTime6.Name = "ClassTime6";
-            this.ClassTime6.ReadOnly = true;
-            this.ClassTime6.Width = 79;
+            this._classTime6.HeaderText = "六";
+            this._classTime6.MinimumWidth = 10;
+            this._classTime6.Name = "ClassTime6";
+            this._classTime6.ReadOnly = true;
+            this._classTime6.Width = 79;
             // 
             // Classroom
             // 
-            this.Classroom.HeaderText = "教室";
-            this.Classroom.MinimumWidth = 10;
-            this.Classroom.Name = "Classroom";
-            this.Classroom.ReadOnly = true;
-            this.Classroom.Width = 103;
+            this._classroom.HeaderText = "教室";
+            this._classroom.MinimumWidth = 10;
+            this._classroom.Name = "Classroom";
+            this._classroom.ReadOnly = true;
+            this._classroom.Width = 103;
             // 
             // NumberOfStudents
             // 
-            this.NumberOfStudents.HeaderText = "人";
-            this.NumberOfStudents.MinimumWidth = 10;
-            this.NumberOfStudents.Name = "NumberOfStudents";
-            this.NumberOfStudents.ReadOnly = true;
-            this.NumberOfStudents.Width = 79;
+            this._numberOfStudents.HeaderText = "人";
+            this._numberOfStudents.MinimumWidth = 10;
+            this._numberOfStudents.Name = "NumberOfStudents";
+            this._numberOfStudents.ReadOnly = true;
+            this._numberOfStudents.Width = 79;
             // 
             // NumberOfDropStudents
             // 
-            this.NumberOfDropStudents.HeaderText = "撤";
-            this.NumberOfDropStudents.MinimumWidth = 10;
-            this.NumberOfDropStudents.Name = "NumberOfDropStudents";
-            this.NumberOfDropStudents.ReadOnly = true;
-            this.NumberOfDropStudents.Width = 79;
+            this._numberOfDropStudents.HeaderText = "撤";
+            this._numberOfDropStudents.MinimumWidth = 10;
+            this._numberOfDropStudents.Name = "NumberOfDropStudents";
+            this._numberOfDropStudents.ReadOnly = true;
+            this._numberOfDropStudents.Width = 79;
             // 
             // TeachingAssistant
             // 
-            this.TeachingAssistant.HeaderText = "教學助理";
-            this.TeachingAssistant.MinimumWidth = 10;
-            this.TeachingAssistant.Name = "TeachingAssistant";
-            this.TeachingAssistant.ReadOnly = true;
-            this.TeachingAssistant.Width = 151;
+            this._teachingAssistant.HeaderText = "教學助理";
+            this._teachingAssistant.MinimumWidth = 10;
+            this._teachingAssistant.Name = "TeachingAssistant";
+            this._teachingAssistant.ReadOnly = true;
+            this._teachingAssistant.Width = 151;
             // 
             // Language
             // 
-            this.Language.HeaderText = "授課語言";
-            this.Language.MinimumWidth = 10;
-            this.Language.Name = "Language";
-            this.Language.ReadOnly = true;
-            this.Language.Width = 151;
+            this._language.HeaderText = "授課語言";
+            this._language.MinimumWidth = 10;
+            this._language.Name = "Language";
+            this._language.ReadOnly = true;
+            this._language.Width = 151;
             // 
             // Outline
             // 
-            this.Outline.HeaderText = "教學大綱";
-            this.Outline.MinimumWidth = 10;
-            this.Outline.Name = "Outline";
-            this.Outline.ReadOnly = true;
-            this.Outline.Width = 151;
+            this._outline.HeaderText = "教學大綱";
+            this._outline.MinimumWidth = 10;
+            this._outline.Name = "Outline";
+            this._outline.ReadOnly = true;
+            this._outline.Width = 151;
             // 
             // Note
             // 
-            this.Note.HeaderText = "備註";
-            this.Note.MinimumWidth = 10;
-            this.Note.Name = "Note";
-            this.Note.ReadOnly = true;
-            this.Note.Width = 103;
+            this._note.HeaderText = "備註";
+            this._note.MinimumWidth = 10;
+            this._note.Name = "Note";
+            this._note.ReadOnly = true;
+            this._note.Width = 103;
             // 
             // Audit
             // 
-            this.Audit.HeaderText = "隨班附讀";
-            this.Audit.MinimumWidth = 10;
-            this.Audit.Name = "Audit";
-            this.Audit.ReadOnly = true;
-            this.Audit.Width = 151;
+            this._audit.HeaderText = "隨班附讀";
+            this._audit.MinimumWidth = 10;
+            this._audit.Name = "Audit";
+            this._audit.ReadOnly = true;
+            this._audit.Width = 151;
             // 
             // Experiment
             // 
-            this.Experiment.HeaderText = "實驗實習";
-            this.Experiment.MinimumWidth = 10;
-            this.Experiment.Name = "Experiment";
-            this.Experiment.ReadOnly = true;
-            this.Experiment.Width = 151;
+            this._experiment.HeaderText = "實驗實習";
+            this._experiment.MinimumWidth = 10;
+            this._experiment.Name = "Experiment";
+            this._experiment.ReadOnly = true;
+            this._experiment.Width = 151;
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(8, 39);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(1557, 543);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this._tabPage2.Location = new System.Drawing.Point(8, 39);
+            this._tabPage2.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
+            this._tabPage2.Name = "tabPage2";
+            this._tabPage2.Size = new System.Drawing.Size(1557, 543);
+            this._tabPage2.TabIndex = 1;
+            this._tabPage2.Text = "tabPage2";
+            this._tabPage2.UseVisualStyleBackColor = true;
             // 
             // CourseSelectingForm
             // 
@@ -365,53 +365,53 @@ namespace CourseManager
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1573, 728);
-            this.Controls.Add(this.courseTabControl);
-            this.Controls.Add(this.submitButton);
-            this.Controls.Add(this.courseSelectionResultButton);
+            this.Controls.Add(this._courseTabControl);
+            this.Controls.Add(this._submitButton);
+            this.Controls.Add(this._courseSelectionResultButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(2, 4, 2, 4);
             //this.Name = "CourseSelectingForm";
             this.Text = "選課";
             this.Load += new System.EventHandler(this.CourseSelectingFormLoad);
-            this.courseTabControl.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.courseDataGridView)).EndInit();
+            this._courseTabControl.ResumeLayout(false);
+            this._tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._courseDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button courseSelectionResultButton;
-        private System.Windows.Forms.Button submitButton;
-        private System.Windows.Forms.TabControl courseTabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.DataGridView courseDataGridView;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Select;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Number;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Stage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Credit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Hour;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CourseType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Teacher;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTime0;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTime1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTime2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTime3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTime4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTime5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTime6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Classroom;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NumberOfStudents;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NumberOfDropStudents;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TeachingAssistant;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Language;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Outline;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Note;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Audit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Experiment;
+        private System.Windows.Forms.Button _courseSelectionResultButton;
+        private System.Windows.Forms.Button _submitButton;
+        private System.Windows.Forms.TabControl _courseTabControl;
+        private System.Windows.Forms.TabPage _tabPage1;
+        private System.Windows.Forms.TabPage _tabPage2;
+        private System.Windows.Forms.DataGridView _courseDataGridView;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn _select;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _number;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _stage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _credit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _hour;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _courseType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _teacher;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _classTime0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _classTime1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _classTime2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _classTime3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _classTime4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _classTime5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _classTime6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _classroom;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _numberOfStudents;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _numberOfDropStudents;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _teachingAssistant;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _language;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _outline;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _note;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _audit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _experiment;
     }
 }
 

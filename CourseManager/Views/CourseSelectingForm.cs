@@ -24,8 +24,8 @@ namespace CourseManager
             for (int index = 0; index < tabCount; index++)
             {
                 CourseTabPageInfo tabPageInfo = _courseTabPageInfos[index];
-                courseTabControl.Controls[index].Name = tabPageInfo.TabName;
-                courseTabControl.Controls[index].Text = tabPageInfo.TabText;
+                _courseTabControl.Controls[index].Name = tabPageInfo.TabName;
+                _courseTabControl.Controls[index].Text = tabPageInfo.TabText;
             }
 
             LoadCourseDataGridView(0);
@@ -34,22 +34,31 @@ namespace CourseManager
         // setup datagridview
         private void LoadCourseDataGridView(int tabIndex)
         {
-            courseDataGridView.Rows.Clear();
+            _courseDataGridView.Rows.Clear();
             List<CourseInfo> courseInfos = _viewModel.GetCourseInfos(tabIndex);
-            _currentShowingIndexes = _viewModel.GetShowingList(tabIndex);
+            _currentShowingIndexes = _viewModel.GetShowingIndexes(tabIndex);
 
             foreach (int index in _currentShowingIndexes)
             {
-                DataGridViewRow row = new DataGridViewRow();
-                foreach (string cellValue in courseInfos[index].GetCourseInfoStrings())
-                {
-                    row.Cells.Add(new DataGridViewTextBoxCell { Value = cellValue });
-                }
-                row.Cells.Insert(0, new DataGridViewCheckBoxCell());
-                courseDataGridView.Rows.Add(row);
+                _courseDataGridView.Rows.Add(CreateSelectingCourseRow(courseInfos[index]));
             }
 
-            courseDataGridView.Refresh();
+            _courseDataGridView.Refresh();
+        }
+
+        // create data grid view row
+        private DataGridViewRow CreateSelectingCourseRow(CourseInfo courseInfo)
+        {
+            DataGridViewRow row = new DataGridViewRow();
+            foreach (string cellValue in courseInfo.GetCourseInfoStrings())
+            {
+                row.Cells.Add(new DataGridViewTextBoxCell
+                {
+                    Value = cellValue
+                });
+            }
+            row.Cells.Insert(0, new DataGridViewCheckBoxCell());
+            return row;
         }
 
         // triggers when checkboxes in datagridview has value change 
@@ -57,7 +66,7 @@ namespace CourseManager
         {
             int selectedCourses = 0;
 
-            foreach (DataGridViewRow row in courseDataGridView.Rows)
+            foreach (DataGridViewRow row in _courseDataGridView.Rows)
             {
                 if (Convert.ToBoolean(row.Cells[0].Value))
                 {
@@ -65,7 +74,7 @@ namespace CourseManager
                 }
             }
 
-            submitButton.Enabled = selectedCourses > 0;
+            _submitButton.Enabled = selectedCourses > 0;
         }
 
         // make datagridview data readonly
@@ -75,13 +84,13 @@ namespace CourseManager
             int columnIndex = e.ColumnIndex;
             if (rowIndex >= 0 && columnIndex == 0)
             {
-                if (Convert.ToBoolean(courseDataGridView.Rows[rowIndex].Cells[0].Value))
+                if (Convert.ToBoolean(_courseDataGridView.Rows[rowIndex].Cells[0].Value))
                 {
-                    courseDataGridView.Rows[rowIndex].Cells[columnIndex].Value = false;
+                    _courseDataGridView.Rows[rowIndex].Cells[columnIndex].Value = false;
                 }
                 else
                 {
-                    courseDataGridView.Rows[rowIndex].Cells[columnIndex].Value = true;
+                    _courseDataGridView.Rows[rowIndex].Cells[columnIndex].Value = true;
                 }
             }
         }
@@ -89,42 +98,42 @@ namespace CourseManager
         // handle dirty state change
         void CourseDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            if (courseDataGridView.IsCurrentCellDirty)
+            if (_courseDataGridView.IsCurrentCellDirty)
             {
-                courseDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                _courseDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
 
         // add datagridview to selected tab index
         void CourseTabControlSelectedIndexChanged(object sender, EventArgs e)
         {
-            int tabIndex = courseTabControl.SelectedIndex;
+            int tabIndex = _courseTabControl.SelectedIndex;
             LoadCourseDataGridView(tabIndex);
-            courseTabControl.Controls[tabIndex].Controls.Add(courseDataGridView);
+            _courseTabControl.Controls[tabIndex].Controls.Add(_courseDataGridView);
         }
 
         // show course result form
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
-            submitButton.Enabled = false;
-            courseSelectionResultButton.Enabled = false;
+            _submitButton.Enabled = false;
+            _courseSelectionResultButton.Enabled = false;
             CourseSelectionResultFormViewModel courseSelectingResultFormViewModel = new CourseSelectionResultFormViewModel(_viewModel.GetModel());
             Form form = new CourseSelectionResultForm(courseSelectingResultFormViewModel);
             form.ShowDialog();
-            LoadCourseDataGridView(courseTabControl.SelectedIndex);
-            courseSelectionResultButton.Enabled = true;
+            LoadCourseDataGridView(_courseTabControl.SelectedIndex);
+            _courseSelectionResultButton.Enabled = true;
         }
 
         // submit courses
         private void SubmitButtonClick(object sender, EventArgs e)
         {
-            int tabIndex = courseTabControl.SelectedIndex;
-            int count = courseDataGridView.Rows.Count;
+            int tabIndex = _courseTabControl.SelectedIndex;
+            int count = _courseDataGridView.Rows.Count;
             List<int> selectedIndexes = new List<int>();
 
             for (int index = 0; index < count; index++)
             {
-                if (Convert.ToBoolean(courseDataGridView.Rows[index].Cells[0].Value))
+                if (Convert.ToBoolean(_courseDataGridView.Rows[index].Cells[0].Value))
                 {
                     selectedIndexes.Add(_currentShowingIndexes[index]);
                 }
@@ -133,7 +142,7 @@ namespace CourseManager
             string selectCourseMessage = _viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes);
             MessageBox.Show(selectCourseMessage);
             LoadCourseDataGridView(tabIndex);
-            submitButton.Enabled = false;
+            _submitButton.Enabled = false;
         }
     }
 }
