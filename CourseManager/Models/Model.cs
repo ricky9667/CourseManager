@@ -58,16 +58,6 @@ namespace CourseManager
             return _courseInfosDictionary[tabIndex];
         }
 
-        // get count of specific course list
-        public int GetCourseCount(int tabIndex)
-        {
-            if (!_courseInfosDictionary.ContainsKey(tabIndex))
-            {
-                LoadCourses(tabIndex);
-            }
-            return _courseInfosDictionary[tabIndex].Count;
-        }
-
         // fetch course data from crawler
         private void LoadCourses(int tabIndex)
         {

@@ -4,16 +4,59 @@ namespace CourseManager
 {
     public class CourseSelectingFormViewModel
     {
-        Model _model;
+        private Model _model;
+        private bool _courseTabControlEnabled;
+        private bool _courseSelectionResultButtonEnabled;
+        private bool _submitButtonEnabled;
         public CourseSelectingFormViewModel(Model model)
         {
             _model = model;
+            _courseTabControlEnabled = true;
+            _courseSelectionResultButtonEnabled = true;
+            _submitButtonEnabled = false;
         }
 
-        // get data model
-        public Model GetModel()
+        public Model Model
         {
-            return _model;
+            get 
+            { 
+                return _model; 
+            }
+        }
+
+        public bool CourseTabControlEnabled
+        {
+            get 
+            { 
+                return _courseTabControlEnabled; 
+            }
+            set 
+            { 
+                _courseTabControlEnabled = value;
+            }
+        }
+
+        public bool CourseSelectionResultButtonEnabled
+        {
+            get 
+            { 
+                return _courseSelectionResultButtonEnabled; 
+            }
+            set
+            {
+                _courseSelectionResultButtonEnabled = value;
+            }
+        }
+        public bool SubmitButtonEnabled
+        {
+            get 
+            { 
+                return _submitButtonEnabled; 
+            }
+            set
+            { 
+                _submitButtonEnabled = value; 
+            }
         }
 
         // get tab page infos

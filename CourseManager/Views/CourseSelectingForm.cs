@@ -15,8 +15,9 @@ namespace CourseManager
         {
             _viewModel = viewModel;
             _courseTabPageInfos = _viewModel.GetCourseTabPageInfos();
+            _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
             InitializeComponent();
-            FormClosed += new FormClosedEventHandler(ThisFormClosed);
+            FormClosed += new FormClosedEventHandler(CourseSelectingFormClosed);
         }
 
         // load select course form
@@ -31,15 +32,7 @@ namespace CourseManager
             }
 
             LoadCourseDataGridView(0);
-        }
-
-        // set components enabled property
-        private void SetComponentsEnabled(bool enabled)
-        {
-            foreach (Control control in this.Controls)
-            {
-                control.Enabled = enabled;
-            }
+            RefreshWindowStatus();
         }
 
         // setup datagridview
@@ -70,6 +63,14 @@ namespace CourseManager
             }
             row.Cells.Insert(0, new DataGridViewCheckBoxCell());
             return row;
+        }
+
+        // refresh component enabled
+        private void RefreshWindowStatus()
+        {
+            _courseTabControl.Enabled = _viewModel.CourseTabControlEnabled;
+            _courseSelectionResultButton.Enabled = _viewModel.CourseSelectionResultButtonEnabled;
+            _submitButton.Enabled = _viewModel.SubmitButtonEnabled;
         }
 
         // triggers when checkboxes in datagridview has value change 
@@ -108,7 +109,9 @@ namespace CourseManager
                     selectedCourses++;
                 }
             }
-            _submitButton.Enabled = selectedCourses > 0;
+
+            _viewModel.SubmitButtonEnabled = selectedCourses > 0;
+            RefreshWindowStatus();
         }
 
         // handle dirty state change
@@ -131,10 +134,14 @@ namespace CourseManager
         // show course result form
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
-            _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.GetModel()));
+            _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
             _courseSelectionResultForm.FormClosed += new FormClosedEventHandler(CourseSelectionResultFormClosed);
             _courseSelectionResultForm.Show();
-            SetComponentsEnabled(false);
+
+            _viewModel.CourseTabControlEnabled = false;
+            _viewModel.CourseSelectionResultButtonEnabled = false;
+            _viewModel.SubmitButtonEnabled = false;
+            RefreshWindowStatus();
         }
 
         // submit courses
@@ -152,14 +159,14 @@ namespace CourseManager
                 }
             }
 
-            string selectCourseMessage = _viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes);
-            MessageBox.Show(selectCourseMessage);
-            LoadCourseDataGridView(tabIndex);
+            MessageBox.Show(_viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes));
             _submitButton.Enabled = false;
+            RefreshWindowStatus();
+            LoadCourseDataGridView(tabIndex);
         }
 
         // handle this form close event
-        private void ThisFormClosed(object sender, FormClosedEventArgs e)
+        private void CourseSelectingFormClosed(object sender, FormClosedEventArgs e)
         {
             _courseSelectionResultForm.Close();
         }
@@ -167,9 +174,11 @@ namespace CourseManager
         // handle course selection form close event
         private void CourseSelectionResultFormClosed(object sender, FormClosedEventArgs e)
         {
-            SetComponentsEnabled(true);
-            _submitButton.Enabled = false;
             LoadCourseDataGridView(_courseTabControl.SelectedIndex);
+            _viewModel.CourseTabControlEnabled = true;
+            _viewModel.CourseSelectionResultButtonEnabled = true;
+            _viewModel.SubmitButtonEnabled = false;
+            RefreshWindowStatus();
         }
     }
 }

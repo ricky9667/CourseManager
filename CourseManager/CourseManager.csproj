@@ -53,6 +53,7 @@
     <Compile Include="Utils\CourseCrawler.cs" />
     <Compile Include="ViewModels\CourseSelectingFormViewModel.cs" />
     <Compile Include="ViewModels\CourseSelectionResultFormViewModel.cs" />
+    <Compile Include="ViewModels\StartUpFormViewModel.cs" />
     <Compile Include="Views\CourseManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>

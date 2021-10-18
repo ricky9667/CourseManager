@@ -5,31 +5,39 @@ namespace CourseManager
 {
     public partial class StartUpForm : Form
     {
-        Model _model;
+        StartUpFormViewModel _viewModel;
         Form _courseSelectingForm;
-        public StartUpForm()
+        public StartUpForm(StartUpFormViewModel viewModel)
         {
-            _model = new Model();
+            _viewModel = viewModel;
             InitializeComponent();
         }
 
         // set button enabled property
-        private void SetEnabled(bool enabled)
+        private void SetControlsStatus(bool enabled)
         {
-            foreach (Control control in this.Controls)
-            {
-                control.Enabled = enabled;
-            }
+            _viewModel.CourseSelectingSystemButtonEnabled = enabled;
+            _viewModel.CourseManagementSystemButtonEnabled = enabled;
+            _viewModel.ExitButtonEnabled = enabled;
+            RefreshWindowStatus();
+        }
+
+        // refresh component enabled
+        private void RefreshWindowStatus()
+        {
+            _courseSelectingSystemButton.Enabled = _viewModel.CourseSelectingSystemButtonEnabled;
+            _courseManagementSystemButton.Enabled = _viewModel.CourseManagementSystemButtonEnabled;
+            _exitButton.Enabled = _viewModel.ExitButtonEnabled;
         }
 
         // show course selecting system
         private void CourseSelectingSystemButtonClick(object sender, EventArgs e)
         {
-            CourseSelectingFormViewModel courseSelectingFormViewModel = new CourseSelectingFormViewModel(_model);
+            CourseSelectingFormViewModel courseSelectingFormViewModel = new CourseSelectingFormViewModel(_viewModel.Model);
             _courseSelectingForm = new CourseSelectingForm(courseSelectingFormViewModel);
             _courseSelectingForm.FormClosed += new FormClosedEventHandler(FormClosed);
             _courseSelectingForm.Show();
-            SetEnabled(false);
+            SetControlsStatus(false);
         }
 
         // show course management system
@@ -38,13 +46,13 @@ namespace CourseManager
             Form form = new CourseManagementForm();
             form.FormClosed += new FormClosedEventHandler(FormClosed);
             form.Show();
-            SetEnabled(false);
+            SetControlsStatus(false);
         }
 
         // handle form close event
         private new void FormClosed(object sender, FormClosedEventArgs e)
         {
-            SetEnabled(true);
+            SetControlsStatus(true);
         }
 
         // exit application

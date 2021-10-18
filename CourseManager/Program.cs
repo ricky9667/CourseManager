@@ -13,8 +13,10 @@ namespace CourseManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            ;
-            Form startUpForm = new StartUpForm();
+
+            Model model = new Model();
+            StartUpFormViewModel startUpFormViewModel = new StartUpFormViewModel(model);
+            Form startUpForm = new StartUpForm(startUpFormViewModel);
             Application.Run(startUpForm);
         }
     }
