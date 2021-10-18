@@ -6,6 +6,7 @@ namespace CourseManager
 {
     public partial class CourseSelectingForm : Form
     {
+        Form _courseSelectionResultForm;
         List<CourseTabPageInfo> _courseTabPageInfos;
         List<int> _currentShowingIndexes;
         CourseSelectingFormViewModel _viewModel;
@@ -15,6 +16,7 @@ namespace CourseManager
             _viewModel = viewModel;
             _courseTabPageInfos = _viewModel.GetCourseTabPageInfos();
             InitializeComponent();
+            FormClosed += new FormClosedEventHandler(ThisFormClosed);
         }
 
         // load select course form
@@ -29,6 +31,15 @@ namespace CourseManager
             }
 
             LoadCourseDataGridView(0);
+        }
+
+        // set components enabled property
+        private void SetComponentsEnabled(bool enabled)
+        {
+            foreach (Control control in this.Controls)
+            {
+                control.Enabled = enabled;
+            }
         }
 
         // setup datagridview
@@ -120,13 +131,10 @@ namespace CourseManager
         // show course result form
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
-            _submitButton.Enabled = false;
-            _courseSelectionResultButton.Enabled = false;
-            CourseSelectionResultFormViewModel courseSelectingResultFormViewModel = new CourseSelectionResultFormViewModel(_viewModel.GetModel());
-            Form form = new CourseSelectionResultForm(courseSelectingResultFormViewModel);
-            form.ShowDialog();
-            LoadCourseDataGridView(_courseTabControl.SelectedIndex);
-            _courseSelectionResultButton.Enabled = true;
+            _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.GetModel()));
+            _courseSelectionResultForm.FormClosed += new FormClosedEventHandler(CourseSelectionResultFormClosed);
+            _courseSelectionResultForm.Show();
+            SetComponentsEnabled(false);
         }
 
         // submit courses
@@ -148,6 +156,20 @@ namespace CourseManager
             MessageBox.Show(selectCourseMessage);
             LoadCourseDataGridView(tabIndex);
             _submitButton.Enabled = false;
+        }
+
+        // handle this form close event
+        private void ThisFormClosed(object sender, FormClosedEventArgs e)
+        {
+            _courseSelectionResultForm.Close();
+        }
+
+        // handle course selection form close event
+        private void CourseSelectionResultFormClosed(object sender, FormClosedEventArgs e)
+        {
+            SetComponentsEnabled(true);
+            _submitButton.Enabled = false;
+            LoadCourseDataGridView(_courseTabControl.SelectedIndex);
         }
     }
 }

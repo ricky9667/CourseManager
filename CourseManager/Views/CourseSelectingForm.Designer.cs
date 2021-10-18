@@ -378,7 +378,6 @@ namespace CourseManager
             this._tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._courseDataGridView)).EndInit();
             this.ResumeLayout(false);
-
         }
 
         #endregion

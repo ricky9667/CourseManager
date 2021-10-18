@@ -6,6 +6,7 @@ namespace CourseManager
     public partial class StartUpForm : Form
     {
         Model _model;
+        Form _courseSelectingForm;
         public StartUpForm()
         {
             _model = new Model();
@@ -15,27 +16,34 @@ namespace CourseManager
         // set button enabled property
         private void SetEnabled(bool enabled)
         {
-            _courseSelectingSystemButton.Enabled = enabled;
-            _courseManagementSystemButton.Enabled = enabled;
-            _exitButton.Enabled = enabled;
+            foreach (Control control in this.Controls)
+            {
+                control.Enabled = enabled;
+            }
         }
 
         // show course selecting system
         private void CourseSelectingSystemButtonClick(object sender, EventArgs e)
         {
-            SetEnabled(false);
             CourseSelectingFormViewModel courseSelectingFormViewModel = new CourseSelectingFormViewModel(_model);
-            Form form = new CourseSelectingForm(courseSelectingFormViewModel);
-            form.ShowDialog();
-            SetEnabled(true);
+            _courseSelectingForm = new CourseSelectingForm(courseSelectingFormViewModel);
+            _courseSelectingForm.FormClosed += new FormClosedEventHandler(FormClosed);
+            _courseSelectingForm.Show();
+            SetEnabled(false);
         }
 
         // show course management system
         private void CourseManagementSystemButtonClick(object sender, EventArgs e)
         {
-            SetEnabled(false);
             Form form = new CourseManagementForm();
-            form.ShowDialog();
+            form.FormClosed += new FormClosedEventHandler(FormClosed);
+            form.Show();
+            SetEnabled(false);
+        }
+
+        // handle form close event
+        private new void FormClosed(object sender, FormClosedEventArgs e)
+        {
             SetEnabled(true);
         }
 
