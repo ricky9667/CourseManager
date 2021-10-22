@@ -80,6 +80,7 @@ namespace CourseManager
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "StartUpForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "選課系統";
             this.ResumeLayout(false);
 

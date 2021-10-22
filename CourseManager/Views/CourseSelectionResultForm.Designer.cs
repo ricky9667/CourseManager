@@ -303,6 +303,7 @@ namespace CourseManager
             this.Name = "CourseSelectionResultForm";
             this.Text = "選課結果";
             this.MaximizeBox = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.CourseSelectionResultFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this._selectedCourseDataGridView)).EndInit();
             this.ResumeLayout(false);

@@ -373,6 +373,7 @@ namespace CourseManager
             this.Name = "CourseSelectingForm";
             this.Text = "選課";
             this.MaximizeBox = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.CourseSelectingFormLoad);
             this._courseTabControl.ResumeLayout(false);
             this._tabPage1.ResumeLayout(false);
