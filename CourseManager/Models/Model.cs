@@ -36,6 +36,14 @@ namespace CourseManager
             };
         }
 
+        public int ClassCount
+        {
+            get
+            {
+                return _courseTabPageInfos.Count;
+            }
+        }
+
         // get tab page infos
         public List<CourseTabPageInfo> GetCourseTabPageInfos()
         {
@@ -133,7 +141,7 @@ namespace CourseManager
                     message += courseInfo.GetCompareSameNumberMessage(selectedCourseInfo);
                 }
             }
-            
+
             return message;
         }
 
@@ -158,7 +166,7 @@ namespace CourseManager
         {
             string message = CheckOwnConflictTime(tabIndex, courseIndexes);
             foreach (int courseIndex in courseIndexes)
-            { 
+            {
                 CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
                 foreach (Tuple<int, int> indexPair in _selectedIndexPairs)
                 {

@@ -165,9 +165,38 @@ namespace CourseManager
             get; set;
         }
 
+        // return index of hour combobox
+        public int HourIndex
+        {
+            get
+            {
+                switch (Hour)
+                {
+                    case "1":
+                        return 0;
+                    case "2":
+                        return 1;
+                    case "3":
+                        return 2;
+                    default:
+                        return -1;
+                }
+            }
+        }
+
         public string CourseType
         {
             get; set;
+        }
+
+        // return index of course type combobox
+        public int CourseTypeIndex
+        {
+            get
+            {
+                const string courseSymbols = "○△☆●▲★";
+                return courseSymbols.IndexOf(CourseType);
+            }
         }
 
         public string Teacher

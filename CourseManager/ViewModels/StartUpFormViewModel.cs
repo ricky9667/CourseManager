@@ -13,21 +13,21 @@
 
         public Model Model
         {
-            get 
-            { 
-                return _model; 
+            get
+            {
+                return _model;
             }
         }
 
         public bool CourseSelectingSystemButtonEnabled
         {
-            get 
+            get
             {
-                return _courseSelectingSystemButtonEnabled; 
+                return _courseSelectingSystemButtonEnabled;
             }
-            set 
+            set
             {
-                _courseSelectingSystemButtonEnabled = value; 
+                _courseSelectingSystemButtonEnabled = value;
             }
         }
 
@@ -35,23 +35,23 @@
         {
             get
             {
-                return _courseManagementSystemButtonEnabled; 
+                return _courseManagementSystemButtonEnabled;
             }
-            set 
-            { 
+            set
+            {
                 _courseManagementSystemButtonEnabled = value;
             }
         }
 
         public bool ExitButtonEnabled
         {
-            get 
-            { 
-                return _exitButtonEnabled; 
-            }
-            set 
+            get
             {
-                _exitButtonEnabled = value; 
+                return _exitButtonEnabled;
+            }
+            set
+            {
+                _exitButtonEnabled = value;
             }
         }
     }

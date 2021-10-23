@@ -43,7 +43,8 @@ namespace CourseManager
         // show course management system
         private void CourseManagementSystemButtonClick(object sender, EventArgs e)
         {
-            Form form = new CourseManagementForm();
+            CourseManagementFormViewModel courseManagementFormViewModel = new CourseManagementFormViewModel(_viewModel.Model);
+            Form form = new CourseManagementForm(courseManagementFormViewModel);
             form.FormClosed += new FormClosedEventHandler(FormClosed);
             form.Show();
             SetControlsStatus(false);

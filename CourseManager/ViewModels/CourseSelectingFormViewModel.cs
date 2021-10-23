@@ -18,29 +18,29 @@ namespace CourseManager
 
         public Model Model
         {
-            get 
-            { 
-                return _model; 
+            get
+            {
+                return _model;
             }
         }
 
         public bool CourseTabControlEnabled
         {
-            get 
-            { 
-                return _courseTabControlEnabled; 
+            get
+            {
+                return _courseTabControlEnabled;
             }
-            set 
-            { 
+            set
+            {
                 _courseTabControlEnabled = value;
             }
         }
 
         public bool CourseSelectionResultButtonEnabled
         {
-            get 
-            { 
-                return _courseSelectionResultButtonEnabled; 
+            get
+            {
+                return _courseSelectionResultButtonEnabled;
             }
             set
             {
@@ -49,13 +49,13 @@ namespace CourseManager
         }
         public bool SubmitButtonEnabled
         {
-            get 
-            { 
-                return _submitButtonEnabled; 
+            get
+            {
+                return _submitButtonEnabled;
             }
             set
-            { 
-                _submitButtonEnabled = value; 
+            {
+                _submitButtonEnabled = value;
             }
         }
 

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Dtos\CourseInfo.cs" />
     <Compile Include="Utils\CourseCrawler.cs" />
+    <Compile Include="ViewModels\CourseManagementFormViewModel.cs" />
     <Compile Include="ViewModels\CourseSelectingFormViewModel.cs" />
     <Compile Include="ViewModels\CourseSelectionResultFormViewModel.cs" />
     <Compile Include="ViewModels\StartUpFormViewModel.cs" />
