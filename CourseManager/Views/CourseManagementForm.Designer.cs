@@ -108,6 +108,7 @@ namespace CourseManager
             this._saveButton.TabIndex = 3;
             this._saveButton.Text = "儲存";
             this._saveButton.UseVisualStyleBackColor = true;
+            this._saveButton.Click += new System.EventHandler(this.SaveButtonClick);
             // 
             // _courseGroupBox
             // 
@@ -338,6 +339,7 @@ namespace CourseManager
             this._teacherTextbox.Name = "_teacherTextbox";
             this._teacherTextbox.Size = new System.Drawing.Size(109, 36);
             this._teacherTextbox.TabIndex = 10;
+            this._teacherTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
             // 
             // _teacherLabel
             // 
@@ -354,6 +356,7 @@ namespace CourseManager
             this._creditTextbox.Name = "_creditTextbox";
             this._creditTextbox.Size = new System.Drawing.Size(109, 36);
             this._creditTextbox.TabIndex = 8;
+            this._creditTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
             // 
             // _creditLabel
             // 
@@ -370,6 +373,7 @@ namespace CourseManager
             this._stageTextbox.Name = "_stageTextbox";
             this._stageTextbox.Size = new System.Drawing.Size(102, 36);
             this._stageTextbox.TabIndex = 6;
+            this._stageTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
             // 
             // _stageLabel
             // 
@@ -386,6 +390,7 @@ namespace CourseManager
             this._courseNameTextbox.Name = "_courseNameTextbox";
             this._courseNameTextbox.Size = new System.Drawing.Size(284, 36);
             this._courseNameTextbox.TabIndex = 4;
+            this._courseNameTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
             // 
             // _courseNumberTextbox
             // 
@@ -393,6 +398,7 @@ namespace CourseManager
             this._courseNumberTextbox.Name = "_courseNumberTextbox";
             this._courseNumberTextbox.Size = new System.Drawing.Size(160, 36);
             this._courseNumberTextbox.TabIndex = 3;
+            this._courseNumberTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
             // 
             // _courseNameLabel
             // 

@@ -28,7 +28,7 @@ namespace CourseManager
         // remove course from selected courses
         public void RemoveCourse(int index)
         {
-            _model.RemoveCourse(index);
+            _model.DeselectCourse(index);
         }
     }
 }

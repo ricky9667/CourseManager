@@ -8,11 +8,12 @@ namespace CourseManager
         private Model _model;
         List<Tuple<int, int, string>> _courseManagementList;
         private bool _courseGroupBoxEnabled;
-
+        private bool _saveButtonEnabled;
         public CourseManagementFormViewModel(Model model)
         {
             _model = model;
             _courseGroupBoxEnabled = false;
+            _saveButtonEnabled = false;
             _courseManagementList = GetCourseManagementList();
         }
 
@@ -21,6 +22,22 @@ namespace CourseManager
             get
             {
                 return _courseGroupBoxEnabled;
+            }
+            set
+            {
+                _courseGroupBoxEnabled = value;
+            }
+        }
+
+        public bool SaveButtonEnabled
+        {
+            get
+            {
+                return _saveButtonEnabled;
+            }
+            set
+            {
+                _saveButtonEnabled = value;
             }
         }
 
@@ -62,17 +79,22 @@ namespace CourseManager
 
             return courseManagementList;
         }
-        
-        // set course group box enabled to true
-        public void EnableCourseGroupBox()
-        {
-            _courseGroupBoxEnabled = true;
-        }
 
         // get course info
         public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
             return _model.GetCourseInfo(tabIndex, courseIndex);
+        }
+
+        // update course info
+        public void UpdateCourseInfo(int tabIndex, int courseIndex, CourseInfo courseInfo, int newTabIndex)
+        {
+            _model.SetCourseInfo(tabIndex, courseIndex, courseInfo);
+            if (tabIndex != newTabIndex)
+            {
+                _model.MoveCourseInfo(tabIndex, courseIndex, newTabIndex);
+            }
+            _courseManagementList = GetCourseManagementList();
         }
     }
 }

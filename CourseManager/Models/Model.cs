@@ -10,6 +10,7 @@ namespace CourseManager
         private Dictionary<int, List<bool>> _isCourseSelected;
         private List<Tuple<int, int>> _selectedIndexPairs; // tabIndex, courseIndex
         private CourseCrawler _courseCrawler;
+
         public Model()
         {
             SetUpTabPageInfo();
@@ -17,6 +18,14 @@ namespace CourseManager
             _isCourseSelected = new Dictionary<int, List<bool>>();
             _selectedIndexPairs = new List<Tuple<int, int>>();
             _courseCrawler = new CourseCrawler();
+        }
+
+        public int ClassCount
+        {
+            get
+            {
+                return _courseTabPageInfos.Count;
+            }
         }
 
         // setup hard data
@@ -36,14 +45,6 @@ namespace CourseManager
             };
         }
 
-        public int ClassCount
-        {
-            get
-            {
-                return _courseTabPageInfos.Count;
-            }
-        }
-
         // get tab page infos
         public List<CourseTabPageInfo> GetCourseTabPageInfos()
         {
@@ -54,6 +55,12 @@ namespace CourseManager
         public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
             return _courseInfosDictionary[tabIndex][courseIndex];
+        }
+
+        // set single course info
+        public void SetCourseInfo(int tabIndex, int courseIndex, CourseInfo courseInfo)
+        {
+            _courseInfosDictionary[tabIndex][courseIndex] = courseInfo;
         }
 
         // get course infos from selected tab
@@ -119,7 +126,7 @@ namespace CourseManager
         }
 
         // remove course from selected courses
-        public void RemoveCourse(int index)
+        public void DeselectCourse(int index)
         {
             int tabIndex = _selectedIndexPairs[index].Item1;
             int courseIndex = _selectedIndexPairs[index].Item2;
@@ -192,6 +199,14 @@ namespace CourseManager
                 }
             }
             return message;
+        }
+
+        // move course info to new list in dictionary
+        public void MoveCourseInfo(int tabIndex, int courseIndex, int newTabIndex)
+        {
+            CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
+            _courseInfosDictionary[tabIndex].RemoveAt(courseIndex);
+            _courseInfosDictionary[newTabIndex].Add(courseInfo);
         }
     }
 }
