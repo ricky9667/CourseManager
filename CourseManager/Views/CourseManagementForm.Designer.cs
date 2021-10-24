@@ -166,6 +166,7 @@ namespace CourseManager
             this._timeDataGridView.RowTemplate.Height = 38;
             this._timeDataGridView.Size = new System.Drawing.Size(1247, 360);
             this._timeDataGridView.TabIndex = 23;
+            this._timeDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TimeDataGridViewCellClicked);
             // 
             // classTimeColumn
             // 
@@ -339,7 +340,7 @@ namespace CourseManager
             this._teacherTextbox.Name = "_teacherTextbox";
             this._teacherTextbox.Size = new System.Drawing.Size(205, 36);
             this._teacherTextbox.TabIndex = 10;
-            this._teacherTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
+            this._teacherTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _teacherLabel
             // 
@@ -356,7 +357,7 @@ namespace CourseManager
             this._creditTextbox.Name = "_creditTextbox";
             this._creditTextbox.Size = new System.Drawing.Size(173, 36);
             this._creditTextbox.TabIndex = 8;
-            this._creditTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
+            this._creditTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _creditLabel
             // 
@@ -373,7 +374,7 @@ namespace CourseManager
             this._stageTextbox.Name = "_stageTextbox";
             this._stageTextbox.Size = new System.Drawing.Size(134, 36);
             this._stageTextbox.TabIndex = 6;
-            this._stageTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
+            this._stageTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _stageLabel
             // 
@@ -390,7 +391,7 @@ namespace CourseManager
             this._courseNameTextbox.Name = "_courseNameTextbox";
             this._courseNameTextbox.Size = new System.Drawing.Size(370, 36);
             this._courseNameTextbox.TabIndex = 4;
-            this._courseNameTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
+            this._courseNameTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _courseNumberTextbox
             // 
@@ -398,7 +399,7 @@ namespace CourseManager
             this._courseNumberTextbox.Name = "_courseNumberTextbox";
             this._courseNumberTextbox.Size = new System.Drawing.Size(280, 36);
             this._courseNumberTextbox.TabIndex = 3;
-            this._courseNumberTextbox.TextChanged += new System.EventHandler(this.TextBoxDataChanged);
+            this._courseNumberTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _courseNameLabel
             // 
@@ -453,7 +454,7 @@ namespace CourseManager
             this._classManagementTabPage.Location = new System.Drawing.Point(8, 39);
             this._classManagementTabPage.Name = "_classManagementTabPage";
             this._classManagementTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this._classManagementTabPage.Size = new System.Drawing.Size(1458, 782);
+            this._classManagementTabPage.Size = new System.Drawing.Size(1758, 882);
             this._classManagementTabPage.TabIndex = 1;
             this._classManagementTabPage.Text = "班級管理";
             this._classManagementTabPage.UseVisualStyleBackColor = true;

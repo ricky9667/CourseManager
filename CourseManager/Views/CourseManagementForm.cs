@@ -120,6 +120,7 @@ namespace CourseManager
             _hourComboBox.SelectedIndex = courseInfo.HourIndex;
             _classComboBox.SelectedIndex = classIndex;
 
+            courseInfo.PrintCourseData();
             ResetTimeDataGridViewCheckboxes();
             List<Tuple<int, int>> classTimes = courseInfo.GetCourseClassTimes();
             foreach (Tuple<int, int> classTime in classTimes)
@@ -177,11 +178,12 @@ namespace CourseManager
                     classTimeString += _courseChars[index] + " ";
                 }
             }
-            return classTimeString;
+
+            return classTimeString.Trim();
         }
 
         // check if course info can be saved and change button status
-        private void TextBoxDataChanged(object sender, EventArgs e)
+        private void CourseInfoDataChanged(object sender, EventArgs e)
         {
             _viewModel.SaveButtonEnabled = CanSaveCourse();
             RefreshWindowStatus();
@@ -208,21 +210,21 @@ namespace CourseManager
         }
 
         // change checkbox cell value when clicked
-        //private void CourseDataGridViewCellClicked(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    int rowIndex = e.RowIndex;
-        //    int columnIndex = e.ColumnIndex;
-        //    if (rowIndex >= 0 && columnIndex > 0)
-        //    {
-        //        if (Convert.ToBoolean(_timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value))
-        //        {
-        //            _timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value = false;
-        //        }
-        //        else
-        //        {
-        //            _timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value = true;
-        //        }
-        //    }
-        //}
+        private void TimeDataGridViewCellClicked(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            int columnIndex = e.ColumnIndex;
+            if (rowIndex >= 0 && columnIndex > 0)
+            {
+                if (Convert.ToBoolean(_timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value))
+                {
+                    _timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value = false;
+                }
+                else
+                {
+                    _timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value = true;
+                }
+            }
+        }
     }
 }

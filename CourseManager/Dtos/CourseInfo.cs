@@ -140,6 +140,20 @@ namespace CourseManager
             return false;
         }
 
+        // log data for testing
+        public void PrintCourseData()
+        {
+            Console.WriteLine("[ " + Name + " " + Number + " ]");
+            Console.WriteLine("Sun: " + ClassTime0);
+            Console.WriteLine("Mon: " + ClassTime1);
+            Console.WriteLine("Tue: " + ClassTime2);
+            Console.WriteLine("Wed: " + ClassTime3);
+            Console.WriteLine("Thu: " + ClassTime4);
+            Console.WriteLine("Fri: " + ClassTime5);
+            Console.WriteLine("Sat: " + ClassTime6);
+            Console.WriteLine("---------------------");
+        }
+
         public string Number
         {
             get; set;
