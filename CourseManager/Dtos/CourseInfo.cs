@@ -6,6 +6,7 @@ namespace CourseManager
     public class CourseInfo
     {
         private readonly int _daysPerWeek = 7;
+        private readonly string _courseChars = "1234N56789ABCD";
         public CourseInfo(string number, string name, string stage, string credit, string hour, string courseType, string teacher,
             string classTime0, string classTime1, string classTime2, string classTime3, string classTime4, string classTime5, string classTime6,
             string classroom, string numberOfStudent, string numberOfDropStudent, string teachingAssistant,
@@ -79,10 +80,9 @@ namespace CourseManager
         // convert class char to int
         private int GetClassIndex(char classChar)
         {
-            const string COURSE_CHARS = "1234N56789ABCD";
-            for (int index = 0; index < COURSE_CHARS.Length; index++)
+            for (int index = 0; index < _courseChars.Length; index++)
             {
-                if (classChar == COURSE_CHARS[index])
+                if (classChar == _courseChars[index])
                 {
                     return index;
                 }
