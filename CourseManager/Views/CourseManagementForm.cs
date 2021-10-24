@@ -185,12 +185,12 @@ namespace CourseManager
         // check if course info can be saved and change button status
         private void CourseInfoDataChanged(object sender, EventArgs e)
         {
-            _viewModel.SaveButtonEnabled = CanSaveCourse();
+            _viewModel.SaveButtonEnabled = IsTextboxDataValid();
             RefreshWindowStatus();
         }
 
         // check if textbox is valid
-        private bool CanSaveCourse()
+        private bool IsTextboxDataValid()
         {
             string courseNumberText = _courseNumberTextbox.Text.Trim();
             string courseNameText = _courseNameTextbox.Text.Trim();
@@ -203,8 +203,14 @@ namespace CourseManager
                 return false;
             }
 
-            //int credits = 0;
-            //bool creditIsNumeric = int.TryParse(creditText, out credits);
+            bool numberIsNumeric = int.TryParse(courseNumberText, out _);
+            bool stageIsNumeric = int.TryParse(stageText, out _);
+            bool creditIsNumeric = double.TryParse(creditText, out _);
+
+            if (!numberIsNumeric || !stageIsNumeric || !creditIsNumeric)
+            {
+                return false;
+            }
 
             return true;
         }
@@ -225,6 +231,27 @@ namespace CourseManager
                     _timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value = true;
                 }
             }
+
+            _viewModel.SaveButtonEnabled = IsTimeDataGridViewValid();
+            RefreshWindowStatus();
+        }
+
+        // cgheck
+        private bool IsTimeDataGridViewValid()
+        {
+            int hourCount = 0;
+            foreach (DataGridViewRow row in _timeDataGridView.Rows)
+            {
+                for (int index = 1; index < row.Cells.Count; index++)
+                {
+                    if (Convert.ToBoolean(row.Cells[index].Value))
+                    {
+                        hourCount++;
+                    }
+                }
+            }
+
+            return hourCount == int.Parse(_hourComboBox.SelectedItem.ToString());
         }
     }
 }
