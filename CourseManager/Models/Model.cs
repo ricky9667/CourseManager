@@ -63,6 +63,13 @@ namespace CourseManager
             _courseInfosDictionary[tabIndex][courseIndex] = courseInfo;
         }
 
+        // add new course info
+        public void AddNewCourseInfo(int tabIndex, CourseInfo courseInfo)
+        {
+            _courseInfosDictionary[tabIndex].Add(courseInfo);
+            _isCourseSelected[tabIndex].Add(false);
+        }
+
         // get course infos from selected tab
         public List<CourseInfo> GetCourseInfos(int tabIndex)
         {

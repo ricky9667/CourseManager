@@ -438,6 +438,7 @@ namespace CourseManager
             this._addCourseButton.TabIndex = 1;
             this._addCourseButton.Text = "新增課程";
             this._addCourseButton.UseVisualStyleBackColor = true;
+            this._addCourseButton.Click += new System.EventHandler(this.AddCourseButtonClick);
             // 
             // _courseListBox
             // 

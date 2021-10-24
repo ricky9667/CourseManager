@@ -8,11 +8,13 @@ namespace CourseManager
         private Model _model;
         List<Tuple<int, int, string>> _courseManagementList;
         private bool _courseGroupBoxEnabled;
+        private bool _addCourseButtonEnabled;
         private bool _saveButtonEnabled;
         public CourseManagementFormViewModel(Model model)
         {
             _model = model;
             _courseGroupBoxEnabled = false;
+            _addCourseButtonEnabled = true;
             _saveButtonEnabled = false;
             _courseManagementList = GetCourseManagementList();
         }
@@ -26,6 +28,18 @@ namespace CourseManager
             set
             {
                 _courseGroupBoxEnabled = value;
+            }
+        }
+
+        public bool AddCourseButtonEnabled
+        {
+            get
+            {
+                return _addCourseButtonEnabled;
+            }
+            set
+            {
+                _addCourseButtonEnabled = value;
             }
         }
 
@@ -94,6 +108,13 @@ namespace CourseManager
             {
                 _model.MoveCourseInfo(tabIndex, courseIndex, newTabIndex);
             }
+            _courseManagementList = GetCourseManagementList();
+        }
+
+        // add course info to model
+        public void AddNewCourse(CourseInfo courseInfo, int newTabIndex)
+        {
+            _model.AddNewCourseInfo(newTabIndex, courseInfo);
             _courseManagementList = GetCourseManagementList();
         }
     }

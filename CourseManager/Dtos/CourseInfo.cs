@@ -7,6 +7,34 @@ namespace CourseManager
     {
         private readonly int _daysPerWeek = 7;
         private readonly string _courseChars = "1234N56789ABCD";
+
+        public CourseInfo()
+        {
+            Number = "";
+            Name = "";
+            Stage = "";
+            Credit = "";
+            Hour = "";
+            CourseType = "";
+            Teacher = "";
+            ClassTime0 = "";
+            ClassTime1 = "";
+            ClassTime2 = "";
+            ClassTime3 = "";
+            ClassTime4 = "";
+            ClassTime5 = "";
+            ClassTime6 = "";
+            Classroom = "";
+            NumberOfStudent = "";
+            NumberOfDropStudent = "";
+            TeachingAssistant = "";
+            Language = "";
+            Outline = "";
+            Note = "";
+            Audit = "";
+            Experiment = "";
+        }
+
         public CourseInfo(string number, string name, string stage, string credit, string hour, string courseType, string teacher,
             string classTime0, string classTime1, string classTime2, string classTime3, string classTime4, string classTime5, string classTime6,
             string classroom, string numberOfStudent, string numberOfDropStudent, string teachingAssistant,
