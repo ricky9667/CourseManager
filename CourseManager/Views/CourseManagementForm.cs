@@ -19,7 +19,19 @@ namespace CourseManager
         {
             LoadCoursesAndClasses();
             AddTimeDataGridViewRows();
-            RefreshWindowStatus();
+            SetBindingProperties();
+        }
+
+        // add data binding properties
+        private void SetBindingProperties()
+        {
+            _addCourseButton.DataBindings.Add(nameof(_addCourseButton.Enabled), _viewModel, nameof(_viewModel.AddCourseButtonEnabled));
+            _saveButton.DataBindings.Add(nameof(_saveButton.Enabled), _viewModel, nameof(_viewModel.SaveButtonEnabled));
+            _courseGroupBox.DataBindings.Add(nameof(_courseGroupBox.Enabled), _viewModel, nameof(_viewModel.CourseGroupBoxEnabled));
+            foreach (Control courseGroupBoxControl in _courseGroupBox.Controls)
+            {
+                courseGroupBoxControl.DataBindings.Add(nameof(courseGroupBoxControl.Enabled), _viewModel, nameof(_viewModel.CourseGroupBoxEnabled));
+            }
         }
 
         // load courses in course list box
@@ -60,29 +72,6 @@ namespace CourseManager
             }
         }
 
-        // refresh components
-        private void RefreshWindowStatus()
-        {
-            // course group box
-            _courseGroupBox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _startCourseSettingsComboBox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _courseNumberTextbox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _courseNameTextbox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _stageTextbox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _creditTextbox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _teacherTextbox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _courseTypeComboBox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _teachingAssistantTextbox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _languageTextbox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _noteTextbox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _hourComboBox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _classComboBox.Enabled = _viewModel.CourseGroupBoxEnabled;
-            _timeDataGridView.Enabled = _viewModel.CourseGroupBoxEnabled;
-
-            _addCourseButton.Enabled = _viewModel.AddCourseButtonEnabled;
-            _saveButton.Enabled = _viewModel.SaveButtonEnabled;
-        }
-
         // reset datagridview checkbox to false
         private void ResetTimeDataGridViewCheckboxes()
         {
@@ -94,8 +83,6 @@ namespace CourseManager
                 }
             }
         }
-
-
 
         // reset all data in group box
         private void ResetGroupBox()
@@ -128,7 +115,6 @@ namespace CourseManager
                 RenderCourseGroupBoxData(courseInfo, course.Item1);
                 _viewModel.CourseGroupBoxEnabled = true;
             }
-            RefreshWindowStatus();
         }
 
         // render data to ui by course info
@@ -177,7 +163,6 @@ namespace CourseManager
             _viewModel.SaveButtonEnabled = false;
             LoadCoursesAndClasses();
             ResetGroupBox();
-            RefreshWindowStatus();
         }
 
         // update data to course info
@@ -222,7 +207,6 @@ namespace CourseManager
         private void CourseInfoDataChanged(object sender, EventArgs e)
         {
             _viewModel.SaveButtonEnabled = IsTextboxDataValid();
-            RefreshWindowStatus();
         }
 
         // check if textbox is valid
@@ -269,7 +253,6 @@ namespace CourseManager
             }
 
             _viewModel.SaveButtonEnabled = IsTimeDataGridViewValid();
-            RefreshWindowStatus();
         }
 
         // check if datagridview matches course hours
@@ -298,7 +281,6 @@ namespace CourseManager
             _viewModel.CourseGroupBoxEnabled = true;
             _courseGroupBox.Text = "新增課程";
             ResetGroupBox();
-            RefreshWindowStatus();
         }
     }
 }

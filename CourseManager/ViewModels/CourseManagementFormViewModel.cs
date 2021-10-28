@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CourseManager
 {
-    public class CourseManagementFormViewModel
+    public class CourseManagementFormViewModel : INotifyPropertyChanged
     {
         private Model _model;
         List<Tuple<int, int, string>> _courseManagementList;
         private bool _courseGroupBoxEnabled;
         private bool _addCourseButtonEnabled;
         private bool _saveButtonEnabled;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public CourseManagementFormViewModel(Model model)
         {
             _model = model;
@@ -17,6 +21,15 @@ namespace CourseManager
             _addCourseButtonEnabled = true;
             _saveButtonEnabled = false;
             _courseManagementList = GetCourseManagementList();
+        }
+
+        // data binding update data on change
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         public bool CourseGroupBoxEnabled
@@ -28,6 +41,7 @@ namespace CourseManager
             set
             {
                 _courseGroupBoxEnabled = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -40,6 +54,7 @@ namespace CourseManager
             set
             {
                 _addCourseButtonEnabled = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -52,6 +67,7 @@ namespace CourseManager
             set
             {
                 _saveButtonEnabled = value;
+                NotifyPropertyChanged();
             }
         }
 
