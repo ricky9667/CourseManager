@@ -16,7 +16,9 @@ namespace CourseManager
             _viewModel = viewModel;
             _courseTabPageInfos = _viewModel.GetCourseTabPageInfos();
             _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
+            
             InitializeComponent();
+            SetBindingProperties();
             FormClosed += new FormClosedEventHandler(CourseSelectingFormClosed);
         }
 
@@ -32,7 +34,14 @@ namespace CourseManager
             }
 
             LoadCourseDataGridView(0);
-            RefreshWindowStatus();
+        }
+
+        // add data binding properties
+        private void SetBindingProperties()
+        {
+            _courseTabControl.DataBindings.Add(nameof(_courseTabControl.Enabled), _viewModel, nameof(_viewModel.CourseTabControlEnabled));
+            _courseSelectionResultButton.DataBindings.Add(nameof(_courseSelectionResultButton.Enabled), _viewModel, nameof(_viewModel.CourseSelectionResultButtonEnabled));
+            _submitButton.DataBindings.Add(nameof(_submitButton.Enabled), _viewModel, nameof(_viewModel.SubmitButtonEnabled));
         }
 
         // setup datagridview
@@ -63,14 +72,6 @@ namespace CourseManager
             }
             row.Cells.Insert(0, new DataGridViewCheckBoxCell());
             return row;
-        }
-
-        // refresh component enabled
-        private void RefreshWindowStatus()
-        {
-            _courseTabControl.Enabled = _viewModel.CourseTabControlEnabled;
-            _courseSelectionResultButton.Enabled = _viewModel.CourseSelectionResultButtonEnabled;
-            _submitButton.Enabled = _viewModel.SubmitButtonEnabled;
         }
 
         // triggers when checkboxes in datagridview has value change 
@@ -111,7 +112,6 @@ namespace CourseManager
             }
 
             _viewModel.SubmitButtonEnabled = selectedCourses > 0;
-            RefreshWindowStatus();
         }
 
         // handle dirty state change
@@ -141,7 +141,6 @@ namespace CourseManager
             _viewModel.CourseTabControlEnabled = false;
             _viewModel.CourseSelectionResultButtonEnabled = false;
             _viewModel.SubmitButtonEnabled = false;
-            RefreshWindowStatus();
         }
 
         // submit courses
@@ -161,7 +160,6 @@ namespace CourseManager
 
             MessageBox.Show(_viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes));
             _submitButton.Enabled = false;
-            RefreshWindowStatus();
             LoadCourseDataGridView(tabIndex);
         }
 
@@ -178,7 +176,6 @@ namespace CourseManager
             _viewModel.CourseTabControlEnabled = true;
             _viewModel.CourseSelectionResultButtonEnabled = true;
             _viewModel.SubmitButtonEnabled = false;
-            RefreshWindowStatus();
         }
     }
 }

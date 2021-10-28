@@ -1,14 +1,25 @@
-﻿namespace CourseManager
+﻿using System.ComponentModel;
+
+namespace CourseManager
 {
-    public class StartUpFormViewModel
+    public class StartUpFormViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        
         private Model _model;
         private bool _courseSelectingSystemButtonEnabled;
         private bool _courseManagementSystemButtonEnabled;
-        private bool _exitButtonEnabled;
         public StartUpFormViewModel(Model model)
         {
             _model = model;
+            _courseSelectingSystemButtonEnabled = true;
+            _courseManagementSystemButtonEnabled = true;
+        }
+
+        // data binding update data on change
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public Model Model
@@ -28,6 +39,7 @@
             set
             {
                 _courseSelectingSystemButtonEnabled = value;
+                NotifyPropertyChanged(nameof(CourseSelectingSystemButtonEnabled));
             }
         }
 
@@ -40,18 +52,7 @@
             set
             {
                 _courseManagementSystemButtonEnabled = value;
-            }
-        }
-
-        public bool ExitButtonEnabled
-        {
-            get
-            {
-                return _exitButtonEnabled;
-            }
-            set
-            {
-                _exitButtonEnabled = value;
+                NotifyPropertyChanged(nameof(CourseManagementSystemButtonEnabled));
             }
         }
     }

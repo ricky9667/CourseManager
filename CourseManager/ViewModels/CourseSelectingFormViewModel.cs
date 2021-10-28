@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CourseManager
 {
-    public class CourseSelectingFormViewModel
+    public class CourseSelectingFormViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private Model _model;
         private bool _courseTabControlEnabled;
         private bool _courseSelectionResultButtonEnabled;
@@ -24,6 +27,12 @@ namespace CourseManager
             }
         }
 
+        // data binding update data on change
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public bool CourseTabControlEnabled
         {
             get
@@ -33,6 +42,7 @@ namespace CourseManager
             set
             {
                 _courseTabControlEnabled = value;
+                NotifyPropertyChanged(nameof(CourseTabControlEnabled));
             }
         }
 
@@ -45,6 +55,7 @@ namespace CourseManager
             set
             {
                 _courseSelectionResultButtonEnabled = value;
+                NotifyPropertyChanged(nameof(CourseSelectionResultButtonEnabled));
             }
         }
         public bool SubmitButtonEnabled
@@ -56,6 +67,7 @@ namespace CourseManager
             set
             {
                 _submitButtonEnabled = value;
+                NotifyPropertyChanged(nameof(SubmitButtonEnabled));
             }
         }
 
