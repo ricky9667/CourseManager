@@ -26,9 +26,15 @@ namespace CourseManager
         {
             CourseSelectingFormViewModel courseSelectingFormViewModel = new CourseSelectingFormViewModel(_viewModel.Model);
             _courseSelectingForm = new CourseSelectingForm(courseSelectingFormViewModel);
-            _courseSelectingForm.FormClosed += new FormClosedEventHandler(FormClosed);
+            _courseSelectingForm.FormClosed += new FormClosedEventHandler(CourseSelectingSystemFormClosed);
             _courseSelectingForm.Show();
             _viewModel.CourseSelectingSystemButtonEnabled = false;
+        }
+
+        // handle course selecting form close event
+        private new void CourseSelectingSystemFormClosed(object sender, FormClosedEventArgs e)
+        {
+            _viewModel.CourseSelectingSystemButtonEnabled = true;
         }
 
         // show course management system
@@ -36,15 +42,14 @@ namespace CourseManager
         {
             CourseManagementFormViewModel courseManagementFormViewModel = new CourseManagementFormViewModel(_viewModel.Model);
             Form form = new CourseManagementForm(courseManagementFormViewModel);
-            form.FormClosed += new FormClosedEventHandler(FormClosed);
+            form.FormClosed += new FormClosedEventHandler(CourseManagementSystemFormClosed);
             form.Show();
             _viewModel.CourseManagementSystemButtonEnabled = false;
         }
 
-        // handle form close event
-        private new void FormClosed(object sender, FormClosedEventArgs e)
+        // handle course management form close event
+        private new void CourseManagementSystemFormClosed(object sender, FormClosedEventArgs e)
         {
-            _viewModel.CourseSelectingSystemButtonEnabled = true;
             _viewModel.CourseManagementSystemButtonEnabled = true;
         }
 
