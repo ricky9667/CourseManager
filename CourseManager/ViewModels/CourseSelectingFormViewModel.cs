@@ -42,7 +42,6 @@ namespace CourseManager
         public void NotifyObserver()
         {
             ViewModelChanged?.Invoke();
-            Console.WriteLine("CourseSelectingFormViewModel Changed");
         }
 
         // data binding update data on change
@@ -136,12 +135,16 @@ namespace CourseManager
         // select courses if success and return select course result
         public string SelectCoursesAndGetMessage(int tabIndex, List<int> selectedIndexes)
         {
-            string resultMessage = CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
-            if (resultMessage == "")
+            const string SELECT_SUCCESS_MESSAGE = "加選成功";
+            const string SELECT_FAIL_MESSAGE = "加選失敗";
+            string message = CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
+
+            if (message == "")
             {
                 _model.SelectCourses(tabIndex, selectedIndexes);
+                return SELECT_SUCCESS_MESSAGE;
             }
-            return resultMessage;
+            return SELECT_FAIL_MESSAGE + message;
         }
 
         // check if courses are able to select and return message if not

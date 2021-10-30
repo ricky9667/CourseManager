@@ -57,7 +57,7 @@ namespace CourseManager
             _courseDataGridView.Refresh();
         }
 
-        // create data grid view row
+        // create datagridview row
         private DataGridViewRow CreateSelectingCourseRow(CourseInfo courseInfo)
         {
             DataGridViewRow row = new DataGridViewRow();
@@ -70,6 +70,15 @@ namespace CourseManager
             }
             row.Cells.Insert(0, new DataGridViewCheckBoxCell());
             return row;
+        }
+
+        // clear datagridview selections
+        private void ClearCourseDataGridViewSelections()
+        {
+            foreach (DataGridViewRow row in _courseDataGridView.Rows)
+            {
+                row.Cells[0].Value = false;
+            }
         }
 
         // triggers when checkboxes in datagridview has value change 
@@ -126,7 +135,6 @@ namespace CourseManager
         {
             _viewModel.CurrentTabIndex = _courseTabControl.SelectedIndex;
             _courseTabControl.SelectedTab.Controls.Add(_courseDataGridView);
-            //LoadCourseDataGridView();
         }
 
         // show course result form
@@ -156,22 +164,9 @@ namespace CourseManager
                 }
             }
 
-            const string SELECT_SUCCESS_MESSAGE = "加選成功";
-            const string SELECT_FAIL_MESSAGE = "加選失敗";
             string message = _viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes);
-            if (message == "")
-            {
-                MessageBox.Show(SELECT_SUCCESS_MESSAGE);
-            }
-            else
-            {
-                MessageBox.Show(message + SELECT_FAIL_MESSAGE);
-                foreach (int index in selectedIndexes)
-                {
-                    _courseDataGridView.Rows[index].Cells[0].Value = false;
-                }
-            }
-
+            MessageBox.Show(message);
+            ClearCourseDataGridViewSelections();
             _viewModel.SubmitButtonEnabled = false;
         }
 

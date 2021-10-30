@@ -10,7 +10,7 @@ namespace CourseManager
 
         private List<CourseTabPageInfo> _courseTabPageInfos;
         private Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
-        private Dictionary<int, List<bool>> _isCourseSelected;
+        private Dictionary<int, List<bool>> _isCourseSelected; 
         private List<Tuple<int, int>> _selectedIndexPairs; // tabIndex, courseIndex
         private CourseCrawler _courseCrawler;
 
@@ -28,9 +28,9 @@ namespace CourseManager
         {
             if (ModelChanged != null)
             {
-                Console.WriteLine("Model Changed");
                 ModelChanged();
             }
+            Console.WriteLine("Model Changed");
         }
 
         public int ClassCount
@@ -74,6 +74,7 @@ namespace CourseManager
         public void SetCourseInfo(int tabIndex, int courseIndex, CourseInfo courseInfo)
         {
             _courseInfosDictionary[tabIndex][courseIndex] = courseInfo;
+            NotifyObserver();
         }
 
         // add new course info
@@ -153,10 +154,9 @@ namespace CourseManager
         {
             int tabIndex = _selectedIndexPairs[index].Item1;
             int courseIndex = _selectedIndexPairs[index].Item2;
-
             _isCourseSelected[tabIndex][courseIndex] = false;
             _selectedIndexPairs.RemoveAt(index);
-            
+
             NotifyObserver();
         }
 
@@ -233,6 +233,10 @@ namespace CourseManager
             _courseInfosDictionary[tabIndex].RemoveAt(courseIndex);
             _courseInfosDictionary[newTabIndex].Add(courseInfo);
 
+            bool isSelected = _isCourseSelected[tabIndex][courseIndex];
+            _isCourseSelected[tabIndex].RemoveAt(courseIndex);
+            _isCourseSelected[newTabIndex].Add(isSelected);
+            
             NotifyObserver();
         }
     }
