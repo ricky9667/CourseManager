@@ -18,7 +18,7 @@ namespace CourseManager
         private void CourseManagementFormLoad(object sender, EventArgs e)
         {
             LoadCoursesAndClasses();
-            AddTimeDataGridViewRows();
+            LoadTimeDataGridViewRows();
             SetBindingProperties();
         }
 
@@ -51,7 +51,7 @@ namespace CourseManager
         }
 
         // generate datagridview rows
-        private void AddTimeDataGridViewRows()
+        private void LoadTimeDataGridViewRows()
         {
             _timeDataGridView.Rows.Clear();
             for (int index = 0; index < _courseChars.Length; index++)
@@ -70,6 +70,8 @@ namespace CourseManager
                 }
                 _timeDataGridView.Rows.Add(row);
             }
+            _timeDataGridView.Refresh();
+            _timeDataGridView.ClearSelection();
         }
 
         // reset datagridview checkbox to false
@@ -107,6 +109,7 @@ namespace CourseManager
         private void CourseListBoxSelectedIndexChanged(object sender, EventArgs e)
         {
             _viewModel.AddCourseButtonEnabled = true;
+            _timeDataGridView.ClearSelection();
             _courseGroupBox.Text = "編輯課程";
             if (_courseListBox.SelectedIndex != -1)
             {
@@ -161,6 +164,7 @@ namespace CourseManager
 
             _viewModel.CourseGroupBoxEnabled = false;
             _viewModel.SaveButtonEnabled = false;
+            _timeDataGridView.ClearSelection();
             LoadCoursesAndClasses();
             ResetGroupBox();
         }
@@ -277,6 +281,7 @@ namespace CourseManager
         private void AddCourseButtonClick(object sender, EventArgs e)
         {
             _courseListBox.ClearSelected();
+            _timeDataGridView.ClearSelection();
             _viewModel.AddCourseButtonEnabled = false;
             _viewModel.CourseGroupBoxEnabled = true;
             _courseGroupBox.Text = "新增課程";

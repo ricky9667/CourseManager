@@ -48,6 +48,7 @@ namespace CourseManager
         // setup datagridview
         private void LoadCourseDataGridView()
         {
+            _courseDataGridView.ClearSelection();
             _courseDataGridView.Rows.Clear();
             foreach (int index in _viewModel.CurrentShowingIndexes)
             {
