@@ -17,10 +17,12 @@ namespace CourseManager
 
             _courseTabPageInfos = _viewModel.GetCourseTabPageInfos();
             _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
-            
+            _courseSelectionResultForm.FormClosed += new FormClosedEventHandler(CourseSelectionResultFormClosed);
+
+            FormClosed += new FormClosedEventHandler(CourseSelectingFormClosed);
+
             InitializeComponent();
             SetBindingProperties();
-            FormClosed += new FormClosedEventHandler(CourseSelectingFormClosed);
         }
 
         // load select course form

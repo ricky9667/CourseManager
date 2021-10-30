@@ -206,11 +206,11 @@ namespace CourseManager
         // check if course info can be saved and change button status
         private void CourseInfoDataChanged(object sender, EventArgs e)
         {
-            _viewModel.SaveButtonEnabled = IsTextboxDataValid();
+            _viewModel.SaveButtonEnabled = CheckTextboxDataValid();
         }
 
         // check if textbox is valid
-        private bool IsTextboxDataValid()
+        private bool CheckTextboxDataValid()
         {
             string courseNumberText = _courseNumberTextbox.Text.Trim();
             string courseNameText = _courseNameTextbox.Text.Trim();

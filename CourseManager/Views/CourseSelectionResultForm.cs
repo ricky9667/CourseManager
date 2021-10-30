@@ -10,6 +10,7 @@ namespace CourseManager
         public CourseSelectionResultForm(CourseSelectionResultFormViewModel viewModel)
         {
             _viewModel = viewModel;
+            _viewModel.ViewModelChanged += LoadSelectedCourseDataGridView;
             InitializeComponent();
         }
 
@@ -22,14 +23,12 @@ namespace CourseManager
         // setup datagridview
         private void LoadSelectedCourseDataGridView()
         {
-            List<CourseInfo> selectedCourseInfos = _viewModel.GetSelectedCourseInfos();
             _selectedCourseDataGridView.Rows.Clear();
-
-            foreach (CourseInfo courseInfo in selectedCourseInfos)
+            //_selectedCourseDataGridView.RowCount = _viewModel.SelectedCourseInfos.Count;
+            foreach (CourseInfo courseInfo in _viewModel.SelectedCourseInfos)
             {
                 _selectedCourseDataGridView.Rows.Add(CreateSelectionResultCourseRow(courseInfo));
             }
-
             _selectedCourseDataGridView.Refresh();
         }
 
