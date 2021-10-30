@@ -8,26 +8,19 @@ namespace CourseManager
         public event ViewModelChangedEventHandler ViewModelChanged;
         public delegate void ViewModelChangedEventHandler();
 
-        Model _model;
+        private readonly Model _model;
         private List<CourseInfo> _selectedCourseInfos;
         public CourseSelectionResultFormViewModel(Model model)
         {
             _model = model;
             _model.ModelChanged += UpdateSelectedCourseInfos;
             _selectedCourseInfos = new List<CourseInfo>();
-            //UpdateSelectedCourseInfos();
+            UpdateSelectedCourseInfos();
         }
 
         public List<CourseInfo> SelectedCourseInfos
         {
-            get
-            {
-                return _selectedCourseInfos;
-            }
-            set
-            {
-                _selectedCourseInfos = value;
-            }
+            get => _selectedCourseInfos;
         }
 
         // notify observer on data changed

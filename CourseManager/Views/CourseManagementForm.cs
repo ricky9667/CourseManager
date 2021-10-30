@@ -7,7 +7,7 @@ namespace CourseManager
     public partial class CourseManagementForm : Form
     {
         private readonly string _courseChars = "1234N56789ABCD";
-        CourseManagementFormViewModel _viewModel;
+        private readonly CourseManagementFormViewModel _viewModel;
         public CourseManagementForm(CourseManagementFormViewModel viewModel)
         {
             _viewModel = viewModel;

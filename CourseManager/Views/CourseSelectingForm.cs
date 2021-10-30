@@ -7,15 +7,13 @@ namespace CourseManager
     public partial class CourseSelectingForm : Form
     {
         Form _courseSelectionResultForm;
-        CourseSelectingFormViewModel _viewModel;
-        List<CourseTabPageInfo> _courseTabPageInfos;
+        private readonly CourseSelectingFormViewModel _viewModel;
 
         public CourseSelectingForm(CourseSelectingFormViewModel viewModel)
         {
             _viewModel = viewModel;
             _viewModel.ViewModelChanged += LoadCourseDataGridView;
 
-            _courseTabPageInfos = _viewModel.GetCourseTabPageInfos();
             _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
             _courseSelectionResultForm.FormClosed += new FormClosedEventHandler(CourseSelectionResultFormClosed);
 
@@ -28,10 +26,11 @@ namespace CourseManager
         // load select course form
         private void CourseSelectingFormLoad(object sender, EventArgs e)
         {
-            int tabCount = _courseTabPageInfos.Count;
+            List<CourseTabPageInfo> courseTabPageInfos = _viewModel.GetCourseTabPageInfos();
+            int tabCount = courseTabPageInfos.Count;
             for (int index = 0; index < tabCount; index++)
             {
-                CourseTabPageInfo tabPageInfo = _courseTabPageInfos[index];
+                CourseTabPageInfo tabPageInfo = courseTabPageInfos[index];
                 _courseTabControl.Controls[index].Name = tabPageInfo.TabName;
                 _courseTabControl.Controls[index].Text = tabPageInfo.TabText;
             }
@@ -72,15 +71,6 @@ namespace CourseManager
             }
             row.Cells.Insert(0, new DataGridViewCheckBoxCell());
             return row;
-        }
-
-        // clear datagridview selections
-        private void ClearCourseDataGridViewSelections()
-        {
-            foreach (DataGridViewRow row in _courseDataGridView.Rows)
-            {
-                row.Cells[0].Value = false;
-            }
         }
 
         // triggers when checkboxes in datagridview has value change 
@@ -168,7 +158,7 @@ namespace CourseManager
 
             string message = _viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes);
             MessageBox.Show(message);
-            ClearCourseDataGridViewSelections();
+            _courseDataGridView.ClearSelection();
             _viewModel.SubmitButtonEnabled = false;
         }
 

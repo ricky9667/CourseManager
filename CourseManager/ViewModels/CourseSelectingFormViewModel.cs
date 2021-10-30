@@ -10,7 +10,7 @@ namespace CourseManager
         public event ViewModelChangedEventHandler ViewModelChanged;
         public delegate void ViewModelChangedEventHandler();
 
-        private Model _model;
+        private readonly Model _model;
         private bool _courseTabControlEnabled;
         private bool _courseSelectionResultButtonEnabled;
         private bool _submitButtonEnabled;
@@ -32,16 +32,7 @@ namespace CourseManager
 
         public Model Model
         {
-            get
-            {
-                return _model;
-            }
-        }
-
-        // notify observer on data changed
-        public void NotifyObserver()
-        {
-            ViewModelChanged?.Invoke();
+            get => _model;
         }
 
         // data binding update data on change
@@ -52,10 +43,7 @@ namespace CourseManager
 
         public bool CourseTabControlEnabled
         {
-            get
-            {
-                return _courseTabControlEnabled;
-            }
+            get => _courseTabControlEnabled;
             set
             {
                 _courseTabControlEnabled = value;
@@ -65,10 +53,7 @@ namespace CourseManager
 
         public bool CourseSelectionResultButtonEnabled
         {
-            get
-            {
-                return _courseSelectionResultButtonEnabled;
-            }
+            get => _courseSelectionResultButtonEnabled;
             set
             {
                 _courseSelectionResultButtonEnabled = value;
@@ -77,10 +62,7 @@ namespace CourseManager
         }
         public bool SubmitButtonEnabled
         {
-            get
-            {
-                return _submitButtonEnabled;
-            }
+            get => _submitButtonEnabled;
             set
             {
                 _submitButtonEnabled = value;
@@ -90,10 +72,7 @@ namespace CourseManager
 
         public int CurrentTabIndex
         {
-            get
-            {
-                return _currentTabIndex;
-            }
+            get => _currentTabIndex;
             set
             {
                 _currentTabIndex = value;
@@ -104,24 +83,24 @@ namespace CourseManager
 
         public List<CourseInfo> CurrentCourseInfos
         {
-            get
-            {
-                return _currentTabCourseInfos;
-            }
+            get => _currentTabCourseInfos;
         }
 
         public List<int> CurrentShowingIndexes
         {
-            get
-            {
-                return _currentTabShowingIndexes;
-            }
+            get => _currentTabShowingIndexes;
+        }
+
+        // notify observer on data changed
+        public void NotifyObserver()
+        {
+            ViewModelChanged?.Invoke();
         }
 
         // get tab page infos
         public List<CourseTabPageInfo> GetCourseTabPageInfos()
         {
-            return _model.GetCourseTabPageInfos();
+            return _model.CourseTabPageInfos;
         }
 
         // update current tab course infos and current showing indexes

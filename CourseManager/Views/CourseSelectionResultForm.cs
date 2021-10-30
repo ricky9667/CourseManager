@@ -6,7 +6,7 @@ namespace CourseManager
 {
     public partial class CourseSelectionResultForm : Form
     {
-        CourseSelectionResultFormViewModel _viewModel;
+        private readonly CourseSelectionResultFormViewModel _viewModel;
         public CourseSelectionResultForm(CourseSelectionResultFormViewModel viewModel)
         {
             _viewModel = viewModel;
@@ -24,7 +24,6 @@ namespace CourseManager
         private void LoadSelectedCourseDataGridView()
         {
             _selectedCourseDataGridView.Rows.Clear();
-            //_selectedCourseDataGridView.RowCount = _viewModel.SelectedCourseInfos.Count;
             foreach (CourseInfo courseInfo in _viewModel.SelectedCourseInfos)
             {
                 _selectedCourseDataGridView.Rows.Add(CreateSelectionResultCourseRow(courseInfo));

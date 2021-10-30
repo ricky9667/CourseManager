@@ -6,7 +6,7 @@ namespace CourseManager
     {
         public event PropertyChangedEventHandler PropertyChanged;
         
-        private Model _model;
+        private readonly Model _model;
         private bool _courseSelectingSystemButtonEnabled;
         private bool _courseManagementSystemButtonEnabled;
         public StartUpFormViewModel(Model model)
@@ -24,18 +24,12 @@ namespace CourseManager
 
         public Model Model
         {
-            get
-            {
-                return _model;
-            }
+            get => _model;
         }
 
         public bool CourseSelectingSystemButtonEnabled
         {
-            get
-            {
-                return _courseSelectingSystemButtonEnabled;
-            }
+            get => _courseSelectingSystemButtonEnabled;
             set
             {
                 _courseSelectingSystemButtonEnabled = value;
@@ -45,10 +39,7 @@ namespace CourseManager
 
         public bool CourseManagementSystemButtonEnabled
         {
-            get
-            {
-                return _courseManagementSystemButtonEnabled;
-            }
+            get => _courseManagementSystemButtonEnabled;
             set
             {
                 _courseManagementSystemButtonEnabled = value;

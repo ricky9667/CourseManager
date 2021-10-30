@@ -13,7 +13,7 @@ namespace CourseManager
         {
             if (Environment.OSVersion.Version.Major >= 6)
             {
-                SetProcessDpiAware();
+                SetProcessDPIAware();
             }
 
             Application.EnableVisualStyles();
@@ -27,6 +27,6 @@ namespace CourseManager
 
         // DPI Display Fix
         [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool SetProcessDpiAware();
+        private static extern bool SetProcessDPIAware();
     }
 }

@@ -8,37 +8,32 @@ namespace CourseManager
         public event ModelChangedEventHandler ModelChanged;
         public delegate void ModelChangedEventHandler();
 
-        private List<CourseTabPageInfo> _courseTabPageInfos;
-        private Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
-        private Dictionary<int, List<bool>> _isCourseSelected; 
-        private List<Tuple<int, int>> _selectedIndexPairs; // tabIndex, courseIndex
-        private CourseCrawler _courseCrawler;
+        private readonly List<CourseTabPageInfo> _courseTabPageInfos;
+        private readonly Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
+        private readonly Dictionary<int, List<bool>> _isCourseSelected; 
+        private readonly List<Tuple<int, int>> _selectedIndexPairs; // tabIndex, courseIndex
+        private readonly CourseCrawler _courseCrawler;
 
         public Model()
         {
-            SetUpTabPageInfo();
+            _courseTabPageInfos = new List<CourseTabPageInfo>();
             _courseInfosDictionary = new Dictionary<int, List<CourseInfo>>();
             _isCourseSelected = new Dictionary<int, List<bool>>();
             _selectedIndexPairs = new List<Tuple<int, int>>();
             _courseCrawler = new CourseCrawler();
+
+            SetUpTabPageInfo();
+        }
+
+        public List<CourseTabPageInfo> CourseTabPageInfos
+        {
+            get => _courseTabPageInfos;
         }
 
         // notify observers when data changed
         public void NotifyObserver()
         {
-            if (ModelChanged != null)
-            {
-                ModelChanged();
-            }
-            Console.WriteLine("Model Changed");
-        }
-
-        public int ClassCount
-        {
-            get
-            {
-                return _courseTabPageInfos.Count;
-            }
+            ModelChanged?.Invoke();
         }
 
         // setup hard data
@@ -51,17 +46,8 @@ namespace CourseManager
             const string ELECTRONIC_ENGINEERING_3A_TAB_TEXT = "電子三甲";
             const string ELECTRONIC_ENGINEERING_3A_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423";
 
-            _courseTabPageInfos = new List<CourseTabPageInfo>
-            {
-                new CourseTabPageInfo(COMPUTER_SCIENCE_3_TAB_NAME, COMPUTER_SCIENCE_3_TAB_TEXT, COMPUTER_SCIENCE_3_COURSE_LINK),
-                new CourseTabPageInfo(ELECTRONIC_ENGINEERING_3A_TAB_NAME, ELECTRONIC_ENGINEERING_3A_TAB_TEXT, ELECTRONIC_ENGINEERING_3A_COURSE_LINK)
-            };
-        }
-
-        // get tab page infos
-        public List<CourseTabPageInfo> GetCourseTabPageInfos()
-        {
-            return _courseTabPageInfos;
+            _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_3_TAB_NAME, COMPUTER_SCIENCE_3_TAB_TEXT, COMPUTER_SCIENCE_3_COURSE_LINK));
+            _courseTabPageInfos.Add(new CourseTabPageInfo(ELECTRONIC_ENGINEERING_3A_TAB_NAME, ELECTRONIC_ENGINEERING_3A_TAB_TEXT, ELECTRONIC_ENGINEERING_3A_COURSE_LINK));
         }
 
         // get single course info

@@ -226,6 +226,7 @@ namespace CourseManager
             // 
             // _classComboBox
             // 
+            this._classComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._classComboBox.FormattingEnabled = true;
             this._classComboBox.Location = new System.Drawing.Point(471, 292);
             this._classComboBox.Name = "_classComboBox";
@@ -243,6 +244,7 @@ namespace CourseManager
             // 
             // _hourComboBox
             // 
+            this._hourComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._hourComboBox.FormattingEnabled = true;
             this._hourComboBox.Items.AddRange(new object[] {
             "1",
@@ -312,6 +314,7 @@ namespace CourseManager
             // 
             // _courseTypeComboBox
             // 
+            this._courseTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._courseTypeComboBox.FormattingEnabled = true;
             this._courseTypeComboBox.Items.AddRange(new object[] {
             "○",
@@ -421,6 +424,7 @@ namespace CourseManager
             // 
             // _startCourseSettingsComboBox
             // 
+            this._startCourseSettingsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._startCourseSettingsComboBox.FormattingEnabled = true;
             this._startCourseSettingsComboBox.Items.AddRange(new object[] {
             "開課",

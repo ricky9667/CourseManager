@@ -8,11 +8,11 @@ namespace CourseManager
     {
         public event PropertyChangedEventHandler PropertyChanged;
         
-        private Model _model;
-        List<Tuple<int, int, string>> _courseManagementList;
+        private readonly Model _model;
         private bool _courseGroupBoxEnabled;
         private bool _addCourseButtonEnabled;
         private bool _saveButtonEnabled;
+        List<Tuple<int, int, string>> _courseManagementList;
 
         public CourseManagementFormViewModel(Model model)
         {
@@ -23,18 +23,9 @@ namespace CourseManager
             _courseManagementList = GetCourseManagementList();
         }
 
-        // data binding update data on change
-        private void NotifyPropertyChanged(string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public bool CourseGroupBoxEnabled
         {
-            get
-            {
-                return _courseGroupBoxEnabled;
-            }
+            get => _courseGroupBoxEnabled;
             set
             {
                 _courseGroupBoxEnabled = value;
@@ -44,10 +35,7 @@ namespace CourseManager
 
         public bool AddCourseButtonEnabled
         {
-            get
-            {
-                return _addCourseButtonEnabled;
-            }
+            get => _addCourseButtonEnabled;
             set
             {
                 _addCourseButtonEnabled = value;
@@ -57,10 +45,7 @@ namespace CourseManager
 
         public bool SaveButtonEnabled
         {
-            get
-            {
-                return _saveButtonEnabled;
-            }
+            get => _saveButtonEnabled;
             set
             {
                 _saveButtonEnabled = value;
@@ -70,10 +55,7 @@ namespace CourseManager
 
         public List<Tuple<int, int, string>> CourseManagementList
         {
-            get
-            {
-                return _courseManagementList;
-            }
+            get => _courseManagementList;
         }
 
         public List<string> ClassNames
@@ -81,7 +63,7 @@ namespace CourseManager
             get
             {
                 List<string> classNames = new List<string>();
-                foreach (CourseTabPageInfo info in _model.GetCourseTabPageInfos())
+                foreach (CourseTabPageInfo info in _model.CourseTabPageInfos)
                 {
                     classNames.Add(info.TabText);
                 }
@@ -89,11 +71,17 @@ namespace CourseManager
             }
         }
 
+        // data binding update data on change
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         // get and classify course management list
         private List<Tuple<int, int, string>> GetCourseManagementList()
         {
             List<Tuple<int, int, string>> courseManagementList = new List<Tuple<int, int, string>>(); // tabIndex, courseIndex, courseName
-            int tabCount = _model.ClassCount;
+            int tabCount = _model.CourseTabPageInfos.Count;
             for (int tabIndex = 0; tabIndex < tabCount; tabIndex++)
             {
                 List<CourseInfo> courseInfos = _model.GetCourseInfos(tabIndex);

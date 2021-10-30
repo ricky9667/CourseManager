@@ -5,7 +5,7 @@ namespace CourseManager
 {
     public partial class StartUpForm : Form
     {
-        StartUpFormViewModel _viewModel;
+        private readonly StartUpFormViewModel _viewModel;
         Form _courseSelectingForm;
         public StartUpForm(StartUpFormViewModel viewModel)
         {
