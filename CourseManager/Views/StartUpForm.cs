@@ -10,6 +10,9 @@ namespace CourseManager
         public StartUpForm(StartUpFormViewModel viewModel)
         {
             _viewModel = viewModel;
+            _courseSelectingForm = new CourseSelectingForm(new CourseSelectingFormViewModel(_viewModel.Model));
+            _courseSelectingForm.FormClosing += new FormClosingEventHandler(CourseSelectingFormClosing);
+
             InitializeComponent();
             SetBindingProperties();
         }
@@ -24,17 +27,19 @@ namespace CourseManager
         // show course selecting system
         private void CourseSelectingSystemButtonClick(object sender, EventArgs e)
         {
-            CourseSelectingFormViewModel courseSelectingFormViewModel = new CourseSelectingFormViewModel(_viewModel.Model);
-            _courseSelectingForm = new CourseSelectingForm(courseSelectingFormViewModel);
-            _courseSelectingForm.FormClosed += new FormClosedEventHandler(CourseSelectingSystemFormClosed);
             _courseSelectingForm.Show();
             _viewModel.CourseSelectingSystemButtonEnabled = false;
         }
 
-        // handle course selecting form close event
-        private void CourseSelectingSystemFormClosed(object sender, FormClosedEventArgs e)
+        // handle course selecting form closing event
+        private void CourseSelectingFormClosing(object sender, FormClosingEventArgs e)
         {
-            _viewModel.CourseSelectingSystemButtonEnabled = true;
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                _courseSelectingForm.Hide();
+                _viewModel.CourseSelectingSystemButtonEnabled = true;
+            }
         }
 
         // show course management system

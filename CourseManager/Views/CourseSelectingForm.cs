@@ -15,9 +15,7 @@ namespace CourseManager
             _viewModel.ViewModelChanged += LoadCourseDataGridView;
 
             _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
-            _courseSelectionResultForm.FormClosed += new FormClosedEventHandler(CourseSelectionResultFormClosed);
-
-            FormClosed += new FormClosedEventHandler(CourseSelectingFormClosed);
+            _courseSelectionResultForm.FormClosing += new FormClosingEventHandler(CourseSelectionResultFormClosing);
 
             InitializeComponent();
             SetBindingProperties();
@@ -132,10 +130,7 @@ namespace CourseManager
         // show course result form
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
-            _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
-            _courseSelectionResultForm.FormClosed += new FormClosedEventHandler(CourseSelectionResultFormClosed);
             _courseSelectionResultForm.Show();
-
             _viewModel.CourseTabControlEnabled = false;
             _viewModel.CourseSelectionResultButtonEnabled = false;
             _viewModel.SubmitButtonEnabled = false;
@@ -162,18 +157,17 @@ namespace CourseManager
             _viewModel.SubmitButtonEnabled = false;
         }
 
-        // handle this form close event
-        private void CourseSelectingFormClosed(object sender, FormClosedEventArgs e)
+        // handle course selection form closing event
+        private void CourseSelectionResultFormClosing(object sender, FormClosingEventArgs e)
         {
-            _courseSelectionResultForm.Close();
-        }
-
-        // handle course selection form close event
-        private void CourseSelectionResultFormClosed(object sender, FormClosedEventArgs e)
-        {
-            _viewModel.CourseTabControlEnabled = true;
-            _viewModel.CourseSelectionResultButtonEnabled = true;
-            _viewModel.SubmitButtonEnabled = false;
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                _courseSelectionResultForm.Hide();
+                _viewModel.CourseTabControlEnabled = true;
+                _viewModel.CourseSelectionResultButtonEnabled = true;
+                _viewModel.SubmitButtonEnabled = false;
+            }
         }
     }
 }

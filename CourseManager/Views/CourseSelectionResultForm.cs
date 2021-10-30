@@ -31,7 +31,7 @@ namespace CourseManager
             _selectedCourseDataGridView.Refresh();
         }
 
-        // create data grid view row
+        // create datagridview row
         private DataGridViewRow CreateSelectionResultCourseRow(CourseInfo courseInfo)
         {
             DataGridViewRow row = new DataGridViewRow();
