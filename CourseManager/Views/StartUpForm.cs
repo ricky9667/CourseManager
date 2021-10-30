@@ -32,7 +32,7 @@ namespace CourseManager
         }
 
         // handle course selecting form close event
-        private new void CourseSelectingSystemFormClosed(object sender, FormClosedEventArgs e)
+        private void CourseSelectingSystemFormClosed(object sender, FormClosedEventArgs e)
         {
             _viewModel.CourseSelectingSystemButtonEnabled = true;
         }
@@ -48,7 +48,7 @@ namespace CourseManager
         }
 
         // handle course management form close event
-        private new void CourseManagementSystemFormClosed(object sender, FormClosedEventArgs e)
+        private void CourseManagementSystemFormClosed(object sender, FormClosedEventArgs e)
         {
             _viewModel.CourseManagementSystemButtonEnabled = true;
         }

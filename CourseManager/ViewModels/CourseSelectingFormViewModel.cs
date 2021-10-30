@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace CourseManager
@@ -6,17 +7,27 @@ namespace CourseManager
     public class CourseSelectingFormViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public event ViewModelChangedEventHandler ViewModelChanged;
+        public delegate void ViewModelChangedEventHandler();
 
         private Model _model;
         private bool _courseTabControlEnabled;
         private bool _courseSelectionResultButtonEnabled;
         private bool _submitButtonEnabled;
+        private int _currentTabIndex;
+        private List<CourseInfo> _currentTabCourseInfos;
+        private List<int> _currentTabShowingIndexes;
         public CourseSelectingFormViewModel(Model model)
         {
             _model = model;
+            _model.ModelChanged += UpdateCurrentTabData;
+
             _courseTabControlEnabled = true;
             _courseSelectionResultButtonEnabled = true;
             _submitButtonEnabled = false;
+            _currentTabIndex = 0;
+            _currentTabCourseInfos = _model.GetCourseInfos(_currentTabIndex);
+            _currentTabShowingIndexes = _model.GetShowingIndexes(_currentTabIndex);
         }
 
         public Model Model
@@ -25,6 +36,13 @@ namespace CourseManager
             {
                 return _model;
             }
+        }
+
+        // notify observer on data changed
+        public void NotifyObserver()
+        {
+            ViewModelChanged?.Invoke();
+            Console.WriteLine("CourseSelectingFormViewModel Changed");
         }
 
         // data binding update data on change
@@ -71,38 +89,59 @@ namespace CourseManager
             }
         }
 
+        public int CurrentTabIndex
+        {
+            get
+            {
+                return _currentTabIndex;
+            }
+            set
+            {
+                _currentTabIndex = value;
+                UpdateCurrentTabData();
+                NotifyPropertyChanged(nameof(CurrentTabIndex));
+            }
+        }
+
+        public List<CourseInfo> CurrentCourseInfos
+        {
+            get
+            {
+                return _currentTabCourseInfos;
+            }
+        }
+
+        public List<int> CurrentShowingIndexes
+        {
+            get
+            {
+                return _currentTabShowingIndexes;
+            }
+        }
+
         // get tab page infos
         public List<CourseTabPageInfo> GetCourseTabPageInfos()
         {
             return _model.GetCourseTabPageInfos();
         }
 
-        // get course infos from selected tab
-        public List<CourseInfo> GetCourseInfos(int tabIndex)
+        // update current tab course infos and current showing indexes
+        public void UpdateCurrentTabData()
         {
-            return _model.GetCourseInfos(tabIndex);
-        }
-
-        // get showing indexes of current datagridview
-        public List<int> GetShowingIndexes(int tabIndex)
-        {
-            return _model.GetShowingIndexes(tabIndex);
+            _currentTabCourseInfos = _model.GetCourseInfos(_currentTabIndex);
+            _currentTabShowingIndexes = _model.GetShowingIndexes(_currentTabIndex);
+            NotifyObserver();
         }
 
         // select courses if success and return select course result
         public string SelectCoursesAndGetMessage(int tabIndex, List<int> selectedIndexes)
         {
-            const string SELECT_SUCCESS_MESSAGE = "加選成功";
-            const string SELECT_FAIL_MESSAGE = "加選失敗";
-
             string resultMessage = CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
             if (resultMessage == "")
             {
                 _model.SelectCourses(tabIndex, selectedIndexes);
-                return SELECT_SUCCESS_MESSAGE;
             }
-
-            return SELECT_FAIL_MESSAGE + resultMessage;
+            return resultMessage;
         }
 
         // check if courses are able to select and return message if not

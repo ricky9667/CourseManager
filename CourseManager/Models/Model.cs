@@ -5,6 +5,9 @@ namespace CourseManager
 {
     public class Model
     {
+        public event ModelChangedEventHandler ModelChanged;
+        public delegate void ModelChangedEventHandler();
+
         private List<CourseTabPageInfo> _courseTabPageInfos;
         private Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
         private Dictionary<int, List<bool>> _isCourseSelected;
@@ -18,6 +21,16 @@ namespace CourseManager
             _isCourseSelected = new Dictionary<int, List<bool>>();
             _selectedIndexPairs = new List<Tuple<int, int>>();
             _courseCrawler = new CourseCrawler();
+        }
+
+        // notify observers when data changed
+        public void NotifyObserver()
+        {
+            if (ModelChanged != null)
+            {
+                Console.WriteLine("Model Changed");
+                ModelChanged();
+            }
         }
 
         public int ClassCount
@@ -68,6 +81,7 @@ namespace CourseManager
         {
             _courseInfosDictionary[tabIndex].Add(courseInfo);
             _isCourseSelected[tabIndex].Add(false);
+            NotifyObserver();
         }
 
         // get course infos from selected tab
@@ -130,16 +144,20 @@ namespace CourseManager
                     selectedIndexes.RemoveAt(0);
                 }
             }
+
+            NotifyObserver();
         }
 
         // remove course from selected courses
-        public void DeselectCourse(int index)
+        public void DiscardCourse(int index)
         {
             int tabIndex = _selectedIndexPairs[index].Item1;
             int courseIndex = _selectedIndexPairs[index].Item2;
 
             _isCourseSelected[tabIndex][courseIndex] = false;
             _selectedIndexPairs.RemoveAt(index);
+            
+            NotifyObserver();
         }
 
         // check same course numbers
@@ -214,6 +232,8 @@ namespace CourseManager
             CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
             _courseInfosDictionary[tabIndex].RemoveAt(courseIndex);
             _courseInfosDictionary[newTabIndex].Add(courseInfo);
+
+            NotifyObserver();
         }
     }
 }
