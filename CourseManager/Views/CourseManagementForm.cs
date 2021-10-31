@@ -119,8 +119,8 @@ namespace CourseManager
 
             if (_courseListBox.SelectedIndex != -1)
             {
-                CourseInfo courseInfo = _viewModel.GetCurrentCourseInfo();
-                RenderCourseGroupBoxData(courseInfo, _classComboBox.SelectedIndex);
+                CourseInfo courseInfo = _viewModel.CurrentCourseInfo;
+                RenderCourseGroupBoxData(courseInfo, _viewModel.CurrentClassIndex);
                 _viewModel.CourseGroupBoxEnabled = true;
             }
         }
@@ -162,10 +162,9 @@ namespace CourseManager
             }
             else
             {
-                Tuple<int, int, string> course = _viewModel.CourseManagementList[_viewModel.CurrentSelectedCourse];
-                CourseInfo courseInfo = _viewModel.GetCourseInfo(course.Item1, course.Item2);
+                CourseInfo courseInfo = _viewModel.CurrentCourseInfo;
                 courseInfo = SetNewCourseInfoData(courseInfo);
-                _viewModel.UpdateCourseInfo(course.Item1, course.Item2, courseInfo, _classComboBox.SelectedIndex);
+                _viewModel.UpdateCourseInfo(courseInfo, _classComboBox.SelectedIndex);
             }
 
             _viewModel.CourseGroupBoxEnabled = false;
@@ -281,6 +280,5 @@ namespace CourseManager
             _courseGroupBox.Text = "新增課程";
             ResetGroupBox();
         }
-   
     }
 }

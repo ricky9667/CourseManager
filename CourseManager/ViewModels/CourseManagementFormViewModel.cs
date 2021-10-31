@@ -77,6 +77,23 @@ namespace CourseManager
             }
         }
 
+        public int CurrentClassIndex
+        {
+            get
+            {
+                return _courseManagementList[_currentSelectedCourse].Item1;
+            }
+        }
+
+        public CourseInfo CurrentCourseInfo
+        {
+            get
+            {
+                Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
+                return _model.GetCourseInfo(course.Item1, course.Item2);
+            }
+        }
+
         public List<Tuple<int, int, string>> CourseManagementList
         {
             get
@@ -113,21 +130,22 @@ namespace CourseManager
             return _model.GetCourseInfo(tabIndex, courseIndex);
         }
 
-        // get single course info by list box index
-        public CourseInfo GetCurrentCourseInfo()
+        // update course info
+        public void UpdateCourseInfo(CourseInfo courseInfo, int newTabIndex)
         {
             Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
-            return _model.GetCourseInfo(course.Item1, course.Item2);
-        }
-
-        // update course info
-        public void UpdateCourseInfo(int tabIndex, int courseIndex, CourseInfo courseInfo, int newTabIndex)
-        {
-            _model.SetCourseInfo(tabIndex, courseIndex, courseInfo);
-            if (tabIndex != newTabIndex)
+            _model.SetCourseInfo(course.Item1, course.Item2, courseInfo);
+            if (course.Item1 != newTabIndex)
             {
-                _model.MoveCourseInfo(tabIndex, courseIndex, newTabIndex);
+                _model.MoveCourseInfo(course.Item1, course.Item2, newTabIndex);
             }
+
+            //_model.SetCourseInfo(tabIndex, courseIndex, courseInfo);
+            //if (tabIndex != newTabIndex)
+            //{
+            //    _model.MoveCourseInfo(tabIndex, courseIndex, newTabIndex);
+            //}
+
             _courseManagementList = _model.GetCourseManagementList();
         }
 
@@ -141,15 +159,26 @@ namespace CourseManager
         // handle save button state
         public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo, int classIndex)
         {
-            Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
-            CourseInfo courseInfo = _model.GetCourseInfo(course.Item1, course.Item2);
-
-            bool isClassChanged = course.Item1 != classIndex;
-            bool isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
-            bool isTextFormatCorrect = changedCourseInfo.CheckCourseFormat();
-            bool isCourseHourMatch = changedCourseInfo.CheckCourseHourMatch();
+            bool isClassChanged, isDataChanged, isTextFormatCorrect, isCourseHourMatch;
+            
+            if (_currentSelectedCourse != -1)
+            {
+                Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
+                CourseInfo courseInfo = _model.GetCourseInfo(course.Item1, course.Item2);
+                isClassChanged = course.Item1 != classIndex;
+                isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
+            }
+            else
+            {
+                isClassChanged = true;
+                isDataChanged = true;
+            }
+            
+            isTextFormatCorrect = changedCourseInfo.CheckCourseFormat();
+            isCourseHourMatch = changedCourseInfo.CheckCourseHourMatch();
 
             return (isClassChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
+            
         }
 
         // check if course data is changed
