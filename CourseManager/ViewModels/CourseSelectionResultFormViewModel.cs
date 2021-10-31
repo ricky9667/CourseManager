@@ -9,7 +9,7 @@ namespace CourseManager
         public delegate void ViewModelChangedEventHandler();
 
         private readonly Model _model;
-        private List<CourseInfo> _selectedCourseInfos;
+        private readonly List<CourseInfo> _selectedCourseInfos;
         public CourseSelectionResultFormViewModel(Model model)
         {
             _model = model;

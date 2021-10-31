@@ -274,6 +274,7 @@ namespace CourseManager
             this._noteTextBox.Name = "_noteTextbox";
             this._noteTextBox.Size = new System.Drawing.Size(926, 36);
             this._noteTextBox.TabIndex = 18;
+            this._noteTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _noteLabel
             // 
@@ -290,6 +291,7 @@ namespace CourseManager
             this._languageTextBox.Name = "_languageTextbox";
             this._languageTextBox.Size = new System.Drawing.Size(458, 36);
             this._languageTextBox.TabIndex = 16;
+            this._languageTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _languageLabel
             // 
@@ -306,6 +308,7 @@ namespace CourseManager
             this._teachingAssistantTextBox.Name = "_teachingAssistantTextbox";
             this._teachingAssistantTextBox.Size = new System.Drawing.Size(450, 36);
             this._teachingAssistantTextBox.TabIndex = 14;
+            this._teachingAssistantTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _teachingAssistantLabel
             // 
@@ -331,6 +334,7 @@ namespace CourseManager
             this._courseTypeComboBox.Name = "_courseTypeComboBox";
             this._courseTypeComboBox.Size = new System.Drawing.Size(179, 32);
             this._courseTypeComboBox.TabIndex = 12;
+            this._teachingAssistantTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _courseTypeLabel
             // 
