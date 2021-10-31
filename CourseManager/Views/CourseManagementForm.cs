@@ -7,10 +7,12 @@ namespace CourseManager
     public partial class CourseManagementForm : Form
     {
         private readonly string _courseChars = "1234N56789ABCD";
+        private bool _isUpdatingCourseGroupBox;
         private readonly CourseManagementFormViewModel _viewModel;
         public CourseManagementForm(CourseManagementFormViewModel viewModel)
         {
             _viewModel = viewModel;
+            _isUpdatingCourseGroupBox = false;
             InitializeComponent();
         }
 
@@ -32,6 +34,7 @@ namespace CourseManager
             {
                 courseGroupBoxControl.DataBindings.Add(nameof(courseGroupBoxControl.Enabled), _viewModel, nameof(_viewModel.CourseGroupBoxEnabled));
             }
+            _courseListBox.DataBindings.Add(nameof(_courseListBox.SelectedIndex), _viewModel, nameof(_viewModel.CurrentSelectedCourse));
         }
 
         // load courses in course list box
@@ -108,21 +111,25 @@ namespace CourseManager
         // change group box data when select index in list box
         private void CourseListBoxSelectedIndexChanged(object sender, EventArgs e)
         {
+            _viewModel.CurrentSelectedCourse = _courseListBox.SelectedIndex;
             _viewModel.AddCourseButtonEnabled = true;
+            _viewModel.SaveButtonEnabled = false;
             _timeDataGridView.ClearSelection();
             _courseGroupBox.Text = "編輯課程";
-            if (_courseListBox.SelectedIndex != -1)
+
+            if (_viewModel.CurrentSelectedCourse != -1)
             {
-                Tuple<int, int, string> course = _viewModel.CourseManagementList[_courseListBox.SelectedIndex];
+                Tuple<int, int, string> course = _viewModel.CourseManagementList[_viewModel.CurrentSelectedCourse];
                 CourseInfo courseInfo = _viewModel.GetCourseInfo(course.Item1, course.Item2);
                 RenderCourseGroupBoxData(courseInfo, course.Item1);
                 _viewModel.CourseGroupBoxEnabled = true;
             }
         }
 
-        // render data to ui by course info
+        // render data to course group box by course info
         private void RenderCourseGroupBoxData(CourseInfo courseInfo, int classIndex)
         {
+            _isUpdatingCourseGroupBox = true;
             _startCourseSettingsComboBox.SelectedIndex = 0;
             _courseNumberTextbox.Text = courseInfo.Number;
             _courseNameTextbox.Text = courseInfo.Name;
@@ -142,13 +149,13 @@ namespace CourseManager
             {
                 _timeDataGridView.Rows[classTime.Item2].Cells[classTime.Item1 + 1].Value = true;
             }
+            _isUpdatingCourseGroupBox = false;
         }
 
         // save updated course info
         private void SaveButtonClick(object sender, EventArgs e)
         {
-            int listBoxIndex = _courseListBox.SelectedIndex;
-            if (listBoxIndex == -1)
+            if (_viewModel.CurrentSelectedCourse == -1)
             {
                 CourseInfo courseInfo = new CourseInfo();
                 courseInfo = SetNewCourseInfoData(courseInfo);
@@ -156,7 +163,7 @@ namespace CourseManager
             }
             else
             {
-                Tuple<int, int, string> course = _viewModel.CourseManagementList[listBoxIndex];
+                Tuple<int, int, string> course = _viewModel.CourseManagementList[_viewModel.CurrentSelectedCourse];
                 CourseInfo courseInfo = _viewModel.GetCourseInfo(course.Item1, course.Item2);
                 courseInfo = SetNewCourseInfoData(courseInfo);
                 _viewModel.UpdateCourseInfo(course.Item1, course.Item2, courseInfo, _classComboBox.SelectedIndex);
@@ -207,41 +214,48 @@ namespace CourseManager
             return classTimeString.Trim();
         }
 
+        // get current showing course info
+        private CourseInfo GetShowingCourseInfo()
+        {
+            return new CourseInfo
+            {
+                Number = _courseNumberTextbox.Text.Trim(),
+                Name = _courseNameTextbox.Text.Trim(),
+                Stage = _stageTextbox.Text.Trim(),
+                Credit = _creditTextbox.Text.Trim(),
+                Teacher = _teacherTextbox.Text.Trim(),
+                CourseType = _courseTypeComboBox.SelectedIndex == -1 ? "" : _courseTypeComboBox.SelectedItem.ToString(),
+                TeachingAssistant = _teachingAssistantTextbox.Text.Trim(),
+                Language = _languageTextbox.Text.Trim(),
+                Note = _noteTextbox.Text.Trim(),
+                Hour = _hourComboBox.SelectedIndex == -1 ? "" : _hourComboBox.SelectedItem.ToString(),
+                ClassTime0 = GetDayClassTime(0),
+                ClassTime1 = GetDayClassTime(1),
+                ClassTime2 = GetDayClassTime(2),
+                ClassTime3 = GetDayClassTime(3),
+                ClassTime4 = GetDayClassTime(4),
+                ClassTime5 = GetDayClassTime(5),
+                ClassTime6 = GetDayClassTime(6)
+            };
+        }
+
         // check if course info can be saved and change button status
         private void CourseInfoDataChanged(object sender, EventArgs e)
         {
-            _viewModel.SaveButtonEnabled = CheckTextboxDataValid();
+            Console.WriteLine("CourseInfoDataChanged: ");
+
+            if (!_isUpdatingCourseGroupBox)
+            {
+                CourseInfo showingCourseInfo = GetShowingCourseInfo();
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo);
+            }
         }
 
-        // check if textbox is valid
-        private bool CheckTextboxDataValid()
-        {
-            string courseNumberText = _courseNumberTextbox.Text.Trim();
-            string courseNameText = _courseNameTextbox.Text.Trim();
-            string stageText = _stageTextbox.Text.Trim();
-            string creditText = _creditTextbox.Text.Trim();
-            string teacherText = _teacherTextbox.Text.Trim();
-
-            if (courseNumberText == "" || courseNameText == "" || stageText == "" || creditText == "" || teacherText == "")
-            {
-                return false;
-            }
-
-            bool numberIsNumeric = int.TryParse(courseNumberText, out _);
-            bool stageIsNumeric = int.TryParse(stageText, out _);
-            bool creditIsNumeric = double.TryParse(creditText, out _);
-
-            if (!numberIsNumeric || !stageIsNumeric || !creditIsNumeric)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        // change checkbox cell value when clicked
+        // change checkbox cell value when clicked and change save button state
         private void TimeDataGridViewCellClicked(object sender, DataGridViewCellEventArgs e)
         {
+            Console.WriteLine("TimeDataGridViewCellClicked: ");
+
             int rowIndex = e.RowIndex;
             int columnIndex = e.ColumnIndex;
             if (rowIndex >= 0 && columnIndex > 0)
@@ -256,25 +270,23 @@ namespace CourseManager
                 }
             }
 
-            _viewModel.SaveButtonEnabled = IsTimeDataGridViewValid();
+            if (!_isUpdatingCourseGroupBox)
+            {
+                CourseInfo showingCourseInfo = GetShowingCourseInfo();
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo);
+            }
         }
 
-        // check if datagridview matches course hours
-        private bool IsTimeDataGridViewValid()
+        // check if course info can be saved and change button status
+        private void HourComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            int hourCount = 0;
-            foreach (DataGridViewRow row in _timeDataGridView.Rows)
-            {
-                for (int index = 1; index < row.Cells.Count; index++)
-                {
-                    if (Convert.ToBoolean(row.Cells[index].Value))
-                    {
-                        hourCount++;
-                    }
-                }
-            }
+            Console.WriteLine("HourComboBoxSelectedIndexChanged: ");
 
-            return hourCount == int.Parse(_hourComboBox.SelectedItem.ToString());
+            if (!_isUpdatingCourseGroupBox)
+            {
+                CourseInfo showingCourseInfo = GetShowingCourseInfo();
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo);
+            }
         }
 
         // create new course and clear all data in group box

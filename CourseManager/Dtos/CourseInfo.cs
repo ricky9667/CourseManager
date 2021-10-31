@@ -6,7 +6,7 @@ namespace CourseManager
     public class CourseInfo
     {
         private readonly int _daysPerWeek = 7;
-        private readonly string _courseChars = "1234N56789ABCD";
+        public static readonly string _courseChars = "1234N56789ABCD";
 
         public CourseInfo()
         {
@@ -70,6 +70,12 @@ namespace CourseManager
         {
             return new string[] { Number, Name, Stage, Credit, Hour, CourseType, Teacher, ClassTime0, ClassTime1, ClassTime2, ClassTime3, ClassTime4, ClassTime5, ClassTime6,
                                     Classroom, NumberOfStudent, NumberOfDropStudent, TeachingAssistant, Language, Outline, Note, Audit, Experiment};
+        }
+
+        // get class time string of course
+        public string[] GetCourseClassTimeStrings()
+        {
+            return new string[] { ClassTime0, ClassTime1, ClassTime2, ClassTime3, ClassTime4, ClassTime5, ClassTime6 };
         }
 
         // get class time of course

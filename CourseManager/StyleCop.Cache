@@ -361,26 +361,15 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/30 19:56:03.203</sourceFile>
+      <sourceFile>2021/10/30 23:05:24.238</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
     </timestamps>
     <violations>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="DelegateAndEvent3" ruleCheckId="DE0003">
-        <context>ICS(Delegate與Event-3)</context>
-        <line>8</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
-        <context>Literal constants(字面常數)-"Model Changed"</context>
-        <line>33</line>
-        <index>1139</index>
-        <endIndex>1153</endIndex>
-        <startLine>33</startLine>
-        <startColumn>31</startColumn>
-        <endLine>33</endLine>
-        <endColumn>45</endColumn>
+      <violation namespace="StyleCop.CSharp.CsParser" rule="SyntaxException" ruleCheckId="SA0102">
+        <context>A syntax error has been discovered in file C:\Users\ricky\source\repos\CourseManager\CourseManager\Models\Model.cs on line 30.</context>
+        <line>30</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -389,7 +378,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/30 21:49:35.045</sourceFile>
+      <sourceFile>2021/10/30 22:04:29.965</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -401,7 +390,7 @@
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
-        <context>Unsuitable naming(名不符實)-SetProcessDpiAware(dpi)</context>
+        <context>Unsuitable naming(名不符實)-SetProcessDPIAware(dpi)</context>
         <line>30</line>
         <index>874</index>
         <endIndex>921</endIndex>
@@ -409,6 +398,11 @@
         <startColumn>9</startColumn>
         <endLine>30</endLine>
         <endColumn>56</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Method1" ruleCheckId="MT0001">
+        <context>ICS(函式-1)</context>
+        <line>30</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -461,15 +455,15 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/28 11:43:42.162</sourceFile>
+      <sourceFile>2021/10/30 23:08:18.491</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
     </timestamps>
     <violations>
       <violation namespace="StyleCop.CSharp.CsParser" rule="SyntaxException" ruleCheckId="SA0102">
-        <context>A syntax error has been discovered in file C:\Users\ricky\source\repos\CourseManager\CourseManager\ViewModels\CourseManagementFormViewModel.cs on line 29.</context>
-        <line>29</line>
+        <context>A syntax error has been discovered in file C:\Users\ricky\source\repos\CourseManager\CourseManager\ViewModels\CourseManagementFormViewModel.cs on line 28.</context>
+        <line>28</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -478,15 +472,15 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/30 16:49:11.373</sourceFile>
+      <sourceFile>2021/10/30 23:08:21.560</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
     </timestamps>
     <violations>
       <violation namespace="StyleCop.CSharp.CsParser" rule="SyntaxException" ruleCheckId="SA0102">
-        <context>A syntax error has been discovered in file C:\Users\ricky\source\repos\CourseManager\CourseManager\ViewModels\CourseSelectingFormViewModel.cs on line 44.</context>
-        <line>44</line>
+        <context>A syntax error has been discovered in file C:\Users\ricky\source\repos\CourseManager\CourseManager\ViewModels\CourseSelectingFormViewModel.cs on line 35.</context>
+        <line>35</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -495,15 +489,15 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/30 21:38:58.541</sourceFile>
+      <sourceFile>2021/10/31 03:00:30.839</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
     </timestamps>
     <violations>
       <violation namespace="StyleCop.CSharp.CsParser" rule="SyntaxException" ruleCheckId="SA0102">
-        <context>A syntax error has been discovered in file C:\Users\ricky\source\repos\CourseManager\CourseManager\ViewModels\CourseSelectionResultFormViewModel.cs on line 36.</context>
-        <line>36</line>
+        <context>A syntax error has been discovered in file C:\Users\ricky\source\repos\CourseManager\CourseManager\ViewModels\CourseSelectionResultFormViewModel.cs on line 23.</context>
+        <line>23</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -512,7 +506,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/28 13:18:45.225</sourceFile>
+      <sourceFile>2021/10/30 23:09:27.103</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -529,52 +523,57 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/30 21:50:23.144</sourceFile>
+      <sourceFile>2021/10/31 03:14:16.822</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
     </timestamps>
     <violations>
+      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LongMethod" ruleCheckId="LM0001">
+        <context>Long method(過長函式)</context>
+        <line>54</line>
+        <warning>False</warning>
+      </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-ResetTimeDataGridViewCheckboxes(checkboxes)</context>
-        <line>76</line>
-        <index>2821</index>
-        <endIndex>3149</endIndex>
-        <startLine>76</startLine>
+        <line>78</line>
+        <index>2931</index>
+        <endIndex>3259</endIndex>
+        <startLine>78</startLine>
         <startColumn>9</startColumn>
-        <endLine>85</endLine>
+        <endLine>87</endLine>
         <endColumn>9</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LongMethod" ruleCheckId="LM0001">
         <context>Long method(過長函式)</context>
-        <line>121</line>
+        <line>124</line>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LongMethod" ruleCheckId="LM0001">
         <context>Long method(過長函式)</context>
-        <line>145</line>
+        <line>148</line>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LongMethod" ruleCheckId="LM0001">
         <context>Long method(過長函式)</context>
-        <line>169</line>
+        <line>173</line>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-CheckTextboxDataValid(textbox)</context>
-        <line>213</line>
-        <index>8763</index>
-        <endIndex>9714</endIndex>
-        <startLine>213</startLine>
+        <line>217</line>
+        <index>8971</index>
+        <endIndex>9922</endIndex>
+        <startLine>217</startLine>
         <startColumn>9</startColumn>
-        <endLine>236</endLine>
+        <endLine>240</endLine>
         <endColumn>9</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LongMethod" ruleCheckId="LM0001">
         <context>Long method(過長函式)</context>
-        <line>213</line>
+        <line>217</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -583,7 +582,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/26 23:05:40.011</sourceFile>
+      <sourceFile>2021/10/31 03:25:11.330</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -591,130 +590,90 @@
     <violations>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-_courseNameTextbox(textbox)</context>
-        <line>488</line>
-        <index>25178</index>
-        <endIndex>25233</endIndex>
-        <startLine>488</startLine>
+        <line>494</line>
+        <index>25773</index>
+        <endIndex>25828</endIndex>
+        <startLine>494</startLine>
         <startColumn>9</startColumn>
-        <endLine>488</endLine>
+        <endLine>494</endLine>
         <endColumn>64</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-_courseNumberTextbox(textbox)</context>
-        <line>490</line>
-        <index>25306</index>
-        <endIndex>25363</endIndex>
-        <startLine>490</startLine>
+        <line>496</line>
+        <index>25901</index>
+        <endIndex>25958</endIndex>
+        <startLine>496</startLine>
         <startColumn>9</startColumn>
-        <endLine>490</endLine>
+        <endLine>496</endLine>
         <endColumn>66</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-_stageTextbox(textbox)</context>
-        <line>492</line>
-        <index>25431</index>
-        <endIndex>25481</endIndex>
-        <startLine>492</startLine>
+        <line>498</line>
+        <index>26026</index>
+        <endIndex>26076</endIndex>
+        <startLine>498</startLine>
         <startColumn>9</startColumn>
-        <endLine>492</endLine>
+        <endLine>498</endLine>
         <endColumn>59</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-_creditTextbox(textbox)</context>
-        <line>494</line>
-        <index>25550</index>
-        <endIndex>25601</endIndex>
-        <startLine>494</startLine>
+        <line>500</line>
+        <index>26145</index>
+        <endIndex>26196</endIndex>
+        <startLine>500</startLine>
         <startColumn>9</startColumn>
-        <endLine>494</endLine>
+        <endLine>500</endLine>
         <endColumn>60</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-_teacherTextbox(textbox)</context>
-        <line>496</line>
-        <index>25671</index>
-        <endIndex>25723</endIndex>
-        <startLine>496</startLine>
+        <line>502</line>
+        <index>26266</index>
+        <endIndex>26318</endIndex>
+        <startLine>502</startLine>
         <startColumn>9</startColumn>
-        <endLine>496</endLine>
+        <endLine>502</endLine>
         <endColumn>61</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-_teachingAssistantTextbox(textbox)</context>
-        <line>500</line>
-        <index>25933</index>
-        <endIndex>25995</endIndex>
-        <startLine>500</startLine>
+        <line>506</line>
+        <index>26528</index>
+        <endIndex>26590</endIndex>
+        <startLine>506</startLine>
         <startColumn>9</startColumn>
-        <endLine>500</endLine>
+        <endLine>506</endLine>
         <endColumn>71</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-_languageTextbox(textbox)</context>
-        <line>502</line>
-        <index>26066</index>
-        <endIndex>26119</endIndex>
-        <startLine>502</startLine>
+        <line>508</line>
+        <index>26661</index>
+        <endIndex>26714</endIndex>
+        <startLine>508</startLine>
         <startColumn>9</startColumn>
-        <endLine>502</endLine>
+        <endLine>508</endLine>
         <endColumn>62</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="UnsuitableNaming" ruleCheckId="UN0001">
         <context>Unsuitable naming(名不符實)-_noteTextbox(textbox)</context>
-        <line>504</line>
-        <index>26186</index>
-        <endIndex>26235</endIndex>
-        <startLine>504</startLine>
+        <line>510</line>
+        <index>26781</index>
+        <endIndex>26830</endIndex>
+        <startLine>510</startLine>
         <startColumn>9</startColumn>
-        <endLine>504</endLine>
+        <endLine>510</endLine>
         <endColumn>58</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Variable1" ruleCheckId="VR0001">
-        <context>ICS(變數-1)</context>
-        <line>525</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Variable1" ruleCheckId="VR0001">
-        <context>ICS(變數-1)</context>
-        <line>526</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Variable1" ruleCheckId="VR0001">
-        <context>ICS(變數-1)</context>
-        <line>527</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Variable1" ruleCheckId="VR0001">
-        <context>ICS(變數-1)</context>
-        <line>528</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Variable1" ruleCheckId="VR0001">
-        <context>ICS(變數-1)</context>
-        <line>529</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Variable1" ruleCheckId="VR0001">
-        <context>ICS(變數-1)</context>
-        <line>530</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Variable1" ruleCheckId="VR0001">
-        <context>ICS(變數-1)</context>
-        <line>531</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Variable1" ruleCheckId="VR0001">
-        <context>ICS(變數-1)</context>
-        <line>532</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -723,7 +682,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/30 21:27:36.427</sourceFile>
+      <sourceFile>2021/10/31 03:19:17.527</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -734,7 +693,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/21 14:46:44.370</sourceFile>
+      <sourceFile>2021/10/31 03:23:13.768</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -745,7 +704,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/30 21:45:22.644</sourceFile>
+      <sourceFile>2021/10/31 03:01:46.679</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -756,7 +715,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/21 14:47:06.091</sourceFile>
+      <sourceFile>2021/10/31 03:23:54.529</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -767,7 +726,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/29 20:13:26.864</sourceFile>
+      <sourceFile>2021/10/31 03:00:08.293</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>

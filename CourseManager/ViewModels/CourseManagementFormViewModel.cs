@@ -12,6 +12,7 @@ namespace CourseManager
         private bool _courseGroupBoxEnabled;
         private bool _addCourseButtonEnabled;
         private bool _saveButtonEnabled;
+        int _currentSelectedCourse;
         List<Tuple<int, int, string>> _courseManagementList;
 
         public CourseManagementFormViewModel(Model model)
@@ -20,6 +21,7 @@ namespace CourseManager
             _courseGroupBoxEnabled = false;
             _addCourseButtonEnabled = true;
             _saveButtonEnabled = false;
+            _currentSelectedCourse = -1;
             _courseManagementList = GetCourseManagementList();
         }
 
@@ -50,6 +52,16 @@ namespace CourseManager
             {
                 _saveButtonEnabled = value;
                 NotifyPropertyChanged(nameof(SaveButtonEnabled));
+            }
+        }
+
+        public int CurrentSelectedCourse
+        {
+            get => _currentSelectedCourse;
+            set
+            {
+                _currentSelectedCourse = value;
+                NotifyPropertyChanged(nameof(CurrentSelectedCourse));
             }
         }
 
@@ -117,6 +129,82 @@ namespace CourseManager
         {
             _model.AddNewCourseInfo(newTabIndex, courseInfo);
             _courseManagementList = GetCourseManagementList();
+        }
+
+        // handle save button state
+        public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo)
+        {
+            Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
+            CourseInfo courseInfo = _model.GetCourseInfo(course.Item1, course.Item2);
+            bool isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
+            bool isTextFormatCorrect = CheckCourseTextFormat(changedCourseInfo);
+            bool isCourseHourMatch = CheckCourseHourMatch(changedCourseInfo);
+
+            Console.WriteLine(isDataChanged.ToString() + " " + isTextFormatCorrect.ToString() + " " + isCourseHourMatch.ToString());
+            return isDataChanged && isTextFormatCorrect && isCourseHourMatch;
+        }
+
+        // check if course data is changed
+        private bool CheckCourseDataChanged(CourseInfo courseInfo, CourseInfo changedCourseInfo)
+        {
+            if (_currentSelectedCourse == -1)
+            {
+                return true; 
+            }
+
+            int[] ignoredIndexes = new int[] { 14, 15, 16, 19, 21, 22 };
+            string[] courseInfoStrings = courseInfo.GetCourseInfoStrings();
+            string[] changedCourseInfoStrings = changedCourseInfo.GetCourseInfoStrings();
+            for (int index = 0; index < courseInfoStrings.Length; index++)
+            {
+                if (Array.Exists(ignoredIndexes, item => item == index))
+                {
+                    continue;
+                }
+                if (courseInfoStrings[index] != changedCourseInfoStrings[index])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // check particular textbox has correct format
+        private bool CheckCourseTextFormat(CourseInfo changedCourseInfo)
+        {
+            if (changedCourseInfo.Number == "" || changedCourseInfo.Name == "" || changedCourseInfo.Stage == "" || changedCourseInfo.Credit == "" || changedCourseInfo.Teacher == "")
+            {
+                return false;
+            }
+
+            bool numberIsNumeric = int.TryParse(changedCourseInfo.Number, out _);
+            bool stageIsNumeric = int.TryParse(changedCourseInfo.Stage, out _);
+            bool creditIsNumeric = double.TryParse(changedCourseInfo.Credit, out _);
+
+            if (!numberIsNumeric || !stageIsNumeric || !creditIsNumeric)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        // check class time matchs course hours
+        private bool CheckCourseHourMatch(CourseInfo changedCourseInfo)
+        {
+            const char SEPARATOR = ' ';
+            int hourCount = 0;
+            
+            foreach (string classTime in changedCourseInfo.GetCourseClassTimeStrings())
+            {
+                if (classTime.Trim() != "")
+                {
+                    hourCount += classTime.Split(SEPARATOR).Length;
+                }
+            }
+
+            return hourCount.ToString() == changedCourseInfo.Hour;
         }
     }
 }
