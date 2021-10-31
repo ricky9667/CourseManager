@@ -179,16 +179,16 @@ namespace CourseManager
         // update data to course info
         private CourseInfo SetNewCourseInfoData(CourseInfo courseInfo)
         {
-            courseInfo.Number = _courseNumberTextbox.Text;
-            courseInfo.Name = _courseNameTextbox.Text;
-            courseInfo.Stage = _stageTextbox.Text;
-            courseInfo.Credit = _creditTextbox.Text;
-            courseInfo.Teacher = _teacherTextbox.Text;
-            courseInfo.CourseType = _courseTypeComboBox.SelectedItem.ToString();
-            courseInfo.TeachingAssistant = _teachingAssistantTextbox.Text;
-            courseInfo.Language = _languageTextbox.Text;
-            courseInfo.Note = _noteTextbox.Text;
-            courseInfo.Hour = _hourComboBox.SelectedItem.ToString();
+            courseInfo.Number = _courseNumberTextbox.Text.Trim();
+            courseInfo.Name = _courseNameTextbox.Text.Trim();
+            courseInfo.Stage = _stageTextbox.Text.Trim();
+            courseInfo.Credit = _creditTextbox.Text.Trim();
+            courseInfo.Teacher = _teacherTextbox.Text.Trim();
+            courseInfo.CourseType = _courseTypeComboBox.SelectedIndex == -1 ? "" : _courseTypeComboBox.SelectedItem.ToString();
+            courseInfo.TeachingAssistant = _teachingAssistantTextbox.Text.Trim();
+            courseInfo.Language = _languageTextbox.Text.Trim();
+            courseInfo.Note = _noteTextbox.Text.Trim();
+            courseInfo.Hour = _hourComboBox.SelectedIndex == -1 ? "" : _hourComboBox.SelectedItem.ToString();
             courseInfo.ClassTime0 = GetDayClassTime(0);
             courseInfo.ClassTime1 = GetDayClassTime(1);
             courseInfo.ClassTime2 = GetDayClassTime(2);
@@ -214,31 +214,6 @@ namespace CourseManager
             return classTimeString.Trim();
         }
 
-        // get current showing course info
-        private CourseInfo GetShowingCourseInfo()
-        {
-            return new CourseInfo
-            {
-                Number = _courseNumberTextbox.Text.Trim(),
-                Name = _courseNameTextbox.Text.Trim(),
-                Stage = _stageTextbox.Text.Trim(),
-                Credit = _creditTextbox.Text.Trim(),
-                Teacher = _teacherTextbox.Text.Trim(),
-                CourseType = _courseTypeComboBox.SelectedIndex == -1 ? "" : _courseTypeComboBox.SelectedItem.ToString(),
-                TeachingAssistant = _teachingAssistantTextbox.Text.Trim(),
-                Language = _languageTextbox.Text.Trim(),
-                Note = _noteTextbox.Text.Trim(),
-                Hour = _hourComboBox.SelectedIndex == -1 ? "" : _hourComboBox.SelectedItem.ToString(),
-                ClassTime0 = GetDayClassTime(0),
-                ClassTime1 = GetDayClassTime(1),
-                ClassTime2 = GetDayClassTime(2),
-                ClassTime3 = GetDayClassTime(3),
-                ClassTime4 = GetDayClassTime(4),
-                ClassTime5 = GetDayClassTime(5),
-                ClassTime6 = GetDayClassTime(6)
-            };
-        }
-
         // check if course info can be saved and change button status
         private void CourseInfoDataChanged(object sender, EventArgs e)
         {
@@ -246,7 +221,8 @@ namespace CourseManager
 
             if (!_isUpdatingCourseGroupBox)
             {
-                CourseInfo showingCourseInfo = GetShowingCourseInfo();
+                CourseInfo showingCourseInfo = new CourseInfo();
+                showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
                 _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo);
             }
         }
@@ -272,7 +248,8 @@ namespace CourseManager
 
             if (!_isUpdatingCourseGroupBox)
             {
-                CourseInfo showingCourseInfo = GetShowingCourseInfo();
+                CourseInfo showingCourseInfo = new CourseInfo();
+                showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
                 _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo);
             }
         }
@@ -284,7 +261,8 @@ namespace CourseManager
 
             if (!_isUpdatingCourseGroupBox)
             {
-                CourseInfo showingCourseInfo = GetShowingCourseInfo();
+                CourseInfo showingCourseInfo = new CourseInfo();
+                showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
                 _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo);
             }
         }

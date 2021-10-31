@@ -125,9 +125,9 @@ namespace CourseManager
         }
 
         // add course info to model
-        public void AddNewCourse(CourseInfo courseInfo, int newTabIndex)
+        public void AddNewCourse(CourseInfo newCourseInfo, int newTabIndex)
         {
-            _model.AddNewCourseInfo(newTabIndex, courseInfo);
+            _model.AddNewCourseInfo(newTabIndex, newCourseInfo);
             _courseManagementList = GetCourseManagementList();
         }
 
