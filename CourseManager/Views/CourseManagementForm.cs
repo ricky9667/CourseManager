@@ -223,7 +223,7 @@ namespace CourseManager
             {
                 CourseInfo showingCourseInfo = new CourseInfo();
                 showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
-                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo);
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
             }
         }
 
@@ -250,7 +250,7 @@ namespace CourseManager
             {
                 CourseInfo showingCourseInfo = new CourseInfo();
                 showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
-                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo);
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
             }
         }
 
@@ -263,7 +263,20 @@ namespace CourseManager
             {
                 CourseInfo showingCourseInfo = new CourseInfo();
                 showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
-                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo);
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
+            }
+        }
+
+        // asdsd
+        private void ClassComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("ClassComboBoxSelectedIndexChanged: ");
+
+            if (!_isUpdatingCourseGroupBox)
+            {
+                CourseInfo showingCourseInfo = new CourseInfo();
+                showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
             }
         }
 
@@ -277,5 +290,6 @@ namespace CourseManager
             _courseGroupBox.Text = "新增課程";
             ResetGroupBox();
         }
+   
     }
 }

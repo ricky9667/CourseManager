@@ -132,16 +132,17 @@ namespace CourseManager
         }
 
         // handle save button state
-        public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo)
+        public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo, int classIndex)
         {
             Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
             CourseInfo courseInfo = _model.GetCourseInfo(course.Item1, course.Item2);
+
+            bool isClassChanged = course.Item1 != classIndex;
             bool isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
             bool isTextFormatCorrect = CheckCourseTextFormat(changedCourseInfo);
             bool isCourseHourMatch = CheckCourseHourMatch(changedCourseInfo);
 
-            Console.WriteLine(isDataChanged.ToString() + " " + isTextFormatCorrect.ToString() + " " + isCourseHourMatch.ToString());
-            return isDataChanged && isTextFormatCorrect && isCourseHourMatch;
+            return (isClassChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
         }
 
         // check if course data is changed
