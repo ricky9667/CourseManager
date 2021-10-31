@@ -355,7 +355,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/31 16:01:17.708</sourceFile>
+      <sourceFile>2021/10/31 16:13:29.904</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -364,8 +364,8 @@
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
         <context>Literal constants(字面常數)-14</context>
         <line>163</line>
-        <index>5438</index>
-        <endIndex>5439</endIndex>
+        <index>5411</index>
+        <endIndex>5412</endIndex>
         <startLine>163</startLine>
         <startColumn>88</startColumn>
         <endLine>163</endLine>
@@ -375,8 +375,8 @@
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
         <context>Literal constants(字面常數)-15</context>
         <line>163</line>
-        <index>5442</index>
-        <endIndex>5443</endIndex>
+        <index>5415</index>
+        <endIndex>5416</endIndex>
         <startLine>163</startLine>
         <startColumn>92</startColumn>
         <endLine>163</endLine>
@@ -386,8 +386,8 @@
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
         <context>Literal constants(字面常數)-16</context>
         <line>163</line>
-        <index>5446</index>
-        <endIndex>5447</endIndex>
+        <index>5419</index>
+        <endIndex>5420</endIndex>
         <startLine>163</startLine>
         <startColumn>96</startColumn>
         <endLine>163</endLine>
@@ -397,8 +397,8 @@
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
         <context>Literal constants(字面常數)-19</context>
         <line>163</line>
-        <index>5450</index>
-        <endIndex>5451</endIndex>
+        <index>5423</index>
+        <endIndex>5424</endIndex>
         <startLine>163</startLine>
         <startColumn>100</startColumn>
         <endLine>163</endLine>
@@ -408,8 +408,8 @@
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
         <context>Literal constants(字面常數)-21</context>
         <line>163</line>
-        <index>5454</index>
-        <endIndex>5455</endIndex>
+        <index>5427</index>
+        <endIndex>5428</endIndex>
         <startLine>163</startLine>
         <startColumn>104</startColumn>
         <endLine>163</endLine>
@@ -419,8 +419,8 @@
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LiteralConstants" ruleCheckId="LC0001">
         <context>Literal constants(字面常數)-22</context>
         <line>163</line>
-        <index>5458</index>
-        <endIndex>5459</endIndex>
+        <index>5431</index>
+        <endIndex>5432</endIndex>
         <startLine>163</startLine>
         <startColumn>108</startColumn>
         <endLine>163</endLine>
@@ -433,7 +433,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/31 15:11:41.543</sourceFile>
+      <sourceFile>2021/10/31 16:35:58.983</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -466,7 +466,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/31 15:34:04.904</sourceFile>
+      <sourceFile>2021/10/31 16:20:12.201</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>
@@ -479,27 +479,27 @@
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LongMethod" ruleCheckId="LM0001">
         <context>Long method(過長函式)</context>
-        <line>130</line>
+        <line>129</line>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LongMethod" ruleCheckId="LM0001">
         <context>Long method(過長函式)</context>
-        <line>156</line>
+        <line>155</line>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LongMethod" ruleCheckId="LM0001">
         <context>Long method(過長函式)</context>
-        <line>180</line>
+        <line>179</line>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="LongMethod" ruleCheckId="LM0001">
         <context>Long method(過長函式)</context>
-        <line>231</line>
+        <line>228</line>
         <warning>False</warning>
       </violation>
       <violation namespace="KellyPalRules.KellyPalAnalyzer" rule="Method2" ruleCheckId="MT0002">
         <context>ICS(函式-2)</context>
-        <line>258</line>
+        <line>253</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -519,7 +519,7 @@
     <timestamps>
       <styleCop>2021/10/02 14:55:23.670</styleCop>
       <settingsFile>0001/01/01 00:00:00.000</settingsFile>
-      <sourceFile>2021/10/31 16:03:27.378</sourceFile>
+      <sourceFile>2021/10/31 16:41:30.258</sourceFile>
       <parser>2021/10/02 14:55:23.670</parser>
       <KellyPalRules.KellyPalAnalyzer>2021/10/02 14:55:23.670</KellyPalRules.KellyPalAnalyzer>
       <KellyPalRules.KellyPalAnalyzer.FilesHashCode>0</KellyPalRules.KellyPalAnalyzer.FilesHashCode>

@@ -24,13 +24,12 @@ namespace CourseManager
         // load select course form
         private void CourseSelectingFormLoad(object sender, EventArgs e)
         {
-            List<CourseTabPageInfo> courseTabPageInfos = _viewModel.GetCourseTabPageInfos();
-            int tabCount = courseTabPageInfos.Count;
-            for (int index = 0; index < tabCount; index++)
+            int index = 0;
+            foreach (CourseTabPageInfo tabPageInfo in _viewModel.CourseTabPageInfos)
             {
-                CourseTabPageInfo tabPageInfo = courseTabPageInfos[index];
-                _courseTabControl.Controls[index].Name = courseTabPageInfos[index].TabName;
-                _courseTabControl.Controls[index].Text = courseTabPageInfos[index].TabText;
+                _courseTabControl.Controls[index].Name = tabPageInfo.TabName;
+                _courseTabControl.Controls[index].Text = tabPageInfo.TabText;
+                index++;
             }
 
             LoadCourseDataGridView();

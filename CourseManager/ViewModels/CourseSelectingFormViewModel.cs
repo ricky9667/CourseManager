@@ -115,6 +115,14 @@ namespace CourseManager
             }
         }
 
+        public List<CourseTabPageInfo> CourseTabPageInfos
+        {
+            get
+            {
+                return _model.CourseTabPageInfos;
+            }
+        }
+
         // notify observer on data changed
         public void NotifyObserver()
         {
@@ -122,12 +130,6 @@ namespace CourseManager
             {
                 _viewModelChanged();
             }
-        }
-
-        // get tab page infos
-        public List<CourseTabPageInfo> GetCourseTabPageInfos()
-        {
-            return _model.CourseTabPageInfos;
         }
 
         // update current tab course infos and current showing indexes

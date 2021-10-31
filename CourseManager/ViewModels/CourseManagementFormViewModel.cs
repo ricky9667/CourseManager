@@ -108,13 +108,13 @@ namespace CourseManager
         }
 
         // get single course info by tab index and course index
-        public CourseInfo GetCourseInfoByIndexPair(int tabIndex, int courseIndex)
+        public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
             return _model.GetCourseInfo(tabIndex, courseIndex);
         }
 
         // get single course info by list box index
-        public CourseInfo GetCourseInfoByListBoxIndex(int index)
+        public CourseInfo GetCurrentCourseInfo()
         {
             Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
             return _model.GetCourseInfo(course.Item1, course.Item2);

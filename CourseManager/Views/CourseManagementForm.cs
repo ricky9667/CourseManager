@@ -117,11 +117,10 @@ namespace CourseManager
             _timeDataGridView.ClearSelection();
             _courseGroupBox.Text = "編輯課程";
 
-            if (_viewModel.CurrentSelectedCourse != -1)
+            if (_courseListBox.SelectedIndex != -1)
             {
-                Tuple<int, int, string> course = _viewModel.CourseManagementList[_viewModel.CurrentSelectedCourse];
-                CourseInfo courseInfo = _viewModel.GetCourseInfoByIndexPair(course.Item1, course.Item2);
-                RenderCourseGroupBoxData(courseInfo, course.Item1);
+                CourseInfo courseInfo = _viewModel.GetCurrentCourseInfo();
+                RenderCourseGroupBoxData(courseInfo, _classComboBox.SelectedIndex);
                 _viewModel.CourseGroupBoxEnabled = true;
             }
         }
@@ -155,7 +154,7 @@ namespace CourseManager
         // save updated course info
         private void SaveButtonClick(object sender, EventArgs e)
         {
-            if (_viewModel.CurrentSelectedCourse == -1)
+            if (_courseListBox.SelectedIndex == -1)
             {
                 CourseInfo courseInfo = new CourseInfo();
                 courseInfo = SetNewCourseInfoData(courseInfo);
@@ -164,7 +163,7 @@ namespace CourseManager
             else
             {
                 Tuple<int, int, string> course = _viewModel.CourseManagementList[_viewModel.CurrentSelectedCourse];
-                CourseInfo courseInfo = _viewModel.GetCourseInfoByIndexPair(course.Item1, course.Item2);
+                CourseInfo courseInfo = _viewModel.GetCourseInfo(course.Item1, course.Item2);
                 courseInfo = SetNewCourseInfoData(courseInfo);
                 _viewModel.UpdateCourseInfo(course.Item1, course.Item2, courseInfo, _classComboBox.SelectedIndex);
             }
@@ -217,8 +216,6 @@ namespace CourseManager
         // check if course info can be saved and change button status
         private void CourseInfoDataChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("CourseInfoDataChanged: ");
-
             if (!_isUpdatingCourseGroupBox)
             {
                 CourseInfo showingCourseInfo = new CourseInfo();
@@ -230,8 +227,6 @@ namespace CourseManager
         // change checkbox cell value when clicked and change save button state
         private void TimeDataGridViewCellClicked(object sender, DataGridViewCellEventArgs e)
         {
-            Console.WriteLine("TimeDataGridViewCellClicked: ");
-
             int rowIndex = e.RowIndex;
             int columnIndex = e.ColumnIndex;
             if (rowIndex >= 0 && columnIndex > 0)
@@ -257,8 +252,6 @@ namespace CourseManager
         // check if course info can be saved and change button status
         private void HourComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("HourComboBoxSelectedIndexChanged: ");
-
             if (!_isUpdatingCourseGroupBox)
             {
                 CourseInfo showingCourseInfo = new CourseInfo();
@@ -270,8 +263,6 @@ namespace CourseManager
         // asdsd
         private void ClassComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("ClassComboBoxSelectedIndexChanged: ");
-
             if (!_isUpdatingCourseGroupBox)
             {
                 CourseInfo showingCourseInfo = new CourseInfo();
