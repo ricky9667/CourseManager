@@ -244,12 +244,34 @@ namespace CourseManager
             CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
             _courseInfosDictionary[tabIndex].RemoveAt(courseIndex);
             _courseInfosDictionary[newTabIndex].Add(courseInfo);
+            int newCourseIndex = _courseInfosDictionary[newTabIndex].IndexOf(courseInfo);
 
             bool isSelected = _isCourseSelected[tabIndex][courseIndex];
             _isCourseSelected[tabIndex].RemoveAt(courseIndex);
             _isCourseSelected[newTabIndex].Add(isSelected);
-            
+
+            if (isSelected)
+            {
+                AdjustSelectedIndexPairs(tabIndex, courseIndex, newTabIndex, newCourseIndex);
+            }
             NotifyObserver();
+        }
+
+        // adjust course indexes when course moved to another tab
+        private void AdjustSelectedIndexPairs(int tabIndex, int courseIndex, int newTabIndex, int newCourseIndex)
+        {
+            for (int i = 0; i < _selectedIndexPairs.Count; i++)
+            {
+                if (_selectedIndexPairs[i].Item1 == tabIndex && _selectedIndexPairs[i].Item2 == courseIndex)
+                {
+                    _selectedIndexPairs[i] = new Tuple<int, int>(newTabIndex, newCourseIndex);
+                }
+                else if (_selectedIndexPairs[i].Item1 == tabIndex && _selectedIndexPairs[i].Item2 > courseIndex)
+                {
+                    _selectedIndexPairs[i] = new Tuple<int, int>(tabIndex, _selectedIndexPairs[i].Item2 - 1);
+                }
+
+            }
         }
     }
 }
