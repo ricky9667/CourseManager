@@ -10,7 +10,7 @@ namespace CourseManager
         public CourseSelectionResultForm(CourseSelectionResultFormViewModel viewModel)
         {
             _viewModel = viewModel;
-            _viewModel.ViewModelChanged += LoadSelectedCourseDataGridView;
+            _viewModel._viewModelChanged += LoadSelectedCourseDataGridView;
             InitializeComponent();
         }
 

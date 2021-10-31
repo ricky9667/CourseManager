@@ -12,7 +12,7 @@ namespace CourseManager
         public CourseSelectingForm(CourseSelectingFormViewModel viewModel)
         {
             _viewModel = viewModel;
-            _viewModel.ViewModelChanged += LoadCourseDataGridView;
+            _viewModel._viewModelChanged += LoadCourseDataGridView;
 
             _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
             _courseSelectionResultForm.FormClosing += new FormClosingEventHandler(CourseSelectionResultFormClosing);
@@ -29,8 +29,8 @@ namespace CourseManager
             for (int index = 0; index < tabCount; index++)
             {
                 CourseTabPageInfo tabPageInfo = courseTabPageInfos[index];
-                _courseTabControl.Controls[index].Name = tabPageInfo.TabName;
-                _courseTabControl.Controls[index].Text = tabPageInfo.TabText;
+                _courseTabControl.Controls[index].Name = courseTabPageInfos[index].TabName;
+                _courseTabControl.Controls[index].Text = courseTabPageInfos[index].TabText;
             }
 
             LoadCourseDataGridView();

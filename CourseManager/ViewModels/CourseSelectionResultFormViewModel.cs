@@ -5,7 +5,7 @@ namespace CourseManager
 {
     public class CourseSelectionResultFormViewModel
     {
-        public event ViewModelChangedEventHandler ViewModelChanged;
+        public event ViewModelChangedEventHandler _viewModelChanged;
         public delegate void ViewModelChangedEventHandler();
 
         private readonly Model _model;
@@ -13,20 +13,26 @@ namespace CourseManager
         public CourseSelectionResultFormViewModel(Model model)
         {
             _model = model;
-            _model.ModelChanged += UpdateSelectedCourseInfos;
+            _model._modelChanged += UpdateSelectedCourseInfos;
             _selectedCourseInfos = new List<CourseInfo>();
             UpdateSelectedCourseInfos();
         }
 
         public List<CourseInfo> SelectedCourseInfos
         {
-            get => _selectedCourseInfos;
+            get
+            {
+                return _selectedCourseInfos;
+            }
         }
 
         // notify observer on data changed
         public void NotifyObserver()
         {
-            ViewModelChanged?.Invoke();
+            if (_viewModelChanged != null)
+            {
+                _viewModelChanged();
+            }
         }
 
         // update selected course infos

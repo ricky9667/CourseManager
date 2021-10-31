@@ -22,12 +22,15 @@ namespace CourseManager
             _addCourseButtonEnabled = true;
             _saveButtonEnabled = false;
             _currentSelectedCourse = -1;
-            _courseManagementList = GetCourseManagementList();
+            _courseManagementList = _model.GetCourseManagementList();
         }
 
         public bool CourseGroupBoxEnabled
         {
-            get => _courseGroupBoxEnabled;
+            get
+            {
+                return _courseGroupBoxEnabled;
+            }
             set
             {
                 _courseGroupBoxEnabled = value;
@@ -37,7 +40,10 @@ namespace CourseManager
 
         public bool AddCourseButtonEnabled
         {
-            get => _addCourseButtonEnabled;
+            get
+            {
+                return _addCourseButtonEnabled;
+            }
             set
             {
                 _addCourseButtonEnabled = value;
@@ -47,7 +53,10 @@ namespace CourseManager
 
         public bool SaveButtonEnabled
         {
-            get => _saveButtonEnabled;
+            get
+            {
+                return _saveButtonEnabled;
+            }
             set
             {
                 _saveButtonEnabled = value;
@@ -57,7 +66,10 @@ namespace CourseManager
 
         public int CurrentSelectedCourse
         {
-            get => _currentSelectedCourse;
+            get
+            {
+                return _currentSelectedCourse;
+            }
             set
             {
                 _currentSelectedCourse = value;
@@ -67,7 +79,10 @@ namespace CourseManager
 
         public List<Tuple<int, int, string>> CourseManagementList
         {
-            get => _courseManagementList;
+            get
+            {
+                return _courseManagementList;
+            }
         }
 
         public List<string> ClassNames
@@ -86,31 +101,23 @@ namespace CourseManager
         // data binding update data on change
         private void NotifyPropertyChanged(string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        // get and classify course management list
-        private List<Tuple<int, int, string>> GetCourseManagementList()
-        {
-            List<Tuple<int, int, string>> courseManagementList = new List<Tuple<int, int, string>>(); // tabIndex, courseIndex, courseName
-            int tabCount = _model.CourseTabPageInfos.Count;
-            for (int tabIndex = 0; tabIndex < tabCount; tabIndex++)
+            if (PropertyChanged != null)
             {
-                List<CourseInfo> courseInfos = _model.GetCourseInfos(tabIndex);
-                int courseCount = courseInfos.Count;
-                for (int courseIndex = 0; courseIndex < courseCount; courseIndex++)
-                {
-                    courseManagementList.Add(new Tuple<int, int, string>(tabIndex, courseIndex, courseInfos[courseIndex].Name));
-                }
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-
-            return courseManagementList;
         }
 
-        // get course info
-        public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
+        // get single course info by tab index and course index
+        public CourseInfo GetCourseInfoByIndexPair(int tabIndex, int courseIndex)
         {
             return _model.GetCourseInfo(tabIndex, courseIndex);
+        }
+
+        // get single course info by list box index
+        public CourseInfo GetCourseInfoByListBoxIndex(int index)
+        {
+            Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
+            return _model.GetCourseInfo(course.Item1, course.Item2);
         }
 
         // update course info
@@ -121,14 +128,14 @@ namespace CourseManager
             {
                 _model.MoveCourseInfo(tabIndex, courseIndex, newTabIndex);
             }
-            _courseManagementList = GetCourseManagementList();
+            _courseManagementList = _model.GetCourseManagementList();
         }
 
         // add course info to model
         public void AddNewCourse(CourseInfo newCourseInfo, int newTabIndex)
         {
             _model.AddNewCourseInfo(newTabIndex, newCourseInfo);
-            _courseManagementList = GetCourseManagementList();
+            _courseManagementList = _model.GetCourseManagementList();
         }
 
         // handle save button state
@@ -139,8 +146,8 @@ namespace CourseManager
 
             bool isClassChanged = course.Item1 != classIndex;
             bool isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
-            bool isTextFormatCorrect = CheckCourseTextFormat(changedCourseInfo);
-            bool isCourseHourMatch = CheckCourseHourMatch(changedCourseInfo);
+            bool isTextFormatCorrect = changedCourseInfo.CheckCourseFormat();
+            bool isCourseHourMatch = changedCourseInfo.CheckCourseHourMatch();
 
             return (isClassChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
         }
@@ -153,59 +160,7 @@ namespace CourseManager
                 return true; 
             }
 
-            int[] ignoredIndexes = new int[] { 14, 15, 16, 19, 21, 22 };
-            string[] courseInfoStrings = courseInfo.GetCourseInfoStrings();
-            string[] changedCourseInfoStrings = changedCourseInfo.GetCourseInfoStrings();
-            for (int index = 0; index < courseInfoStrings.Length; index++)
-            {
-                if (Array.Exists(ignoredIndexes, item => item == index))
-                {
-                    continue;
-                }
-                if (courseInfoStrings[index] != changedCourseInfoStrings[index])
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        // check particular textbox has correct format
-        private bool CheckCourseTextFormat(CourseInfo changedCourseInfo)
-        {
-            if (changedCourseInfo.Number == "" || changedCourseInfo.Name == "" || changedCourseInfo.Stage == "" || changedCourseInfo.Credit == "" || changedCourseInfo.Teacher == "")
-            {
-                return false;
-            }
-
-            bool numberIsNumeric = int.TryParse(changedCourseInfo.Number, out _);
-            bool stageIsNumeric = int.TryParse(changedCourseInfo.Stage, out _);
-            bool creditIsNumeric = double.TryParse(changedCourseInfo.Credit, out _);
-
-            if (!numberIsNumeric || !stageIsNumeric || !creditIsNumeric)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        // check class time matchs course hours
-        private bool CheckCourseHourMatch(CourseInfo changedCourseInfo)
-        {
-            const char SEPARATOR = ' ';
-            int hourCount = 0;
-            
-            foreach (string classTime in changedCourseInfo.GetCourseClassTimeStrings())
-            {
-                if (classTime.Trim() != "")
-                {
-                    hourCount += classTime.Split(SEPARATOR).Length;
-                }
-            }
-
-            return hourCount.ToString() == changedCourseInfo.Hour;
+            return !courseInfo.CheckPropertiesIdentical(changedCourseInfo, new int[] { 14, 15, 16, 19, 21, 22 });
         }
     }
 }

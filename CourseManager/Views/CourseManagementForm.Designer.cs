@@ -34,34 +34,34 @@ namespace CourseManager
             this._saveButton = new System.Windows.Forms.Button();
             this._courseGroupBox = new System.Windows.Forms.GroupBox();
             this._timeDataGridView = new System.Windows.Forms.DataGridView();
-            this.classTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sundayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.mondayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.tuesdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.wednesdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.thursdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.fridayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.saturdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this._classTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._sundayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this._mondayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this._tuesdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this._wednesdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this._thursdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this._fridayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this._saturdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this._classComboBox = new System.Windows.Forms.ComboBox();
             this._classLabel = new System.Windows.Forms.Label();
             this._hourComboBox = new System.Windows.Forms.ComboBox();
             this._hourLabel = new System.Windows.Forms.Label();
-            this._noteTextbox = new System.Windows.Forms.TextBox();
+            this._noteTextBox = new System.Windows.Forms.TextBox();
             this._noteLabel = new System.Windows.Forms.Label();
-            this._languageTextbox = new System.Windows.Forms.TextBox();
+            this._languageTextBox = new System.Windows.Forms.TextBox();
             this._languageLabel = new System.Windows.Forms.Label();
-            this._teachingAssistantTextbox = new System.Windows.Forms.TextBox();
+            this._teachingAssistantTextBox = new System.Windows.Forms.TextBox();
             this._teachingAssistantLabel = new System.Windows.Forms.Label();
             this._courseTypeComboBox = new System.Windows.Forms.ComboBox();
             this._courseTypeLabel = new System.Windows.Forms.Label();
-            this._teacherTextbox = new System.Windows.Forms.TextBox();
+            this._teacherTextBox = new System.Windows.Forms.TextBox();
             this._teacherLabel = new System.Windows.Forms.Label();
-            this._creditTextbox = new System.Windows.Forms.TextBox();
+            this._creditTextBox = new System.Windows.Forms.TextBox();
             this._creditLabel = new System.Windows.Forms.Label();
-            this._stageTextbox = new System.Windows.Forms.TextBox();
+            this._stageTextBox = new System.Windows.Forms.TextBox();
             this._stageLabel = new System.Windows.Forms.Label();
-            this._courseNameTextbox = new System.Windows.Forms.TextBox();
-            this._courseNumberTextbox = new System.Windows.Forms.TextBox();
+            this._courseNameTextBox = new System.Windows.Forms.TextBox();
+            this._courseNumberTextBox = new System.Windows.Forms.TextBox();
             this._courseNameLabel = new System.Windows.Forms.Label();
             this._courseNumberLabel = new System.Windows.Forms.Label();
             this._startCourseSettingsComboBox = new System.Windows.Forms.ComboBox();
@@ -117,22 +117,22 @@ namespace CourseManager
             this._courseGroupBox.Controls.Add(this._classLabel);
             this._courseGroupBox.Controls.Add(this._hourComboBox);
             this._courseGroupBox.Controls.Add(this._hourLabel);
-            this._courseGroupBox.Controls.Add(this._noteTextbox);
+            this._courseGroupBox.Controls.Add(this._noteTextBox);
             this._courseGroupBox.Controls.Add(this._noteLabel);
-            this._courseGroupBox.Controls.Add(this._languageTextbox);
+            this._courseGroupBox.Controls.Add(this._languageTextBox);
             this._courseGroupBox.Controls.Add(this._languageLabel);
-            this._courseGroupBox.Controls.Add(this._teachingAssistantTextbox);
+            this._courseGroupBox.Controls.Add(this._teachingAssistantTextBox);
             this._courseGroupBox.Controls.Add(this._teachingAssistantLabel);
             this._courseGroupBox.Controls.Add(this._courseTypeComboBox);
             this._courseGroupBox.Controls.Add(this._courseTypeLabel);
-            this._courseGroupBox.Controls.Add(this._teacherTextbox);
+            this._courseGroupBox.Controls.Add(this._teacherTextBox);
             this._courseGroupBox.Controls.Add(this._teacherLabel);
-            this._courseGroupBox.Controls.Add(this._creditTextbox);
+            this._courseGroupBox.Controls.Add(this._creditTextBox);
             this._courseGroupBox.Controls.Add(this._creditLabel);
-            this._courseGroupBox.Controls.Add(this._stageTextbox);
+            this._courseGroupBox.Controls.Add(this._stageTextBox);
             this._courseGroupBox.Controls.Add(this._stageLabel);
-            this._courseGroupBox.Controls.Add(this._courseNameTextbox);
-            this._courseGroupBox.Controls.Add(this._courseNumberTextbox);
+            this._courseGroupBox.Controls.Add(this._courseNameTextBox);
+            this._courseGroupBox.Controls.Add(this._courseNumberTextBox);
             this._courseGroupBox.Controls.Add(this._courseNameLabel);
             this._courseGroupBox.Controls.Add(this._courseNumberLabel);
             this._courseGroupBox.Controls.Add(this._startCourseSettingsComboBox);
@@ -152,14 +152,14 @@ namespace CourseManager
             this._timeDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this._timeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this._timeDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.classTimeColumn,
-            this.sundayColumn,
-            this.mondayColumn,
-            this.tuesdayColumn,
-            this.wednesdayColumn,
-            this.thursdayColumn,
-            this.fridayColumn,
-            this.saturdayColumn});
+            this._classTimeColumn,
+            this._sundayColumn,
+            this._mondayColumn,
+            this._tuesdayColumn,
+            this._wednesdayColumn,
+            this._thursdayColumn,
+            this._fridayColumn,
+            this._saturdayColumn});
             this._timeDataGridView.Location = new System.Drawing.Point(37, 360);
             this._timeDataGridView.Name = "_timeDataGridView";
             this._timeDataGridView.ReadOnly = true;
@@ -172,59 +172,59 @@ namespace CourseManager
             // 
             // classTimeColumn
             // 
-            this.classTimeColumn.HeaderText = "節數";
-            this.classTimeColumn.MinimumWidth = 10;
-            this.classTimeColumn.Name = "classTimeColumn";
-            this.classTimeColumn.ReadOnly = true;
+            this._classTimeColumn.HeaderText = "節數";
+            this._classTimeColumn.MinimumWidth = 10;
+            this._classTimeColumn.Name = "classTimeColumn";
+            this._classTimeColumn.ReadOnly = true;
             // 
             // sundayColumn
             // 
-            this.sundayColumn.HeaderText = "日";
-            this.sundayColumn.MinimumWidth = 10;
-            this.sundayColumn.Name = "sundayColumn";
-            this.sundayColumn.ReadOnly = true;
+            this._sundayColumn.HeaderText = "日";
+            this._sundayColumn.MinimumWidth = 10;
+            this._sundayColumn.Name = "sundayColumn";
+            this._sundayColumn.ReadOnly = true;
             // 
             // mondayColumn
             // 
-            this.mondayColumn.HeaderText = "一";
-            this.mondayColumn.MinimumWidth = 10;
-            this.mondayColumn.Name = "mondayColumn";
-            this.mondayColumn.ReadOnly = true;
+            this._mondayColumn.HeaderText = "一";
+            this._mondayColumn.MinimumWidth = 10;
+            this._mondayColumn.Name = "mondayColumn";
+            this._mondayColumn.ReadOnly = true;
             // 
             // tuesdayColumn
             // 
-            this.tuesdayColumn.HeaderText = "二";
-            this.tuesdayColumn.MinimumWidth = 10;
-            this.tuesdayColumn.Name = "tuesdayColumn";
-            this.tuesdayColumn.ReadOnly = true;
+            this._tuesdayColumn.HeaderText = "二";
+            this._tuesdayColumn.MinimumWidth = 10;
+            this._tuesdayColumn.Name = "tuesdayColumn";
+            this._tuesdayColumn.ReadOnly = true;
             // 
             // wednesdayColumn
             // 
-            this.wednesdayColumn.HeaderText = "三";
-            this.wednesdayColumn.MinimumWidth = 10;
-            this.wednesdayColumn.Name = "wednesdayColumn";
-            this.wednesdayColumn.ReadOnly = true;
+            this._wednesdayColumn.HeaderText = "三";
+            this._wednesdayColumn.MinimumWidth = 10;
+            this._wednesdayColumn.Name = "wednesdayColumn";
+            this._wednesdayColumn.ReadOnly = true;
             // 
             // thursdayColumn
             // 
-            this.thursdayColumn.HeaderText = "四";
-            this.thursdayColumn.MinimumWidth = 10;
-            this.thursdayColumn.Name = "thursdayColumn";
-            this.thursdayColumn.ReadOnly = true;
+            this._thursdayColumn.HeaderText = "四";
+            this._thursdayColumn.MinimumWidth = 10;
+            this._thursdayColumn.Name = "thursdayColumn";
+            this._thursdayColumn.ReadOnly = true;
             // 
             // fridayColumn
             // 
-            this.fridayColumn.HeaderText = "五";
-            this.fridayColumn.MinimumWidth = 10;
-            this.fridayColumn.Name = "fridayColumn";
-            this.fridayColumn.ReadOnly = true;
+            this._fridayColumn.HeaderText = "五";
+            this._fridayColumn.MinimumWidth = 10;
+            this._fridayColumn.Name = "fridayColumn";
+            this._fridayColumn.ReadOnly = true;
             // 
             // saturdayColumn
             // 
-            this.saturdayColumn.HeaderText = "六";
-            this.saturdayColumn.MinimumWidth = 10;
-            this.saturdayColumn.Name = "saturdayColumn";
-            this.saturdayColumn.ReadOnly = true;
+            this._saturdayColumn.HeaderText = "六";
+            this._saturdayColumn.MinimumWidth = 10;
+            this._saturdayColumn.Name = "saturdayColumn";
+            this._saturdayColumn.ReadOnly = true;
             // 
             // _classComboBox
             // 
@@ -270,10 +270,10 @@ namespace CourseManager
             // 
             // _noteTextbox
             // 
-            this._noteTextbox.Location = new System.Drawing.Point(118, 227);
-            this._noteTextbox.Name = "_noteTextbox";
-            this._noteTextbox.Size = new System.Drawing.Size(926, 36);
-            this._noteTextbox.TabIndex = 18;
+            this._noteTextBox.Location = new System.Drawing.Point(118, 227);
+            this._noteTextBox.Name = "_noteTextbox";
+            this._noteTextBox.Size = new System.Drawing.Size(926, 36);
+            this._noteTextBox.TabIndex = 18;
             // 
             // _noteLabel
             // 
@@ -286,10 +286,10 @@ namespace CourseManager
             // 
             // _languageTextbox
             // 
-            this._languageTextbox.Location = new System.Drawing.Point(826, 168);
-            this._languageTextbox.Name = "_languageTextbox";
-            this._languageTextbox.Size = new System.Drawing.Size(458, 36);
-            this._languageTextbox.TabIndex = 16;
+            this._languageTextBox.Location = new System.Drawing.Point(826, 168);
+            this._languageTextBox.Name = "_languageTextbox";
+            this._languageTextBox.Size = new System.Drawing.Size(458, 36);
+            this._languageTextBox.TabIndex = 16;
             // 
             // _languageLabel
             // 
@@ -302,10 +302,10 @@ namespace CourseManager
             // 
             // _teachingAssistantTextbox
             // 
-            this._teachingAssistantTextbox.Location = new System.Drawing.Point(171, 165);
-            this._teachingAssistantTextbox.Name = "_teachingAssistantTextbox";
-            this._teachingAssistantTextbox.Size = new System.Drawing.Size(450, 36);
-            this._teachingAssistantTextbox.TabIndex = 14;
+            this._teachingAssistantTextBox.Location = new System.Drawing.Point(171, 165);
+            this._teachingAssistantTextBox.Name = "_teachingAssistantTextbox";
+            this._teachingAssistantTextBox.Size = new System.Drawing.Size(450, 36);
+            this._teachingAssistantTextBox.TabIndex = 14;
             // 
             // _teachingAssistantLabel
             // 
@@ -343,11 +343,11 @@ namespace CourseManager
             // 
             // _teacherTextbox
             // 
-            this._teacherTextbox.Location = new System.Drawing.Point(765, 101);
-            this._teacherTextbox.Name = "_teacherTextbox";
-            this._teacherTextbox.Size = new System.Drawing.Size(205, 36);
-            this._teacherTextbox.TabIndex = 10;
-            this._teacherTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
+            this._teacherTextBox.Location = new System.Drawing.Point(765, 101);
+            this._teacherTextBox.Name = "_teacherTextbox";
+            this._teacherTextBox.Size = new System.Drawing.Size(205, 36);
+            this._teacherTextBox.TabIndex = 10;
+            this._teacherTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _teacherLabel
             // 
@@ -360,11 +360,11 @@ namespace CourseManager
             // 
             // _creditTextbox
             // 
-            this._creditTextbox.Location = new System.Drawing.Point(417, 101);
-            this._creditTextbox.Name = "_creditTextbox";
-            this._creditTextbox.Size = new System.Drawing.Size(173, 36);
-            this._creditTextbox.TabIndex = 8;
-            this._creditTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
+            this._creditTextBox.Location = new System.Drawing.Point(417, 101);
+            this._creditTextBox.Name = "_creditTextbox";
+            this._creditTextBox.Size = new System.Drawing.Size(173, 36);
+            this._creditTextBox.TabIndex = 8;
+            this._creditTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _creditLabel
             // 
@@ -377,11 +377,11 @@ namespace CourseManager
             // 
             // _stageTextbox
             // 
-            this._stageTextbox.Location = new System.Drawing.Point(142, 101);
-            this._stageTextbox.Name = "_stageTextbox";
-            this._stageTextbox.Size = new System.Drawing.Size(134, 36);
-            this._stageTextbox.TabIndex = 6;
-            this._stageTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
+            this._stageTextBox.Location = new System.Drawing.Point(142, 101);
+            this._stageTextBox.Name = "_stageTextbox";
+            this._stageTextBox.Size = new System.Drawing.Size(134, 36);
+            this._stageTextBox.TabIndex = 6;
+            this._stageTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _stageLabel
             // 
@@ -394,19 +394,19 @@ namespace CourseManager
             // 
             // _courseNameTextbox
             // 
-            this._courseNameTextbox.Location = new System.Drawing.Point(914, 40);
-            this._courseNameTextbox.Name = "_courseNameTextbox";
-            this._courseNameTextbox.Size = new System.Drawing.Size(370, 36);
-            this._courseNameTextbox.TabIndex = 4;
-            this._courseNameTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
+            this._courseNameTextBox.Location = new System.Drawing.Point(914, 40);
+            this._courseNameTextBox.Name = "_courseNameTextbox";
+            this._courseNameTextBox.Size = new System.Drawing.Size(370, 36);
+            this._courseNameTextBox.TabIndex = 4;
+            this._courseNameTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _courseNumberTextbox
             // 
-            this._courseNumberTextbox.Location = new System.Drawing.Point(417, 41);
-            this._courseNumberTextbox.Name = "_courseNumberTextbox";
-            this._courseNumberTextbox.Size = new System.Drawing.Size(280, 36);
-            this._courseNumberTextbox.TabIndex = 3;
-            this._courseNumberTextbox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
+            this._courseNumberTextBox.Location = new System.Drawing.Point(417, 41);
+            this._courseNumberTextBox.Name = "_courseNumberTextbox";
+            this._courseNumberTextBox.Size = new System.Drawing.Size(280, 36);
+            this._courseNumberTextBox.TabIndex = 3;
+            this._courseNumberTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _courseNameLabel
             // 
@@ -493,23 +493,23 @@ namespace CourseManager
 
         private System.Windows.Forms.ComboBox _startCourseSettingsComboBox;
         private System.Windows.Forms.Label _courseNumberLabel;
-        private System.Windows.Forms.TextBox _courseNameTextbox;
+        private System.Windows.Forms.TextBox _courseNameTextBox;
         private System.Windows.Forms.Label _courseNameLabel;
-        private System.Windows.Forms.TextBox _courseNumberTextbox;
+        private System.Windows.Forms.TextBox _courseNumberTextBox;
         private System.Windows.Forms.Label _stageLabel;
-        private System.Windows.Forms.TextBox _stageTextbox;
+        private System.Windows.Forms.TextBox _stageTextBox;
         private System.Windows.Forms.Label _creditLabel;
-        private System.Windows.Forms.TextBox _creditTextbox;
+        private System.Windows.Forms.TextBox _creditTextBox;
         private System.Windows.Forms.Label _teacherLabel;
-        private System.Windows.Forms.TextBox _teacherTextbox;
+        private System.Windows.Forms.TextBox _teacherTextBox;
         private System.Windows.Forms.Label _courseTypeLabel;
         private System.Windows.Forms.ComboBox _courseTypeComboBox;
         private System.Windows.Forms.Label _teachingAssistantLabel;
-        private System.Windows.Forms.TextBox _teachingAssistantTextbox;
+        private System.Windows.Forms.TextBox _teachingAssistantTextBox;
         private System.Windows.Forms.Label _languageLabel;
-        private System.Windows.Forms.TextBox _languageTextbox;
+        private System.Windows.Forms.TextBox _languageTextBox;
         private System.Windows.Forms.Label _noteLabel;
-        private System.Windows.Forms.TextBox _noteTextbox;
+        private System.Windows.Forms.TextBox _noteTextBox;
         private System.Windows.Forms.Label _hourLabel;
         private System.Windows.Forms.ComboBox _hourComboBox;
         private System.Windows.Forms.Label _classLabel;
@@ -530,13 +530,5 @@ namespace CourseManager
         private System.Windows.Forms.DataGridViewCheckBoxColumn _thursdayColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn _fridayColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn _saturdayColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn classTimeColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn sundayColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn mondayColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn tuesdayColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn wednesdayColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn thursdayColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn fridayColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn saturdayColumn;
     }
 }

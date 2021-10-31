@@ -5,7 +5,7 @@ namespace CourseManager
 {
     public class Model
     {
-        public event ModelChangedEventHandler ModelChanged;
+        public event ModelChangedEventHandler _modelChanged;
         public delegate void ModelChangedEventHandler();
 
         private readonly List<CourseTabPageInfo> _courseTabPageInfos;
@@ -27,13 +27,19 @@ namespace CourseManager
 
         public List<CourseTabPageInfo> CourseTabPageInfos
         {
-            get => _courseTabPageInfos;
+            get
+            {
+                return _courseTabPageInfos;
+            }
         }
 
         // notify observers when data changed
         public void NotifyObserver()
         {
-            ModelChanged?.Invoke();
+            if (_modelChanged != null)
+            {
+                _modelChanged();
+            }
         }
 
         // setup hard data
@@ -210,6 +216,27 @@ namespace CourseManager
                 }
             }
             return message;
+        }
+
+
+        // get course management list
+        public List<Tuple<int, int, string>> GetCourseManagementList()
+        {
+            List<Tuple<int, int, string>> courseManagementList = new List<Tuple<int, int, string>>(); // tabIndex, courseIndex, courseName
+            for (int tabIndex = 0; tabIndex < _courseTabPageInfos.Count; tabIndex++)
+            {
+                if (!_courseInfosDictionary.ContainsKey(tabIndex))
+                {
+                    LoadCourses(tabIndex);
+                }
+                List<CourseInfo> courseInfos = _courseInfosDictionary[tabIndex];
+                for (int courseIndex = 0; courseIndex < courseInfos.Count; courseIndex++)
+                {
+                    courseManagementList.Add(new Tuple<int, int, string>(tabIndex, courseIndex, courseInfos[courseIndex].Name));
+                }
+            }
+
+            return courseManagementList;
         }
 
         // move course info to new list in dictionary

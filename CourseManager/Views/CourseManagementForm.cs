@@ -78,7 +78,7 @@ namespace CourseManager
         }
 
         // reset datagridview checkbox to false
-        private void ResetTimeDataGridViewCheckboxes()
+        private void ResetTimeDataGridViewCheckBoxes()
         {
             foreach (DataGridViewRow row in _timeDataGridView.Rows)
             {
@@ -93,19 +93,19 @@ namespace CourseManager
         private void ResetGroupBox()
         {
             _startCourseSettingsComboBox.SelectedIndex = 0;
-            _courseNumberTextbox.Text = "";
-            _courseNameTextbox.Text = "";
-            _stageTextbox.Text = "";
-            _creditTextbox.Text = "";
-            _teacherTextbox.Text = "";
+            _courseNumberTextBox.Text = "";
+            _courseNameTextBox.Text = "";
+            _stageTextBox.Text = "";
+            _creditTextBox.Text = "";
+            _teacherTextBox.Text = "";
             _courseTypeComboBox.SelectedIndex = 0;
-            _teachingAssistantTextbox.Text = "";
-            _languageTextbox.Text = "";
-            _noteTextbox.Text = "";
+            _teachingAssistantTextBox.Text = "";
+            _languageTextBox.Text = "";
+            _noteTextBox.Text = "";
             _hourComboBox.SelectedIndex = 0;
             _classComboBox.SelectedIndex = 0;
 
-            ResetTimeDataGridViewCheckboxes();
+            ResetTimeDataGridViewCheckBoxes();
         }
 
         // change group box data when select index in list box
@@ -120,7 +120,7 @@ namespace CourseManager
             if (_viewModel.CurrentSelectedCourse != -1)
             {
                 Tuple<int, int, string> course = _viewModel.CourseManagementList[_viewModel.CurrentSelectedCourse];
-                CourseInfo courseInfo = _viewModel.GetCourseInfo(course.Item1, course.Item2);
+                CourseInfo courseInfo = _viewModel.GetCourseInfoByIndexPair(course.Item1, course.Item2);
                 RenderCourseGroupBoxData(courseInfo, course.Item1);
                 _viewModel.CourseGroupBoxEnabled = true;
             }
@@ -131,19 +131,19 @@ namespace CourseManager
         {
             _isUpdatingCourseGroupBox = true;
             _startCourseSettingsComboBox.SelectedIndex = 0;
-            _courseNumberTextbox.Text = courseInfo.Number;
-            _courseNameTextbox.Text = courseInfo.Name;
-            _stageTextbox.Text = courseInfo.Stage;
-            _creditTextbox.Text = courseInfo.Credit;
-            _teacherTextbox.Text = courseInfo.Teacher;
+            _courseNumberTextBox.Text = courseInfo.Number;
+            _courseNameTextBox.Text = courseInfo.Name;
+            _stageTextBox.Text = courseInfo.Stage;
+            _creditTextBox.Text = courseInfo.Credit;
+            _teacherTextBox.Text = courseInfo.Teacher;
             _courseTypeComboBox.SelectedIndex = courseInfo.CourseTypeIndex;
-            _teachingAssistantTextbox.Text = courseInfo.TeachingAssistant;
-            _languageTextbox.Text = courseInfo.Language;
-            _noteTextbox.Text = courseInfo.Note;
+            _teachingAssistantTextBox.Text = courseInfo.TeachingAssistant;
+            _languageTextBox.Text = courseInfo.Language;
+            _noteTextBox.Text = courseInfo.Note;
             _hourComboBox.SelectedIndex = courseInfo.HourIndex;
             _classComboBox.SelectedIndex = classIndex;
 
-            ResetTimeDataGridViewCheckboxes();
+            ResetTimeDataGridViewCheckBoxes();
             List<Tuple<int, int>> classTimes = courseInfo.GetCourseClassTimes();
             foreach (Tuple<int, int> classTime in classTimes)
             {
@@ -164,7 +164,7 @@ namespace CourseManager
             else
             {
                 Tuple<int, int, string> course = _viewModel.CourseManagementList[_viewModel.CurrentSelectedCourse];
-                CourseInfo courseInfo = _viewModel.GetCourseInfo(course.Item1, course.Item2);
+                CourseInfo courseInfo = _viewModel.GetCourseInfoByIndexPair(course.Item1, course.Item2);
                 courseInfo = SetNewCourseInfoData(courseInfo);
                 _viewModel.UpdateCourseInfo(course.Item1, course.Item2, courseInfo, _classComboBox.SelectedIndex);
             }
@@ -179,15 +179,15 @@ namespace CourseManager
         // update data to course info
         private CourseInfo SetNewCourseInfoData(CourseInfo courseInfo)
         {
-            courseInfo.Number = _courseNumberTextbox.Text.Trim();
-            courseInfo.Name = _courseNameTextbox.Text.Trim();
-            courseInfo.Stage = _stageTextbox.Text.Trim();
-            courseInfo.Credit = _creditTextbox.Text.Trim();
-            courseInfo.Teacher = _teacherTextbox.Text.Trim();
+            courseInfo.Number = _courseNumberTextBox.Text.Trim();
+            courseInfo.Name = _courseNameTextBox.Text.Trim();
+            courseInfo.Stage = _stageTextBox.Text.Trim();
+            courseInfo.Credit = _creditTextBox.Text.Trim();
+            courseInfo.Teacher = _teacherTextBox.Text.Trim();
             courseInfo.CourseType = _courseTypeComboBox.SelectedIndex == -1 ? "" : _courseTypeComboBox.SelectedItem.ToString();
-            courseInfo.TeachingAssistant = _teachingAssistantTextbox.Text.Trim();
-            courseInfo.Language = _languageTextbox.Text.Trim();
-            courseInfo.Note = _noteTextbox.Text.Trim();
+            courseInfo.TeachingAssistant = _teachingAssistantTextBox.Text.Trim();
+            courseInfo.Language = _languageTextBox.Text.Trim();
+            courseInfo.Note = _noteTextBox.Text.Trim();
             courseInfo.Hour = _hourComboBox.SelectedIndex == -1 ? "" : _hourComboBox.SelectedItem.ToString();
             courseInfo.ClassTime0 = GetDayClassTime(0);
             courseInfo.ClassTime1 = GetDayClassTime(1);

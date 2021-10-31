@@ -7,7 +7,7 @@ namespace CourseManager
     public class CourseSelectingFormViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public event ViewModelChangedEventHandler ViewModelChanged;
+        public event ViewModelChangedEventHandler _viewModelChanged;
         public delegate void ViewModelChangedEventHandler();
 
         private readonly Model _model;
@@ -20,7 +20,7 @@ namespace CourseManager
         public CourseSelectingFormViewModel(Model model)
         {
             _model = model;
-            _model.ModelChanged += UpdateCurrentTabData;
+            _model._modelChanged += UpdateCurrentTabData;
 
             _courseTabControlEnabled = true;
             _courseSelectionResultButtonEnabled = true;
@@ -32,18 +32,27 @@ namespace CourseManager
 
         public Model Model
         {
-            get => _model;
+            get
+            {
+                return _model;
+            }
         }
 
         // data binding update data on change
         private void NotifyPropertyChanged(string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         public bool CourseTabControlEnabled
         {
-            get => _courseTabControlEnabled;
+            get
+            {
+                return _courseTabControlEnabled;
+            }
             set
             {
                 _courseTabControlEnabled = value;
@@ -53,7 +62,10 @@ namespace CourseManager
 
         public bool CourseSelectionResultButtonEnabled
         {
-            get => _courseSelectionResultButtonEnabled;
+            get
+            {
+                return _courseSelectionResultButtonEnabled;
+            }
             set
             {
                 _courseSelectionResultButtonEnabled = value;
@@ -62,7 +74,10 @@ namespace CourseManager
         }
         public bool SubmitButtonEnabled
         {
-            get => _submitButtonEnabled;
+            get
+            {
+                return _submitButtonEnabled;
+            }
             set
             {
                 _submitButtonEnabled = value;
@@ -72,7 +87,10 @@ namespace CourseManager
 
         public int CurrentTabIndex
         {
-            get => _currentTabIndex;
+            get
+            {
+                return _currentTabIndex;
+            }
             set
             {
                 _currentTabIndex = value;
@@ -83,18 +101,27 @@ namespace CourseManager
 
         public List<CourseInfo> CurrentCourseInfos
         {
-            get => _currentTabCourseInfos;
+            get
+            {
+                return _currentTabCourseInfos;
+            }
         }
 
         public List<int> CurrentShowingIndexes
         {
-            get => _currentTabShowingIndexes;
+            get
+            {
+                return _currentTabShowingIndexes;
+            }
         }
 
         // notify observer on data changed
         public void NotifyObserver()
         {
-            ViewModelChanged?.Invoke();
+            if (_viewModelChanged != null)
+            {
+                _viewModelChanged();
+            }
         }
 
         // get tab page infos

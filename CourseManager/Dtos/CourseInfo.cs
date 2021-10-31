@@ -6,7 +6,7 @@ namespace CourseManager
     public class CourseInfo
     {
         private readonly int _daysPerWeek = 7;
-        public static readonly string _courseChars = "1234N56789ABCD";
+        private readonly string _courseChars = "1234N56789ABCD";
 
         public CourseInfo()
         {
@@ -174,19 +174,79 @@ namespace CourseManager
             return false;
         }
 
-        // log data for testing
-        public void PrintCourseData()
+        // check if course data are identical
+        public bool CheckPropertiesIdentical(CourseInfo courseInfo, int[] ignoredIndexes)
         {
-            Console.WriteLine("[ " + Name + " " + Number + " ]");
-            Console.WriteLine("Sun: " + ClassTime0);
-            Console.WriteLine("Mon: " + ClassTime1);
-            Console.WriteLine("Tue: " + ClassTime2);
-            Console.WriteLine("Wed: " + ClassTime3);
-            Console.WriteLine("Thu: " + ClassTime4);
-            Console.WriteLine("Fri: " + ClassTime5);
-            Console.WriteLine("Sat: " + ClassTime6);
-            Console.WriteLine("---------------------");
+            string[] courseInfoStrings = courseInfo.GetCourseInfoStrings();
+            string[] thisCourseInfoStrings = GetCourseInfoStrings();
+
+            for (int index = 0; index < courseInfoStrings.Length; index++)
+            {
+                if (Array.Exists(ignoredIndexes, item => item == index))
+                {
+                    continue;
+                }
+                if (courseInfoStrings[index] != thisCourseInfoStrings[index])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
+         
+        // check if course data properties are valid
+        public bool CheckCourseFormat()
+        {
+            return RequiredPropertiesAreFilled() && NumberPropertiesAreNumeric();
+        }
+
+        // required text boxes cannot be empty
+        private bool RequiredPropertiesAreFilled()
+        {
+            return !(Number == "" || Name == "" || Stage == "" || Credit == "" || Teacher == "");
+        }
+
+        // particular properties should be numeric
+        private bool NumberPropertiesAreNumeric()
+        {
+            bool numberIsNumeric = int.TryParse(Number, out _);
+            bool stageIsNumeric = int.TryParse(Stage, out _);
+            bool creditIsNumeric = double.TryParse(Credit, out _);
+
+            return numberIsNumeric && stageIsNumeric && creditIsNumeric;
+        }
+
+        // check class time matchs course hours
+        public bool CheckCourseHourMatch()
+        {
+            const char SEPARATOR = ' ';
+            int hourCount = 0;
+
+            foreach (string classTime in GetCourseClassTimeStrings())
+            {
+                if (classTime.Trim() != "")
+                {
+                    hourCount += classTime.Split(SEPARATOR).Length;
+                }
+            }
+
+            return hourCount.ToString() == Hour;
+        }
+
+        // log data for testing
+        //public void PrintCourseData()
+        //{
+        //    Console.WriteLine("[ " + Name + " " + Number + " ]");
+        //    Console.WriteLine("Sun: " + ClassTime0);
+        //    Console.WriteLine("Mon: " + ClassTime1);
+        //    Console.WriteLine("Tue: " + ClassTime2);
+        //    Console.WriteLine("Wed: " + ClassTime3);
+        //    Console.WriteLine("Thu: " + ClassTime4);
+        //    Console.WriteLine("Fri: " + ClassTime5);
+        //    Console.WriteLine("Sat: " + ClassTime6);
+        //    Console.WriteLine("---------------------");
+        //}
 
         public string Number
         {

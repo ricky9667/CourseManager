@@ -19,17 +19,26 @@ namespace CourseManager
         // data binding update data on change
         private void NotifyPropertyChanged(string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         public Model Model
         {
-            get => _model;
+            get
+            {
+                return _model;
+            }
         }
 
         public bool CourseSelectingSystemButtonEnabled
         {
-            get => _courseSelectingSystemButtonEnabled;
+            get
+            {
+                return _courseSelectingSystemButtonEnabled;
+            }
             set
             {
                 _courseSelectingSystemButtonEnabled = value;
@@ -39,7 +48,10 @@ namespace CourseManager
 
         public bool CourseManagementSystemButtonEnabled
         {
-            get => _courseManagementSystemButtonEnabled;
+            get
+            {
+                return _courseManagementSystemButtonEnabled;
+            }
             set
             {
                 _courseManagementSystemButtonEnabled = value;
