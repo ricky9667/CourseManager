@@ -218,7 +218,6 @@ namespace CourseManager
             return message;
         }
 
-
         // get course management list
         public List<Tuple<int, int, string>> GetCourseManagementList()
         {

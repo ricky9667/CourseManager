@@ -140,12 +140,6 @@ namespace CourseManager
                 _model.MoveCourseInfo(course.Item1, course.Item2, newTabIndex);
             }
 
-            //_model.SetCourseInfo(tabIndex, courseIndex, courseInfo);
-            //if (tabIndex != newTabIndex)
-            //{
-            //    _model.MoveCourseInfo(tabIndex, courseIndex, newTabIndex);
-            //}
-
             _courseManagementList = _model.GetCourseManagementList();
         }
 
@@ -159,8 +153,11 @@ namespace CourseManager
         // handle save button state
         public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo, int classIndex)
         {
-            bool isClassChanged, isDataChanged, isTextFormatCorrect, isCourseHourMatch;
-            
+            bool isClassChanged = true;
+            bool isDataChanged = true;
+            bool isTextFormatCorrect = changedCourseInfo.CheckCourseFormat();
+            bool isCourseHourMatch = changedCourseInfo.CheckCourseHourMatch();
+
             if (_currentSelectedCourse != -1)
             {
                 Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
@@ -168,17 +165,8 @@ namespace CourseManager
                 isClassChanged = course.Item1 != classIndex;
                 isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
             }
-            else
-            {
-                isClassChanged = true;
-                isDataChanged = true;
-            }
             
-            isTextFormatCorrect = changedCourseInfo.CheckCourseFormat();
-            isCourseHourMatch = changedCourseInfo.CheckCourseHourMatch();
-
             return (isClassChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
-            
         }
 
         // check if course data is changed
@@ -188,8 +176,14 @@ namespace CourseManager
             {
                 return true; 
             }
-
-            return !courseInfo.CheckPropertiesIdentical(changedCourseInfo, new int[] { 14, 15, 16, 19, 21, 22 });
+            
+            const int CLASSROOM_INDEX = 14;
+            const int NUMBER_OF_STUDENT = 15;
+            const int NUMBER_OF_DROP_STUDENT = 16;
+            const int OUTLINE_INDEX = 19;
+            const int AUDIT_INDEX = 21;
+            const int EXPERIMENT_INDEX = 22;
+            return !courseInfo.CheckPropertiesIdentical(changedCourseInfo, new int[] { CLASSROOM_INDEX, NUMBER_OF_STUDENT, NUMBER_OF_DROP_STUDENT, OUTLINE_INDEX, AUDIT_INDEX, EXPERIMENT_INDEX });
         }
     }
 }

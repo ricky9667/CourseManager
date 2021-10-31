@@ -234,7 +234,7 @@ namespace CourseManager
             this._classComboBox.Name = "_classComboBox";
             this._classComboBox.Size = new System.Drawing.Size(169, 32);
             this._classComboBox.TabIndex = 22;
-            this._classComboBox.SelectedIndexChanged += new System.EventHandler(this.ClassComboBoxSelectedIndexChanged);
+            this._classComboBox.SelectedIndexChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _classLabel
             // 
@@ -257,7 +257,7 @@ namespace CourseManager
             this._hourComboBox.Name = "_hourComboBox";
             this._hourComboBox.Size = new System.Drawing.Size(169, 32);
             this._hourComboBox.TabIndex = 20;
-            this._hourComboBox.SelectedIndexChanged += new System.EventHandler(this.HourComboBoxSelectedIndexChanged);
+            this._hourComboBox.SelectedIndexChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _hourLabel
             // 

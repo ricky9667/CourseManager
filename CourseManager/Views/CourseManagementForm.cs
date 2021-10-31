@@ -59,22 +59,28 @@ namespace CourseManager
             _timeDataGridView.Rows.Clear();
             for (int index = 0; index < _courseChars.Length; index++)
             {
-                DataGridViewRow row = new DataGridViewRow();
-                row.Cells.Add(new DataGridViewTextBoxCell
-                {
-                    Value = _courseChars[index],
-                });
-                for (int day = 0; day < 7; day++)
-                {
-                    row.Cells.Add(new DataGridViewCheckBoxCell
-                    {
-                        Value = false
-                    });
-                }
-                _timeDataGridView.Rows.Add(row);
+                _timeDataGridView.Rows.Add(CreateTimeDataGridViewRow(_courseChars[index]));
             }
             _timeDataGridView.Refresh();
             _timeDataGridView.ClearSelection();
+        }
+
+        // create datagridview row
+        private DataGridViewRow CreateTimeDataGridViewRow(char classTime)
+        {
+            DataGridViewRow row = new DataGridViewRow();
+            row.Cells.Add(new DataGridViewTextBoxCell
+            {
+                Value = classTime,
+            });
+            for (int day = 0; day < 7; day++)
+            {
+                row.Cells.Add(new DataGridViewCheckBoxCell
+                {
+                    Value = false
+                });
+            }
+            return row;
         }
 
         // reset datagridview checkbox to false
@@ -117,18 +123,20 @@ namespace CourseManager
             _timeDataGridView.ClearSelection();
             _courseGroupBox.Text = "編輯課程";
 
+            _isUpdatingCourseGroupBox = true;
             if (_courseListBox.SelectedIndex != -1)
             {
+                ResetTimeDataGridViewCheckBoxes();
                 CourseInfo courseInfo = _viewModel.CurrentCourseInfo;
                 RenderCourseGroupBoxData(courseInfo, _viewModel.CurrentClassIndex);
                 _viewModel.CourseGroupBoxEnabled = true;
             }
+            _isUpdatingCourseGroupBox = false;
         }
 
         // render data to course group box by course info
         private void RenderCourseGroupBoxData(CourseInfo courseInfo, int classIndex)
         {
-            _isUpdatingCourseGroupBox = true;
             _startCourseSettingsComboBox.SelectedIndex = 0;
             _courseNumberTextBox.Text = courseInfo.Number;
             _courseNameTextBox.Text = courseInfo.Name;
@@ -141,14 +149,11 @@ namespace CourseManager
             _noteTextBox.Text = courseInfo.Note;
             _hourComboBox.SelectedIndex = courseInfo.HourIndex;
             _classComboBox.SelectedIndex = classIndex;
-
-            ResetTimeDataGridViewCheckBoxes();
             List<Tuple<int, int>> classTimes = courseInfo.GetCourseClassTimes();
             foreach (Tuple<int, int> classTime in classTimes)
             {
                 _timeDataGridView.Rows[classTime.Item2].Cells[classTime.Item1 + 1].Value = true;
             }
-            _isUpdatingCourseGroupBox = false;
         }
 
         // save updated course info
@@ -167,8 +172,7 @@ namespace CourseManager
                 _viewModel.UpdateCourseInfo(courseInfo, _classComboBox.SelectedIndex);
             }
 
-            _viewModel.CourseGroupBoxEnabled = false;
-            _viewModel.SaveButtonEnabled = false;
+            _viewModel.CourseGroupBoxEnabled = _viewModel.SaveButtonEnabled = false;
             _timeDataGridView.ClearSelection();
             LoadCoursesAndClasses();
             ResetGroupBox();
@@ -187,6 +191,12 @@ namespace CourseManager
             courseInfo.Language = _languageTextBox.Text.Trim();
             courseInfo.Note = _noteTextBox.Text.Trim();
             courseInfo.Hour = _hourComboBox.SelectedIndex == -1 ? "" : _hourComboBox.SelectedItem.ToString();
+            return SetDayClassTimes(courseInfo);
+        }
+
+        // set class time to time datagridview
+        private CourseInfo SetDayClassTimes(CourseInfo courseInfo)
+        {
             courseInfo.ClassTime0 = GetDayClassTime(0);
             courseInfo.ClassTime1 = GetDayClassTime(1);
             courseInfo.ClassTime2 = GetDayClassTime(2);
@@ -208,66 +218,42 @@ namespace CourseManager
                     classTimeString += _courseChars[index] + " ";
                 }
             }
-
             return classTimeString.Trim();
+        }
+
+        // handle save button enabled state
+        private void HandleSaveButtonEnabled()
+        {
+            if (!_isUpdatingCourseGroupBox)
+            {
+                CourseInfo showingCourseInfo = new CourseInfo();
+                showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
+            }
         }
 
         // check if course info can be saved and change button status
         private void CourseInfoDataChanged(object sender, EventArgs e)
         {
-            if (!_isUpdatingCourseGroupBox)
-            {
-                CourseInfo showingCourseInfo = new CourseInfo();
-                showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
-                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
-            }
+            HandleSaveButtonEnabled();
         }
 
         // change checkbox cell value when clicked and change save button state
         private void TimeDataGridViewCellClicked(object sender, DataGridViewCellEventArgs e)
         {
-            int rowIndex = e.RowIndex;
-            int columnIndex = e.ColumnIndex;
-            if (rowIndex >= 0 && columnIndex > 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex > 0)
             {
-                if (Convert.ToBoolean(_timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value))
+                if (Convert.ToBoolean(_timeDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value))
                 {
-                    _timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value = false;
+                    _timeDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
                 }
                 else
                 {
-                    _timeDataGridView.Rows[rowIndex].Cells[columnIndex].Value = true;
+                    _timeDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
                 }
             }
 
-            if (!_isUpdatingCourseGroupBox)
-            {
-                CourseInfo showingCourseInfo = new CourseInfo();
-                showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
-                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
-            }
-        }
-
-        // check if course info can be saved and change button status
-        private void HourComboBoxSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!_isUpdatingCourseGroupBox)
-            {
-                CourseInfo showingCourseInfo = new CourseInfo();
-                showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
-                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
-            }
-        }
-
-        // asdsd
-        private void ClassComboBoxSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!_isUpdatingCourseGroupBox)
-            {
-                CourseInfo showingCourseInfo = new CourseInfo();
-                showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
-                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
-            }
+            HandleSaveButtonEnabled();
         }
 
         // create new course and clear all data in group box

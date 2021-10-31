@@ -82,12 +82,10 @@ namespace CourseManager
         public List<Tuple<int, int>> GetCourseClassTimes()
         {
             List<Tuple<int, int>> classTimes = new List<Tuple<int, int>>();
-
             for (int day = 0; day < _daysPerWeek; day++)
             {
                 classTimes.AddRange(GetSingleDayClassTime(day));
             }
-
             return classTimes;
         }
 
@@ -95,8 +93,7 @@ namespace CourseManager
         private List<Tuple<int, int>> GetSingleDayClassTime(int day)
         {
             List<Tuple<int, int>> classTimes = new List<Tuple<int, int>>();
-            string[] dayToClassString = new string[] { ClassTime0, ClassTime1, ClassTime2, ClassTime3, ClassTime4, ClassTime5, ClassTime6 };
-            string classString = dayToClassString[day];
+            string classString = GetCourseClassTimeStrings()[day];
 
             if (classString != "")
             {
@@ -104,24 +101,11 @@ namespace CourseManager
                 string[] classChars = classString.Split(SEPARATOR);
                 foreach (string classChar in classChars)
                 {
-                    classTimes.Add(new Tuple<int, int>(day, GetClassIndex(classChar[0])));
+                    classTimes.Add(new Tuple<int, int>(day, _courseChars.IndexOf(classChar[0])));
                 }
             }
 
             return classTimes;
-        }
-
-        // convert class char to int
-        private int GetClassIndex(char classChar)
-        {
-            for (int index = 0; index < _courseChars.Length; index++)
-            {
-                if (classChar == _courseChars[index])
-                {
-                    return index;
-                }
-            }
-            return -1;
         }
 
         // get course basic data string
@@ -198,23 +182,11 @@ namespace CourseManager
         // check if course data properties are valid
         public bool CheckCourseFormat()
         {
-            return RequiredPropertiesAreFilled() && NumberPropertiesAreNumeric();
-        }
-
-        // required text boxes cannot be empty
-        private bool RequiredPropertiesAreFilled()
-        {
-            return !(Number == "" || Name == "" || Stage == "" || Credit == "" || Teacher == "");
-        }
-
-        // particular properties should be numeric
-        private bool NumberPropertiesAreNumeric()
-        {
+            bool propertiesAreFilled = Number != "" && Name != "" && Stage != "" && Credit != "" && Teacher != "";
             bool numberIsNumeric = int.TryParse(Number, out _);
             bool stageIsNumeric = int.TryParse(Stage, out _);
             bool creditIsNumeric = double.TryParse(Credit, out _);
-
-            return numberIsNumeric && stageIsNumeric && creditIsNumeric;
+            return propertiesAreFilled && numberIsNumeric && stageIsNumeric && creditIsNumeric;
         }
 
         // check class time matchs course hours
@@ -233,20 +205,6 @@ namespace CourseManager
 
             return hourCount.ToString() == Hour;
         }
-
-        // log data for testing
-        //public void PrintCourseData()
-        //{
-        //    Console.WriteLine("[ " + Name + " " + Number + " ]");
-        //    Console.WriteLine("Sun: " + ClassTime0);
-        //    Console.WriteLine("Mon: " + ClassTime1);
-        //    Console.WriteLine("Tue: " + ClassTime2);
-        //    Console.WriteLine("Wed: " + ClassTime3);
-        //    Console.WriteLine("Thu: " + ClassTime4);
-        //    Console.WriteLine("Fri: " + ClassTime5);
-        //    Console.WriteLine("Sat: " + ClassTime6);
-        //    Console.WriteLine("---------------------");
-        //}
 
         public string Number
         {
@@ -278,17 +236,8 @@ namespace CourseManager
         {
             get
             {
-                switch (Hour)
-                {
-                    case "1":
-                        return 0;
-                    case "2":
-                        return 1;
-                    case "3":
-                        return 2;
-                    default:
-                        return -1;
-                }
+                const string chars = "123";
+                return chars.IndexOf(Hour);
             }
         }
 
