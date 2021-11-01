@@ -1,80 +1,143 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CourseManager
 {
-    public class CourseSelectingFormViewModel
+    public class CourseSelectingFormViewModel : INotifyPropertyChanged
     {
-        private Model _model;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event ViewModelChangedEventHandler _viewModelChanged;
+        public delegate void ViewModelChangedEventHandler();
+
+        private readonly Model _model;
         private bool _courseTabControlEnabled;
         private bool _courseSelectionResultButtonEnabled;
         private bool _submitButtonEnabled;
+        private int _currentTabIndex;
+        private List<CourseInfo> _currentTabCourseInfos;
+        private List<int> _currentTabShowingIndexes;
         public CourseSelectingFormViewModel(Model model)
         {
             _model = model;
+            _model._modelChanged += UpdateCurrentTabData;
+
             _courseTabControlEnabled = true;
             _courseSelectionResultButtonEnabled = true;
             _submitButtonEnabled = false;
+            _currentTabIndex = 0;
+            _currentTabCourseInfos = _model.GetCourseInfos(_currentTabIndex);
+            _currentTabShowingIndexes = _model.GetShowingIndexes(_currentTabIndex);
         }
 
         public Model Model
         {
-            get 
-            { 
-                return _model; 
+            get
+            {
+                return _model;
+            }
+        }
+
+        // data binding update data on change
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
         public bool CourseTabControlEnabled
         {
-            get 
-            { 
-                return _courseTabControlEnabled; 
+            get
+            {
+                return _courseTabControlEnabled;
             }
-            set 
-            { 
+            set
+            {
                 _courseTabControlEnabled = value;
+                NotifyPropertyChanged(nameof(CourseTabControlEnabled));
             }
         }
 
         public bool CourseSelectionResultButtonEnabled
         {
-            get 
-            { 
-                return _courseSelectionResultButtonEnabled; 
+            get
+            {
+                return _courseSelectionResultButtonEnabled;
             }
             set
             {
                 _courseSelectionResultButtonEnabled = value;
+                NotifyPropertyChanged(nameof(CourseSelectionResultButtonEnabled));
             }
         }
         public bool SubmitButtonEnabled
         {
-            get 
-            { 
-                return _submitButtonEnabled; 
+            get
+            {
+                return _submitButtonEnabled;
             }
             set
-            { 
-                _submitButtonEnabled = value; 
+            {
+                _submitButtonEnabled = value;
+                NotifyPropertyChanged(nameof(SubmitButtonEnabled));
             }
         }
 
-        // get tab page infos
-        public List<CourseTabPageInfo> GetCourseTabPageInfos()
+        public int CurrentTabIndex
         {
-            return _model.GetCourseTabPageInfos();
+            get
+            {
+                return _currentTabIndex;
+            }
+            set
+            {
+                _currentTabIndex = value;
+                UpdateCurrentTabData();
+                NotifyPropertyChanged(nameof(CurrentTabIndex));
+            }
         }
 
-        // get course infos from selected tab
-        public List<CourseInfo> GetCourseInfos(int tabIndex)
+        public List<CourseInfo> CurrentCourseInfos
         {
-            return _model.GetCourseInfos(tabIndex);
+            get
+            {
+                return _currentTabCourseInfos;
+            }
         }
 
-        // get showing indexes of current datagridview
-        public List<int> GetShowingIndexes(int tabIndex)
+        public List<int> CurrentShowingIndexes
         {
-            return _model.GetShowingIndexes(tabIndex);
+            get
+            {
+                return _currentTabShowingIndexes;
+            }
+        }
+
+        public List<CourseTabPageInfo> CourseTabPageInfos
+        {
+            get
+            {
+                return _model.CourseTabPageInfos;
+            }
+        }
+
+        // notify observer on data changed
+        public void NotifyObserver()
+        {
+            if (_viewModelChanged != null)
+            {
+                _viewModelChanged();
+            }
+        }
+
+        // update current tab course infos and current showing indexes
+        public void UpdateCurrentTabData()
+        {
+            _currentTabCourseInfos = _model.GetCourseInfos(_currentTabIndex);
+            _currentTabShowingIndexes = _model.GetShowingIndexes(_currentTabIndex);
+            NotifyObserver();
         }
 
         // select courses if success and return select course result
@@ -82,15 +145,14 @@ namespace CourseManager
         {
             const string SELECT_SUCCESS_MESSAGE = "加選成功";
             const string SELECT_FAIL_MESSAGE = "加選失敗";
+            string message = CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
 
-            string resultMessage = CheckSelectCoursesWithMessage(tabIndex, selectedIndexes);
-            if (resultMessage == "")
+            if (message == "")
             {
                 _model.SelectCourses(tabIndex, selectedIndexes);
                 return SELECT_SUCCESS_MESSAGE;
             }
-
-            return SELECT_FAIL_MESSAGE + resultMessage;
+            return SELECT_FAIL_MESSAGE + message;
         }
 
         // check if courses are able to select and return message if not

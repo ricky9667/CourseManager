@@ -6,6 +6,35 @@ namespace CourseManager
     public class CourseInfo
     {
         private readonly int _daysPerWeek = 7;
+        private readonly string _courseChars = "1234N56789ABCD";
+
+        public CourseInfo()
+        {
+            Number = "";
+            Name = "";
+            Stage = "";
+            Credit = "";
+            Hour = "";
+            CourseType = "";
+            Teacher = "";
+            ClassTime0 = "";
+            ClassTime1 = "";
+            ClassTime2 = "";
+            ClassTime3 = "";
+            ClassTime4 = "";
+            ClassTime5 = "";
+            ClassTime6 = "";
+            Classroom = "";
+            NumberOfStudent = "";
+            NumberOfDropStudent = "";
+            TeachingAssistant = "";
+            Language = "";
+            Outline = "";
+            Note = "";
+            Audit = "";
+            Experiment = "";
+        }
+
         public CourseInfo(string number, string name, string stage, string credit, string hour, string courseType, string teacher,
             string classTime0, string classTime1, string classTime2, string classTime3, string classTime4, string classTime5, string classTime6,
             string classroom, string numberOfStudent, string numberOfDropStudent, string teachingAssistant,
@@ -43,16 +72,20 @@ namespace CourseManager
                                     Classroom, NumberOfStudent, NumberOfDropStudent, TeachingAssistant, Language, Outline, Note, Audit, Experiment};
         }
 
+        // get class time string of course
+        public string[] GetCourseClassTimeStrings()
+        {
+            return new string[] { ClassTime0, ClassTime1, ClassTime2, ClassTime3, ClassTime4, ClassTime5, ClassTime6 };
+        }
+
         // get class time of course
         public List<Tuple<int, int>> GetCourseClassTimes()
         {
             List<Tuple<int, int>> classTimes = new List<Tuple<int, int>>();
-
             for (int day = 0; day < _daysPerWeek; day++)
             {
                 classTimes.AddRange(GetSingleDayClassTime(day));
             }
-
             return classTimes;
         }
 
@@ -60,8 +93,7 @@ namespace CourseManager
         private List<Tuple<int, int>> GetSingleDayClassTime(int day)
         {
             List<Tuple<int, int>> classTimes = new List<Tuple<int, int>>();
-            string[] dayToClassString = new string[] { ClassTime0, ClassTime1, ClassTime2, ClassTime3, ClassTime4, ClassTime5, ClassTime6 };
-            string classString = dayToClassString[day];
+            string classString = GetCourseClassTimeStrings()[day];
 
             if (classString != "")
             {
@@ -69,25 +101,11 @@ namespace CourseManager
                 string[] classChars = classString.Split(SEPARATOR);
                 foreach (string classChar in classChars)
                 {
-                    classTimes.Add(new Tuple<int, int>(day, GetClassIndex(classChar[0])));
+                    classTimes.Add(new Tuple<int, int>(day, _courseChars.IndexOf(classChar[0])));
                 }
             }
 
             return classTimes;
-        }
-
-        // convert class char to int
-        private int GetClassIndex(char classChar)
-        {
-            const string COURSE_CHARS = "1234N56789ABCD";
-            for (int index = 0; index < COURSE_CHARS.Length; index++)
-            {
-                if (classChar == COURSE_CHARS[index])
-                {
-                    return index;
-                }
-            }
-            return -1;
         }
 
         // get course basic data string
@@ -140,6 +158,54 @@ namespace CourseManager
             return false;
         }
 
+        // check if course data are identical
+        public bool CheckPropertiesIdentical(CourseInfo courseInfo, int[] ignoredIndexes)
+        {
+            string[] courseInfoStrings = courseInfo.GetCourseInfoStrings();
+            string[] thisCourseInfoStrings = GetCourseInfoStrings();
+
+            for (int index = 0; index < courseInfoStrings.Length; index++)
+            {
+                if (Array.Exists(ignoredIndexes, item => item == index))
+                {
+                    continue;
+                }
+                if (courseInfoStrings[index] != thisCourseInfoStrings[index])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+         
+        // check if course data properties are valid
+        public bool CheckCourseFormat()
+        {
+            bool propertiesAreFilled = Number != "" && Name != "" && Stage != "" && Credit != "" && Teacher != "";
+            bool numberIsNumeric = int.TryParse(Number, out _);
+            bool stageIsNumeric = int.TryParse(Stage, out _);
+            bool creditIsNumeric = double.TryParse(Credit, out _);
+            return propertiesAreFilled && numberIsNumeric && stageIsNumeric && creditIsNumeric;
+        }
+
+        // check class time matchs course hours
+        public bool CheckCourseHourMatch()
+        {
+            const char SEPARATOR = ' ';
+            int hourCount = 0;
+
+            foreach (string classTime in GetCourseClassTimeStrings())
+            {
+                if (classTime.Trim() != "")
+                {
+                    hourCount += classTime.Split(SEPARATOR).Length;
+                }
+            }
+
+            return hourCount.ToString() == Hour;
+        }
+
         public string Number
         {
             get; set;
@@ -165,9 +231,29 @@ namespace CourseManager
             get; set;
         }
 
+        // return index of hour combobox
+        public int HourIndex
+        {
+            get
+            {
+                const string chars = "123";
+                return chars.IndexOf(Hour);
+            }
+        }
+
         public string CourseType
         {
             get; set;
+        }
+
+        // return index of course type combobox
+        public int CourseTypeIndex
+        {
+            get
+            {
+                const string courseSymbols = "○△☆●▲★";
+                return courseSymbols.IndexOf(CourseType);
+            }
         }
 
         public string Teacher

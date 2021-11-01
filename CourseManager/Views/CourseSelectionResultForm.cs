@@ -6,10 +6,11 @@ namespace CourseManager
 {
     public partial class CourseSelectionResultForm : Form
     {
-        CourseSelectionResultFormViewModel _viewModel;
+        private readonly CourseSelectionResultFormViewModel _viewModel;
         public CourseSelectionResultForm(CourseSelectionResultFormViewModel viewModel)
         {
             _viewModel = viewModel;
+            _viewModel._viewModelChanged += LoadSelectedCourseDataGridView;
             InitializeComponent();
         }
 
@@ -22,18 +23,15 @@ namespace CourseManager
         // setup datagridview
         private void LoadSelectedCourseDataGridView()
         {
-            List<CourseInfo> selectedCourseInfos = _viewModel.GetSelectedCourseInfos();
             _selectedCourseDataGridView.Rows.Clear();
-
-            foreach (CourseInfo courseInfo in selectedCourseInfos)
+            foreach (CourseInfo courseInfo in _viewModel.SelectedCourseInfos)
             {
                 _selectedCourseDataGridView.Rows.Add(CreateSelectionResultCourseRow(courseInfo));
             }
-
             _selectedCourseDataGridView.Refresh();
         }
 
-        // create data grid view row
+        // create datagridview row
         private DataGridViewRow CreateSelectionResultCourseRow(CourseInfo courseInfo)
         {
             DataGridViewRow row = new DataGridViewRow();

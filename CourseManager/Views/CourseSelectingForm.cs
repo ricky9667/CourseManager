@@ -7,50 +7,56 @@ namespace CourseManager
     public partial class CourseSelectingForm : Form
     {
         Form _courseSelectionResultForm;
-        List<CourseTabPageInfo> _courseTabPageInfos;
-        List<int> _currentShowingIndexes;
-        CourseSelectingFormViewModel _viewModel;
+        private readonly CourseSelectingFormViewModel _viewModel;
 
         public CourseSelectingForm(CourseSelectingFormViewModel viewModel)
         {
             _viewModel = viewModel;
-            _courseTabPageInfos = _viewModel.GetCourseTabPageInfos();
+            _viewModel._viewModelChanged += LoadCourseDataGridView;
+
             _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
+            _courseSelectionResultForm.FormClosing += new FormClosingEventHandler(CourseSelectionResultFormClosing);
+
             InitializeComponent();
-            FormClosed += new FormClosedEventHandler(CourseSelectingFormClosed);
+            SetBindingProperties();
         }
 
         // load select course form
         private void CourseSelectingFormLoad(object sender, EventArgs e)
         {
-            int tabCount = _courseTabPageInfos.Count;
-            for (int index = 0; index < tabCount; index++)
+            int index = 0;
+            foreach (CourseTabPageInfo tabPageInfo in _viewModel.CourseTabPageInfos)
             {
-                CourseTabPageInfo tabPageInfo = _courseTabPageInfos[index];
                 _courseTabControl.Controls[index].Name = tabPageInfo.TabName;
                 _courseTabControl.Controls[index].Text = tabPageInfo.TabText;
+                index++;
             }
 
-            LoadCourseDataGridView(0);
-            RefreshWindowStatus();
+            LoadCourseDataGridView();
+        }
+
+        // add data binding properties
+        private void SetBindingProperties()
+        {
+            _courseTabControl.DataBindings.Add(nameof(_courseTabControl.Enabled), _viewModel, nameof(_viewModel.CourseTabControlEnabled));
+            _courseSelectionResultButton.DataBindings.Add(nameof(_courseSelectionResultButton.Enabled), _viewModel, nameof(_viewModel.CourseSelectionResultButtonEnabled));
+            _submitButton.DataBindings.Add(nameof(_submitButton.Enabled), _viewModel, nameof(_viewModel.SubmitButtonEnabled));
+            _courseTabControl.DataBindings.Add(nameof(_courseTabControl.SelectedIndex), _viewModel, nameof(_viewModel.CurrentTabIndex));
         }
 
         // setup datagridview
-        private void LoadCourseDataGridView(int tabIndex)
+        private void LoadCourseDataGridView()
         {
+            _courseDataGridView.ClearSelection();
             _courseDataGridView.Rows.Clear();
-            List<CourseInfo> courseInfos = _viewModel.GetCourseInfos(tabIndex);
-            _currentShowingIndexes = _viewModel.GetShowingIndexes(tabIndex);
-
-            foreach (int index in _currentShowingIndexes)
+            foreach (int index in _viewModel.CurrentShowingIndexes)
             {
-                _courseDataGridView.Rows.Add(CreateSelectingCourseRow(courseInfos[index]));
+                _courseDataGridView.Rows.Add(CreateSelectingCourseRow(_viewModel.CurrentCourseInfos[index]));
             }
-
             _courseDataGridView.Refresh();
         }
 
-        // create data grid view row
+        // create datagridview row
         private DataGridViewRow CreateSelectingCourseRow(CourseInfo courseInfo)
         {
             DataGridViewRow row = new DataGridViewRow();
@@ -63,14 +69,6 @@ namespace CourseManager
             }
             row.Cells.Insert(0, new DataGridViewCheckBoxCell());
             return row;
-        }
-
-        // refresh component enabled
-        private void RefreshWindowStatus()
-        {
-            _courseTabControl.Enabled = _viewModel.CourseTabControlEnabled;
-            _courseSelectionResultButton.Enabled = _viewModel.CourseSelectionResultButtonEnabled;
-            _submitButton.Enabled = _viewModel.SubmitButtonEnabled;
         }
 
         // triggers when checkboxes in datagridview has value change 
@@ -111,7 +109,6 @@ namespace CourseManager
             }
 
             _viewModel.SubmitButtonEnabled = selectedCourses > 0;
-            RefreshWindowStatus();
         }
 
         // handle dirty state change
@@ -126,22 +123,17 @@ namespace CourseManager
         // add datagridview to selected tab index
         private void CourseTabControlSelectedIndexChanged(object sender, EventArgs e)
         {
-            int tabIndex = _courseTabControl.SelectedIndex;
-            LoadCourseDataGridView(tabIndex);
-            _courseTabControl.Controls[tabIndex].Controls.Add(_courseDataGridView);
+            _viewModel.CurrentTabIndex = _courseTabControl.SelectedIndex;
+            _courseTabControl.SelectedTab.Controls.Add(_courseDataGridView);
         }
 
         // show course result form
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
-            _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
-            _courseSelectionResultForm.FormClosed += new FormClosedEventHandler(CourseSelectionResultFormClosed);
             _courseSelectionResultForm.Show();
-
             _viewModel.CourseTabControlEnabled = false;
             _viewModel.CourseSelectionResultButtonEnabled = false;
             _viewModel.SubmitButtonEnabled = false;
-            RefreshWindowStatus();
         }
 
         // submit courses
@@ -155,30 +147,27 @@ namespace CourseManager
             {
                 if (Convert.ToBoolean(_courseDataGridView.Rows[index].Cells[0].Value))
                 {
-                    selectedIndexes.Add(_currentShowingIndexes[index]);
+                    selectedIndexes.Add(_viewModel.CurrentShowingIndexes[index]);
                 }
             }
 
-            MessageBox.Show(_viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes));
-            _submitButton.Enabled = false;
-            RefreshWindowStatus();
-            LoadCourseDataGridView(tabIndex);
-        }
-
-        // handle this form close event
-        private void CourseSelectingFormClosed(object sender, FormClosedEventArgs e)
-        {
-            _courseSelectionResultForm.Close();
-        }
-
-        // handle course selection form close event
-        private void CourseSelectionResultFormClosed(object sender, FormClosedEventArgs e)
-        {
-            LoadCourseDataGridView(_courseTabControl.SelectedIndex);
-            _viewModel.CourseTabControlEnabled = true;
-            _viewModel.CourseSelectionResultButtonEnabled = true;
+            string message = _viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes);
+            MessageBox.Show(message);
+            _courseDataGridView.ClearSelection();
             _viewModel.SubmitButtonEnabled = false;
-            RefreshWindowStatus();
+        }
+
+        // handle course selection form closing event
+        private void CourseSelectionResultFormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                _courseSelectionResultForm.Hide();
+                _viewModel.CourseTabControlEnabled = true;
+                _viewModel.CourseSelectionResultButtonEnabled = true;
+                _viewModel.SubmitButtonEnabled = false;
+            }
         }
     }
 }

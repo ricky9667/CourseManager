@@ -60,6 +60,9 @@ namespace CourseManager
             // selectedCourseDataGridView
             // 
             this._selectedCourseDataGridView.AllowUserToAddRows = false;
+            this._selectedCourseDataGridView.AllowUserToDeleteRows = false;
+            this._selectedCourseDataGridView.AllowUserToResizeRows = false;
+            this._selectedCourseDataGridView.AllowUserToResizeColumns = false;
             this._selectedCourseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this._selectedCourseDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this._selectedCourseDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -303,6 +306,7 @@ namespace CourseManager
             this.Name = "CourseSelectionResultForm";
             this.Text = "選課結果";
             this.MaximizeBox = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.CourseSelectionResultFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this._selectedCourseDataGridView)).EndInit();
             this.ResumeLayout(false);
