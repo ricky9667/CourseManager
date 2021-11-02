@@ -59,6 +59,10 @@ namespace CourseManager
         // get single course info
         public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
+            if (!_courseInfosDictionary.ContainsKey(tabIndex))
+            {
+                LoadCourses(tabIndex);
+            }
             return _courseInfosDictionary[tabIndex][courseIndex];
         }
 
