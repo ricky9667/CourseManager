@@ -33,6 +33,14 @@ namespace CourseManager
             }
         }
 
+        public List<Tuple<int, int>> SelectedIndexPairs
+        {
+            get
+            {
+                return _selectedIndexPairs;
+            }
+        }
+
         // notify observers when data changed
         public void NotifyObserver()
         {
@@ -59,7 +67,7 @@ namespace CourseManager
         // get single course info
         public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
-            if (!_courseInfosDictionary.ContainsKey(tabIndex))
+            if (!CheckTabExists(tabIndex))
             {
                 LoadCourses(tabIndex);
             }
@@ -71,24 +79,6 @@ namespace CourseManager
         {
             _courseInfosDictionary[tabIndex][courseIndex] = courseInfo;
             NotifyObserver();
-        }
-
-        // add new course info
-        public void AddNewCourseInfo(int tabIndex, CourseInfo courseInfo)
-        {
-            _courseInfosDictionary[tabIndex].Add(courseInfo);
-            _isCourseSelected[tabIndex].Add(false);
-            NotifyObserver();
-        }
-
-        // get course infos from selected tab
-        public List<CourseInfo> GetCourseInfos(int tabIndex)
-        {
-            if (!_courseInfosDictionary.ContainsKey(tabIndex))
-            {
-                LoadCourses(tabIndex);
-            }
-            return _courseInfosDictionary[tabIndex];
         }
 
         // fetch course data from crawler
@@ -107,9 +97,57 @@ namespace CourseManager
             _isCourseSelected.Add(tabIndex, selectedCourses);
         }
 
+        // load all courses
+        public void ManuallyLoadAllCourses()
+        {
+            for (int index = 0; index < _courseTabPageInfos.Count; index++)
+            {
+                LoadCourses(index);
+            }
+        }
+
+        // add new course info
+        public void AddNewCourseInfo(int tabIndex, CourseInfo courseInfo)
+        {
+            _courseInfosDictionary[tabIndex].Add(courseInfo);
+            _isCourseSelected[tabIndex].Add(false);
+            NotifyObserver();
+        }
+
+        // check if tab exists
+        public bool CheckTabExists(int tabIndex)
+        {
+            return _courseInfosDictionary.ContainsKey(tabIndex);
+        }
+
+        // get course infos from selected tab
+        public List<CourseInfo> GetCourseInfos(int tabIndex)
+        {
+            if (!CheckTabExists(tabIndex))
+            {
+                LoadCourses(tabIndex);
+            }
+            return _courseInfosDictionary[tabIndex];
+        }
+
+        // check if a particular course is selected
+        public bool CheckCourseSelected(int tabIndex, int courseIndex)
+        {
+            if (!CheckTabExists(tabIndex))
+            {
+                LoadCourses(tabIndex);
+            }
+            return _isCourseSelected[tabIndex][courseIndex];
+        }
+
         // get showing indexes of current datagridview
         public List<int> GetShowingIndexes(int tabIndex)
         {
+            if (!CheckTabExists(tabIndex))
+            {
+                LoadCourses(tabIndex);
+            }
+
             List<int> showingList = new List<int>();
             int count = _courseInfosDictionary[tabIndex].Count;
             for (int courseIndex = 0; courseIndex < count; courseIndex++)
@@ -122,15 +160,14 @@ namespace CourseManager
             return showingList;
         }
 
-        // get selected courses index pairs
-        public List<Tuple<int, int>> GetSelectedIndexPairs()
-        {
-            return _selectedIndexPairs;
-        }
-
         // add checked courses to selected courses
         public void SelectCourses(int tabIndex, List<int> selectedIndexes)
         {
+            if (!CheckTabExists(tabIndex))
+            {
+                LoadCourses(tabIndex);
+            }
+
             int tabCount = _courseInfosDictionary[tabIndex].Count;
             for (int courseIndex = 0; courseIndex < tabCount; courseIndex++)
             {
@@ -228,7 +265,7 @@ namespace CourseManager
             List<Tuple<int, int, string>> courseManagementList = new List<Tuple<int, int, string>>(); // tabIndex, courseIndex, courseName
             for (int tabIndex = 0; tabIndex < _courseTabPageInfos.Count; tabIndex++)
             {
-                if (!_courseInfosDictionary.ContainsKey(tabIndex))
+                if (!CheckTabExists(tabIndex))
                 {
                     LoadCourses(tabIndex);
                 }
