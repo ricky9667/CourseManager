@@ -59,6 +59,7 @@
     <Compile Include="Models\ModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CourseSelectingFormViewModelTests.cs" />
+    <Compile Include="ViewModels\CourseSelectionResultFormViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
