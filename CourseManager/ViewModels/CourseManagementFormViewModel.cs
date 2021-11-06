@@ -165,7 +165,7 @@ namespace CourseManager
                 isClassChanged = course.Item1 != classIndex;
                 isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
             }
-            
+
             return (isClassChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
         }
 
