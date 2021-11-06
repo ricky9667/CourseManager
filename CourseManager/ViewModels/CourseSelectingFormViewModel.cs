@@ -38,15 +38,6 @@ namespace CourseManager
             }
         }
 
-        // data binding update data on change
-        private void NotifyPropertyChanged(string propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         public bool CourseTabControlEnabled
         {
             get
@@ -120,6 +111,15 @@ namespace CourseManager
             get
             {
                 return _model.CourseTabPageInfos;
+            }
+        }
+
+        // data binding update data on change
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 

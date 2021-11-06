@@ -109,7 +109,7 @@ namespace CourseManager
         }
 
         // get course basic data string
-        private string GetCourseDataString()
+        public string GetCourseDataString()
         {
             const string FRONT_QUOTE = "「";
             const string SEPARATER = " ";
