@@ -65,6 +65,13 @@ namespace CourseManager
             Experiment = experiment;
         }
 
+        // get deep copy
+        public CourseInfo Copy()
+        {
+            return new CourseInfo(Number, Name, Stage, Credit, Hour, CourseType, Teacher, ClassTime0, ClassTime1, ClassTime2, ClassTime3, ClassTime4, ClassTime5, ClassTime6,
+                                    Classroom, NumberOfStudent, NumberOfDropStudent, TeachingAssistant, Language, Outline, Note, Audit, Experiment);
+        }
+
         // return string array type
         public string[] GetCourseInfoStrings()
         {

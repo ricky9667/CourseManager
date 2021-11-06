@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Models\ModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CourseManagementFormViewModelTests.cs" />
     <Compile Include="ViewModels\CourseSelectingFormViewModelTests.cs" />
     <Compile Include="ViewModels\CourseSelectionResultFormViewModelTests.cs" />
     <Compile Include="ViewModels\StartUpFormViewModelTests.cs" />

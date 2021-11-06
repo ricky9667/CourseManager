@@ -154,7 +154,7 @@ namespace CourseManager
         public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo, int classIndex)
         {
             bool isClassChanged = true;
-            bool isDataChanged = true;
+            bool isDataChanged = tru/*e*/;
             bool isTextFormatCorrect = changedCourseInfo.CheckCourseFormat();
             bool isCourseHourMatch = changedCourseInfo.CheckCourseHourMatch();
 
@@ -165,7 +165,7 @@ namespace CourseManager
                 isClassChanged = course.Item1 != classIndex;
                 isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
             }
-            
+
             return (isClassChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
         }
 
