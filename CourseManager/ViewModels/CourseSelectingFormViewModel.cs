@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -110,7 +111,7 @@ namespace CourseManager
         {
             get
             {
-                return _model.CourseTabPageInfos;
+                return _model.CourseTabPageInfos.Where(tabPageInfo => tabPageInfo.Loaded).ToList();
             }
         }
 

@@ -50,7 +50,6 @@ namespace CourseManager
             if (_modelChanged != null)
             {
                 _modelChanged();
-                Console.WriteLine("ModelChanged");
             }
         }
 
@@ -83,10 +82,6 @@ namespace CourseManager
         // get single course info
         public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
-            //if (!CheckTabExists(tabIndex))
-            //{
-            //    LoadCourses(tabIndex);
-            //}
             return _courseInfosDictionary[tabIndex][courseIndex];
         }
 
@@ -166,31 +161,18 @@ namespace CourseManager
         // get course infos from selected tab
         public List<CourseInfo> GetCourseInfos(int tabIndex)
         {
-            //if (!CheckTabExists(tabIndex))
-            //{
-            //    LoadCourses(tabIndex);
-            //}
             return _courseInfosDictionary[tabIndex];
         }
 
         // check if a particular course is selected
         public bool CheckCourseSelected(int tabIndex, int courseIndex)
         {
-            //if (!CheckTabExists(tabIndex))
-            //{
-            //    LoadCourses(tabIndex);
-            //}
             return _isCourseSelected[tabIndex][courseIndex];
         }
 
         // get showing indexes of current datagridview
         public List<int> GetShowingIndexes(int tabIndex)
         {
-            //if (!CheckTabExists(tabIndex))
-            //{
-            //    LoadCourses(tabIndex);
-            //}
-
             List<int> showingList = new List<int>();
             int count = _courseInfosDictionary[tabIndex].Count;
             for (int courseIndex = 0; courseIndex < count; courseIndex++)
@@ -206,11 +188,6 @@ namespace CourseManager
         // add checked courses to selected courses
         public void SelectCourses(int tabIndex, List<int> selectedIndexes)
         {
-            //if (!CheckTabExists(tabIndex))
-            //{
-            //    LoadCourses(tabIndex);
-            //}
-
             int tabCount = _courseInfosDictionary[tabIndex].Count;
             for (int courseIndex = 0; courseIndex < tabCount; courseIndex++)
             {
@@ -249,7 +226,6 @@ namespace CourseManager
                     message += courseInfo.GetCompareSameNumberMessage(selectedCourseInfo);
                 }
             }
-
             return message;
         }
 
@@ -308,10 +284,6 @@ namespace CourseManager
             List<Tuple<int, int, string>> courseManagementList = new List<Tuple<int, int, string>>(); // tabIndex, courseIndex, courseName
             for (int tabIndex = 0; tabIndex < _courseTabPageInfos.Count; tabIndex++)
             {
-                //if (!CheckTabExists(tabIndex))
-                //{
-                //    LoadCourses(tabIndex);
-                //}
                 if (_courseTabPageInfos[tabIndex].Loaded)
                 {
                     List<CourseInfo> courseInfos = _courseInfosDictionary[tabIndex];
@@ -341,6 +313,7 @@ namespace CourseManager
             {
                 AdjustSelectedIndexPairs(tabIndex, courseIndex, newTabIndex, newCourseIndex);
             }
+
             NotifyObserver();
         }
 
@@ -357,7 +330,6 @@ namespace CourseManager
                 {
                     _selectedIndexPairs[i] = new Tuple<int, int>(tabIndex, _selectedIndexPairs[i].Item2 - 1);
                 }
-
             }
         }
     }
