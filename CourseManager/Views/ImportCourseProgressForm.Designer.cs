@@ -54,10 +54,13 @@ namespace CourseManager
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 230);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Controls.Add(this._importCourseProgressBar);
             this.Controls.Add(this._importCourseProgressLabel);
             this.Name = "ImportCourseProgressForm";
+            this.MaximizeBox = false;
             this.Text = "匯入課程";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.ImportCourseProgressFormLoad);
             this.ResumeLayout(false);
             this.PerformLayout();

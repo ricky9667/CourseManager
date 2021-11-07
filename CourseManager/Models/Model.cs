@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CourseManager
 {
@@ -84,17 +85,20 @@ namespace CourseManager
         // fetch course data from crawler
         private void LoadCourses(int tabIndex)
         {
-            List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
-            List<bool> selectedCourses = new List<bool>();
-
-            int courseCount = courseInfos.Count;
-            while (courseCount-- > 0)
+            if (!CheckTabExists(tabIndex))
             {
-                selectedCourses.Add(false);
-            }
+                List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
+                List<bool> selectedCourses = new List<bool>();
 
-            _courseInfosDictionary.Add(tabIndex, courseInfos);
-            _isCourseSelected.Add(tabIndex, selectedCourses);
+                int courseCount = courseInfos.Count;
+                while (courseCount-- > 0)
+                {
+                    selectedCourses.Add(false);
+                }
+
+                _courseInfosDictionary.Add(tabIndex, courseInfos);
+                _isCourseSelected.Add(tabIndex, selectedCourses);
+            }
         }
 
         // load all courses
@@ -104,6 +108,8 @@ namespace CourseManager
             {
                 LoadCourses(index);
             }
+
+            NotifyObserver();
         }
 
         // add new course info

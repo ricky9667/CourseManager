@@ -12,6 +12,8 @@ namespace CourseManager
         public CourseManagementForm(CourseManagementFormViewModel viewModel)
         {
             _viewModel = viewModel;
+            _viewModel._viewModelChanged += LoadCoursesAndClasses;
+
             _isUpdatingCourseGroupBox = false;
             InitializeComponent();
         }
@@ -273,8 +275,15 @@ namespace CourseManager
         {
             ImportCourseProgressFormViewModel importCourseProgressFormViewModel = new ImportCourseProgressFormViewModel(_viewModel.Model);
             Form importCourseProgressForm = new ImportCourseProgressForm(importCourseProgressFormViewModel);
-            importCourseProgressForm.ShowDialog();
+            importCourseProgressForm.FormClosed += new FormClosedEventHandler(ImportCourseProgressFormClosed);
             _viewModel.ImportCourseButtonEnabled = false;
+            importCourseProgressForm.ShowDialog();
+        }
+        
+        // change button state when form closed
+        private void ImportCourseProgressFormClosed(object sender, FormClosedEventArgs e)
+        {
+            _viewModel.ImportCourseButtonEnabled = true;
         }
     }
 }

@@ -7,7 +7,9 @@ namespace CourseManager
     public class CourseManagementFormViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        
+        public event ViewModelChangedEventHandler _viewModelChanged;
+        public delegate void ViewModelChangedEventHandler();
+
         private readonly Model _model;
         private bool _courseGroupBoxEnabled;
         private bool _addCourseButtonEnabled;
@@ -19,12 +21,14 @@ namespace CourseManager
         public CourseManagementFormViewModel(Model model)
         {
             _model = model;
+            _model._modelChanged += UpdateCourseManagementList;
+
             _courseGroupBoxEnabled = false;
             _addCourseButtonEnabled = true;
             _saveButtonEnabled = false;
             _importCourseButtonEnabled = true;
             _currentSelectedCourse = -1;
-            _courseManagementList = _model.GetCourseManagementList();
+            UpdateCourseManagementList();
         }
 
         public Model Model
@@ -147,6 +151,15 @@ namespace CourseManager
             }
         }
 
+        // notify observer on data changed
+        public void NotifyObserver()
+        {
+            if (_viewModelChanged != null)
+            {
+                _viewModelChanged();
+            }
+        }
+
         // get single course info by tab index and course index
         public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
@@ -162,15 +175,19 @@ namespace CourseManager
             {
                 _model.MoveCourseInfo(course.Item1, course.Item2, newTabIndex);
             }
+        }
 
+        // update course management list
+        public void UpdateCourseManagementList()
+        {
             _courseManagementList = _model.GetCourseManagementList();
+            NotifyObserver();
         }
 
         // add course info to model
         public void AddNewCourse(CourseInfo newCourseInfo, int newTabIndex)
         {
             _model.AddNewCourseInfo(newTabIndex, newCourseInfo);
-            _courseManagementList = _model.GetCourseManagementList();
         }
 
         // handle save button state
