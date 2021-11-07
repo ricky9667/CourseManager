@@ -169,6 +169,7 @@ namespace CourseManager.Tests
         [TestMethod()]
         public void GetCourseManagementListTest()
         {
+            model.ManuallyLoadAllCourses();
             List<Tuple<int, int, string>> courseList = model.GetCourseManagementList();
             int tabCount = model.CourseTabPageInfos.Count;
             int courseCount = 0;
