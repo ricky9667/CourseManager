@@ -25,6 +25,14 @@ namespace CourseManager
             _courseManagementList = _model.GetCourseManagementList();
         }
 
+        public Model Model
+        {
+            get
+            {
+                return _model;
+            }
+        }
+
         public bool CourseGroupBoxEnabled
         {
             get
@@ -154,7 +162,7 @@ namespace CourseManager
         public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo, int classIndex)
         {
             bool isClassChanged = true;
-            bool isDataChanged = tru/*e*/;
+            bool isDataChanged = true;
             bool isTextFormatCorrect = changedCourseInfo.CheckCourseFormat();
             bool isCourseHourMatch = changedCourseInfo.CheckCourseHourMatch();
 

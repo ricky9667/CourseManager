@@ -31,17 +31,18 @@ namespace CourseManager
         {
             this._courseManagementTabControl = new System.Windows.Forms.TabControl();
             this._courseManagementTabPage = new System.Windows.Forms.TabPage();
+            this._importComputerScienceCoursesButton = new System.Windows.Forms.Button();
             this._saveButton = new System.Windows.Forms.Button();
             this._courseGroupBox = new System.Windows.Forms.GroupBox();
             this._timeDataGridView = new System.Windows.Forms.DataGridView();
-            this._classTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._sundayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this._mondayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this._tuesdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this._wednesdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this._thursdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this._fridayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this._saturdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.classTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sundayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.mondayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tuesdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.wednesdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.thursdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.fridayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.saturdayColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this._classComboBox = new System.Windows.Forms.ComboBox();
             this._classLabel = new System.Windows.Forms.Label();
             this._hourComboBox = new System.Windows.Forms.ComboBox();
@@ -87,6 +88,7 @@ namespace CourseManager
             // 
             // _courseManagementTabPage
             // 
+            this._courseManagementTabPage.Controls.Add(this._importComputerScienceCoursesButton);
             this._courseManagementTabPage.Controls.Add(this._saveButton);
             this._courseManagementTabPage.Controls.Add(this._courseGroupBox);
             this._courseManagementTabPage.Controls.Add(this._addCourseButton);
@@ -99,12 +101,22 @@ namespace CourseManager
             this._courseManagementTabPage.Text = "課程管理";
             this._courseManagementTabPage.UseVisualStyleBackColor = true;
             // 
+            // _importComputerScienceCoursesButton
+            // 
+            this._importComputerScienceCoursesButton.Location = new System.Drawing.Point(239, 784);
+            this._importComputerScienceCoursesButton.Name = "_importComputerScienceCoursesButton";
+            this._importComputerScienceCoursesButton.Size = new System.Drawing.Size(244, 71);
+            this._importComputerScienceCoursesButton.TabIndex = 4;
+            this._importComputerScienceCoursesButton.Text = "匯入資工系全部課程";
+            this._importComputerScienceCoursesButton.UseVisualStyleBackColor = true;
+            this._importComputerScienceCoursesButton.Click += new System.EventHandler(this.ImportComputerScienceCoursesButtonClick);
+            // 
             // _saveButton
             // 
             this._saveButton.Enabled = false;
-            this._saveButton.Location = new System.Drawing.Point(1429, 770);
+            this._saveButton.Location = new System.Drawing.Point(1519, 784);
             this._saveButton.Name = "_saveButton";
-            this._saveButton.Size = new System.Drawing.Size(323, 95);
+            this._saveButton.Size = new System.Drawing.Size(206, 71);
             this._saveButton.TabIndex = 3;
             this._saveButton.Text = "儲存";
             this._saveButton.UseVisualStyleBackColor = true;
@@ -152,14 +164,14 @@ namespace CourseManager
             this._timeDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this._timeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this._timeDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this._classTimeColumn,
-            this._sundayColumn,
-            this._mondayColumn,
-            this._tuesdayColumn,
-            this._wednesdayColumn,
-            this._thursdayColumn,
-            this._fridayColumn,
-            this._saturdayColumn});
+            this.classTimeColumn,
+            this.sundayColumn,
+            this.mondayColumn,
+            this.tuesdayColumn,
+            this.wednesdayColumn,
+            this.thursdayColumn,
+            this.fridayColumn,
+            this.saturdayColumn});
             this._timeDataGridView.Location = new System.Drawing.Point(37, 360);
             this._timeDataGridView.Name = "_timeDataGridView";
             this._timeDataGridView.ReadOnly = true;
@@ -172,59 +184,59 @@ namespace CourseManager
             // 
             // classTimeColumn
             // 
-            this._classTimeColumn.HeaderText = "節數";
-            this._classTimeColumn.MinimumWidth = 10;
-            this._classTimeColumn.Name = "classTimeColumn";
-            this._classTimeColumn.ReadOnly = true;
+            this.classTimeColumn.HeaderText = "節數";
+            this.classTimeColumn.MinimumWidth = 10;
+            this.classTimeColumn.Name = "classTimeColumn";
+            this.classTimeColumn.ReadOnly = true;
             // 
             // sundayColumn
             // 
-            this._sundayColumn.HeaderText = "日";
-            this._sundayColumn.MinimumWidth = 10;
-            this._sundayColumn.Name = "sundayColumn";
-            this._sundayColumn.ReadOnly = true;
+            this.sundayColumn.HeaderText = "日";
+            this.sundayColumn.MinimumWidth = 10;
+            this.sundayColumn.Name = "sundayColumn";
+            this.sundayColumn.ReadOnly = true;
             // 
             // mondayColumn
             // 
-            this._mondayColumn.HeaderText = "一";
-            this._mondayColumn.MinimumWidth = 10;
-            this._mondayColumn.Name = "mondayColumn";
-            this._mondayColumn.ReadOnly = true;
+            this.mondayColumn.HeaderText = "一";
+            this.mondayColumn.MinimumWidth = 10;
+            this.mondayColumn.Name = "mondayColumn";
+            this.mondayColumn.ReadOnly = true;
             // 
             // tuesdayColumn
             // 
-            this._tuesdayColumn.HeaderText = "二";
-            this._tuesdayColumn.MinimumWidth = 10;
-            this._tuesdayColumn.Name = "tuesdayColumn";
-            this._tuesdayColumn.ReadOnly = true;
+            this.tuesdayColumn.HeaderText = "二";
+            this.tuesdayColumn.MinimumWidth = 10;
+            this.tuesdayColumn.Name = "tuesdayColumn";
+            this.tuesdayColumn.ReadOnly = true;
             // 
             // wednesdayColumn
             // 
-            this._wednesdayColumn.HeaderText = "三";
-            this._wednesdayColumn.MinimumWidth = 10;
-            this._wednesdayColumn.Name = "wednesdayColumn";
-            this._wednesdayColumn.ReadOnly = true;
+            this.wednesdayColumn.HeaderText = "三";
+            this.wednesdayColumn.MinimumWidth = 10;
+            this.wednesdayColumn.Name = "wednesdayColumn";
+            this.wednesdayColumn.ReadOnly = true;
             // 
             // thursdayColumn
             // 
-            this._thursdayColumn.HeaderText = "四";
-            this._thursdayColumn.MinimumWidth = 10;
-            this._thursdayColumn.Name = "thursdayColumn";
-            this._thursdayColumn.ReadOnly = true;
+            this.thursdayColumn.HeaderText = "四";
+            this.thursdayColumn.MinimumWidth = 10;
+            this.thursdayColumn.Name = "thursdayColumn";
+            this.thursdayColumn.ReadOnly = true;
             // 
             // fridayColumn
             // 
-            this._fridayColumn.HeaderText = "五";
-            this._fridayColumn.MinimumWidth = 10;
-            this._fridayColumn.Name = "fridayColumn";
-            this._fridayColumn.ReadOnly = true;
+            this.fridayColumn.HeaderText = "五";
+            this.fridayColumn.MinimumWidth = 10;
+            this.fridayColumn.Name = "fridayColumn";
+            this.fridayColumn.ReadOnly = true;
             // 
             // saturdayColumn
             // 
-            this._saturdayColumn.HeaderText = "六";
-            this._saturdayColumn.MinimumWidth = 10;
-            this._saturdayColumn.Name = "saturdayColumn";
-            this._saturdayColumn.ReadOnly = true;
+            this.saturdayColumn.HeaderText = "六";
+            this.saturdayColumn.MinimumWidth = 10;
+            this.saturdayColumn.Name = "saturdayColumn";
+            this.saturdayColumn.ReadOnly = true;
             // 
             // _classComboBox
             // 
@@ -268,10 +280,10 @@ namespace CourseManager
             this._hourLabel.TabIndex = 19;
             this._hourLabel.Text = "時數(*)";
             // 
-            // _noteTextbox
+            // _noteTextBox
             // 
             this._noteTextBox.Location = new System.Drawing.Point(118, 227);
-            this._noteTextBox.Name = "_noteTextbox";
+            this._noteTextBox.Name = "_noteTextBox";
             this._noteTextBox.Size = new System.Drawing.Size(926, 36);
             this._noteTextBox.TabIndex = 18;
             this._noteTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -285,10 +297,10 @@ namespace CourseManager
             this._noteLabel.TabIndex = 17;
             this._noteLabel.Text = "備註";
             // 
-            // _languageTextbox
+            // _languageTextBox
             // 
             this._languageTextBox.Location = new System.Drawing.Point(826, 168);
-            this._languageTextBox.Name = "_languageTextbox";
+            this._languageTextBox.Name = "_languageTextBox";
             this._languageTextBox.Size = new System.Drawing.Size(458, 36);
             this._languageTextBox.TabIndex = 16;
             this._languageTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -302,10 +314,10 @@ namespace CourseManager
             this._languageLabel.TabIndex = 15;
             this._languageLabel.Text = "授課語言";
             // 
-            // _teachingAssistantTextbox
+            // _teachingAssistantTextBox
             // 
             this._teachingAssistantTextBox.Location = new System.Drawing.Point(171, 165);
-            this._teachingAssistantTextBox.Name = "_teachingAssistantTextbox";
+            this._teachingAssistantTextBox.Name = "_teachingAssistantTextBox";
             this._teachingAssistantTextBox.Size = new System.Drawing.Size(450, 36);
             this._teachingAssistantTextBox.TabIndex = 14;
             this._teachingAssistantTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -334,7 +346,6 @@ namespace CourseManager
             this._courseTypeComboBox.Name = "_courseTypeComboBox";
             this._courseTypeComboBox.Size = new System.Drawing.Size(179, 32);
             this._courseTypeComboBox.TabIndex = 12;
-            this._teachingAssistantTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _courseTypeLabel
             // 
@@ -345,10 +356,10 @@ namespace CourseManager
             this._courseTypeLabel.TabIndex = 11;
             this._courseTypeLabel.Text = "修(*)";
             // 
-            // _teacherTextbox
+            // _teacherTextBox
             // 
             this._teacherTextBox.Location = new System.Drawing.Point(765, 101);
-            this._teacherTextBox.Name = "_teacherTextbox";
+            this._teacherTextBox.Name = "_teacherTextBox";
             this._teacherTextBox.Size = new System.Drawing.Size(205, 36);
             this._teacherTextBox.TabIndex = 10;
             this._teacherTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -362,10 +373,10 @@ namespace CourseManager
             this._teacherLabel.TabIndex = 9;
             this._teacherLabel.Text = "教師(*)";
             // 
-            // _creditTextbox
+            // _creditTextBox
             // 
             this._creditTextBox.Location = new System.Drawing.Point(417, 101);
-            this._creditTextBox.Name = "_creditTextbox";
+            this._creditTextBox.Name = "_creditTextBox";
             this._creditTextBox.Size = new System.Drawing.Size(173, 36);
             this._creditTextBox.TabIndex = 8;
             this._creditTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -379,10 +390,10 @@ namespace CourseManager
             this._creditLabel.TabIndex = 7;
             this._creditLabel.Text = "學分(*)";
             // 
-            // _stageTextbox
+            // _stageTextBox
             // 
             this._stageTextBox.Location = new System.Drawing.Point(142, 101);
-            this._stageTextBox.Name = "_stageTextbox";
+            this._stageTextBox.Name = "_stageTextBox";
             this._stageTextBox.Size = new System.Drawing.Size(134, 36);
             this._stageTextBox.TabIndex = 6;
             this._stageTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -396,18 +407,18 @@ namespace CourseManager
             this._stageLabel.TabIndex = 5;
             this._stageLabel.Text = "階段(*)";
             // 
-            // _courseNameTextbox
+            // _courseNameTextBox
             // 
             this._courseNameTextBox.Location = new System.Drawing.Point(914, 40);
-            this._courseNameTextBox.Name = "_courseNameTextbox";
+            this._courseNameTextBox.Name = "_courseNameTextBox";
             this._courseNameTextBox.Size = new System.Drawing.Size(370, 36);
             this._courseNameTextBox.TabIndex = 4;
             this._courseNameTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
-            // _courseNumberTextbox
+            // _courseNumberTextBox
             // 
             this._courseNumberTextBox.Location = new System.Drawing.Point(417, 41);
-            this._courseNumberTextBox.Name = "_courseNumberTextbox";
+            this._courseNumberTextBox.Name = "_courseNumberTextBox";
             this._courseNumberTextBox.Size = new System.Drawing.Size(280, 36);
             this._courseNumberTextBox.TabIndex = 3;
             this._courseNumberTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -444,9 +455,9 @@ namespace CourseManager
             // 
             // _addCourseButton
             // 
-            this._addCourseButton.Location = new System.Drawing.Point(17, 770);
+            this._addCourseButton.Location = new System.Drawing.Point(17, 784);
             this._addCourseButton.Name = "_addCourseButton";
-            this._addCourseButton.Size = new System.Drawing.Size(401, 95);
+            this._addCourseButton.Size = new System.Drawing.Size(201, 71);
             this._addCourseButton.TabIndex = 1;
             this._addCourseButton.Text = "新增課程";
             this._addCourseButton.UseVisualStyleBackColor = true;
@@ -482,7 +493,7 @@ namespace CourseManager
             this.MaximizeBox = false;
             this.Name = "CourseManagementForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CourseManagementForm";
+            this.Text = "課程管理";
             this.Load += new System.EventHandler(this.CourseManagementFormLoad);
             this._courseManagementTabControl.ResumeLayout(false);
             this._courseManagementTabPage.ResumeLayout(false);
@@ -534,5 +545,14 @@ namespace CourseManager
         private System.Windows.Forms.DataGridViewCheckBoxColumn _thursdayColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn _fridayColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn _saturdayColumn;
+        private System.Windows.Forms.Button _importComputerScienceCoursesButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn classTimeColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn sundayColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn mondayColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn tuesdayColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn wednesdayColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn thursdayColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn fridayColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn saturdayColumn;
     }
 }

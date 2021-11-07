@@ -266,5 +266,13 @@ namespace CourseManager
             _courseGroupBox.Text = "新增課程";
             ResetGroupBox();
         }
+
+        // import computer science courses and show loading dialog
+        private void ImportComputerScienceCoursesButtonClick(object sender, EventArgs e)
+        {
+            ImportCourseProgressFormViewModel importCourseProgressFormViewModel = new ImportCourseProgressFormViewModel(_viewModel.Model);
+            Form importCourseProgressForm = new ImportCourseProgressForm(importCourseProgressFormViewModel);
+            importCourseProgressForm.ShowDialog();
+        }
     }
 }
