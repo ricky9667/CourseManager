@@ -212,11 +212,6 @@ namespace CourseManager
         // check if course data is changed
         private bool CheckCourseDataChanged(CourseInfo courseInfo, CourseInfo changedCourseInfo)
         {
-            if (_currentSelectedCourse == -1)
-            {
-                return true; 
-            }
-            
             const int CLASSROOM_INDEX = 14;
             const int NUMBER_OF_STUDENT = 15;
             const int NUMBER_OF_DROP_STUDENT = 16;

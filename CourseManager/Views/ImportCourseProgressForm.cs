@@ -26,16 +26,8 @@ namespace CourseManager
             {
                 _viewModel.LoadTabPageCourses(index + INDEX_OFFSET); // need to make function async
                 _importCourseProgressBar.Increment(1);
-                _importCourseProgressLabel.Text = GenerateProgressLabelText(Convert.ToDouble((index + 1) * 100 / _computerScienceTabCount));
+                _importCourseProgressLabel.Text = _viewModel.GenerateProgressLabelText(Convert.ToDouble((index + 1) * 100 / _computerScienceTabCount));
             }
-        }
-
-        // generate progress label string
-        private string GenerateProgressLabelText(double percentage)
-        {
-            const string LOADING_TEXT = "正在匯入課程... ";
-            const string PERCENT = "%";
-            return LOADING_TEXT + percentage + PERCENT;
         }
     }
 }

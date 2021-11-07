@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace CourseManager
 {
@@ -44,6 +39,14 @@ namespace CourseManager
         public void LoadTabPageCourses(int index)
         {
             _model.LoadTabCourses(index);
+        }
+
+        // generate progress label string
+        public string GenerateProgressLabelText(double percentage)
+        {
+            const string LOADING_TEXT = "正在匯入課程... ";
+            const string PERCENT = "%";
+            return LOADING_TEXT + percentage + PERCENT;
         }
     }
 }
