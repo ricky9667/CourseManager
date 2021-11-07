@@ -24,6 +24,8 @@ namespace CourseManager
             _courseCrawler = new CourseCrawler();
 
             SetUpTabPageInfo();
+            LoadTabCourses(0);
+            LoadTabCourses(1);
         }
 
         public List<CourseTabPageInfo> CourseTabPageInfos
@@ -48,6 +50,7 @@ namespace CourseManager
             if (_modelChanged != null)
             {
                 _modelChanged();
+                Console.WriteLine("ModelChanged");
             }
         }
 
@@ -60,18 +63,30 @@ namespace CourseManager
             const string ELECTRONIC_ENGINEERING_3A_TAB_NAME = "electronicEngineering3ATabPage";
             const string ELECTRONIC_ENGINEERING_3A_TAB_TEXT = "電子三甲";
             const string ELECTRONIC_ENGINEERING_3A_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423";
+            const string COMPUTER_SCIENCE_1_TAB_NAME = "computerScience1TabPage";
+            const string COMPUTER_SCIENCE_1_TAB_TEXT = "資工一";
+            const string COMPUTER_SCIENCE_1_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2676";
+            const string COMPUTER_SCIENCE_2_TAB_NAME = "computerScience2TabPage";
+            const string COMPUTER_SCIENCE_2_TAB_TEXT = "資工二";
+            const string COMPUTER_SCIENCE_2_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2550";
+            const string COMPUTER_SCIENCE_4_TAB_NAME = "computerScience4TabPage";
+            const string COMPUTER_SCIENCE_4_TAB_TEXT = "資工四";
+            const string COMPUTER_SCIENCE_4_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2314";
 
             _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_3_TAB_NAME, COMPUTER_SCIENCE_3_TAB_TEXT, COMPUTER_SCIENCE_3_COURSE_LINK));
             _courseTabPageInfos.Add(new CourseTabPageInfo(ELECTRONIC_ENGINEERING_3A_TAB_NAME, ELECTRONIC_ENGINEERING_3A_TAB_TEXT, ELECTRONIC_ENGINEERING_3A_COURSE_LINK));
+            _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_1_TAB_NAME, COMPUTER_SCIENCE_1_TAB_TEXT, COMPUTER_SCIENCE_1_COURSE_LINK));
+            _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_2_TAB_NAME, COMPUTER_SCIENCE_2_TAB_TEXT, COMPUTER_SCIENCE_2_COURSE_LINK));
+            _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_4_TAB_NAME, COMPUTER_SCIENCE_4_TAB_TEXT, COMPUTER_SCIENCE_4_COURSE_LINK));
         }
 
         // get single course info
         public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
-            if (!CheckTabExists(tabIndex))
-            {
-                LoadCourses(tabIndex);
-            }
+            //if (!CheckTabExists(tabIndex))
+            //{
+            //    LoadCourses(tabIndex);
+            //}
             return _courseInfosDictionary[tabIndex][courseIndex];
         }
 
@@ -87,6 +102,7 @@ namespace CourseManager
         {
             if (!CheckTabExists(tabIndex))
             {
+                Console.WriteLine("loading course tab = " + tabIndex);
                 List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
                 List<bool> selectedCourses = new List<bool>();
 
@@ -98,15 +114,36 @@ namespace CourseManager
 
                 _courseInfosDictionary.Add(tabIndex, courseInfos);
                 _isCourseSelected.Add(tabIndex, selectedCourses);
+                _courseTabPageInfos[tabIndex].Loaded = true;
+            }
+        }
+
+        // fetch course tab data from crawler
+        public void LoadTabCourses(int tabIndex)
+        {
+            if (!_courseTabPageInfos[tabIndex].Loaded)
+            {
+                List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
+                List<bool> selectedCourses = new List<bool>();
+                for (int i = 0; i < courseInfos.Count; i++)
+                {
+                    selectedCourses.Add(false);
+                }
+                _courseInfosDictionary.Add(tabIndex, courseInfos);
+                _isCourseSelected.Add(tabIndex, selectedCourses);
+                _courseTabPageInfos[tabIndex].Loaded = true;
+
+                NotifyObserver();
             }
         }
 
         // load all courses
         public void ManuallyLoadAllCourses()
         {
+            Console.WriteLine(_courseTabPageInfos.Count);
             for (int index = 0; index < _courseTabPageInfos.Count; index++)
             {
-                LoadCourses(index);
+                LoadTabCourses(index);
             }
 
             NotifyObserver();
@@ -129,30 +166,30 @@ namespace CourseManager
         // get course infos from selected tab
         public List<CourseInfo> GetCourseInfos(int tabIndex)
         {
-            if (!CheckTabExists(tabIndex))
-            {
-                LoadCourses(tabIndex);
-            }
+            //if (!CheckTabExists(tabIndex))
+            //{
+            //    LoadCourses(tabIndex);
+            //}
             return _courseInfosDictionary[tabIndex];
         }
 
         // check if a particular course is selected
         public bool CheckCourseSelected(int tabIndex, int courseIndex)
         {
-            if (!CheckTabExists(tabIndex))
-            {
-                LoadCourses(tabIndex);
-            }
+            //if (!CheckTabExists(tabIndex))
+            //{
+            //    LoadCourses(tabIndex);
+            //}
             return _isCourseSelected[tabIndex][courseIndex];
         }
 
         // get showing indexes of current datagridview
         public List<int> GetShowingIndexes(int tabIndex)
         {
-            if (!CheckTabExists(tabIndex))
-            {
-                LoadCourses(tabIndex);
-            }
+            //if (!CheckTabExists(tabIndex))
+            //{
+            //    LoadCourses(tabIndex);
+            //}
 
             List<int> showingList = new List<int>();
             int count = _courseInfosDictionary[tabIndex].Count;
@@ -169,10 +206,10 @@ namespace CourseManager
         // add checked courses to selected courses
         public void SelectCourses(int tabIndex, List<int> selectedIndexes)
         {
-            if (!CheckTabExists(tabIndex))
-            {
-                LoadCourses(tabIndex);
-            }
+            //if (!CheckTabExists(tabIndex))
+            //{
+            //    LoadCourses(tabIndex);
+            //}
 
             int tabCount = _courseInfosDictionary[tabIndex].Count;
             for (int courseIndex = 0; courseIndex < tabCount; courseIndex++)
@@ -271,14 +308,17 @@ namespace CourseManager
             List<Tuple<int, int, string>> courseManagementList = new List<Tuple<int, int, string>>(); // tabIndex, courseIndex, courseName
             for (int tabIndex = 0; tabIndex < _courseTabPageInfos.Count; tabIndex++)
             {
-                if (!CheckTabExists(tabIndex))
+                //if (!CheckTabExists(tabIndex))
+                //{
+                //    LoadCourses(tabIndex);
+                //}
+                if (_courseTabPageInfos[tabIndex].Loaded)
                 {
-                    LoadCourses(tabIndex);
-                }
-                List<CourseInfo> courseInfos = _courseInfosDictionary[tabIndex];
-                for (int courseIndex = 0; courseIndex < courseInfos.Count; courseIndex++)
-                {
-                    courseManagementList.Add(new Tuple<int, int, string>(tabIndex, courseIndex, courseInfos[courseIndex].Name));
+                    List<CourseInfo> courseInfos = _courseInfosDictionary[tabIndex];
+                    for (int courseIndex = 0; courseIndex < courseInfos.Count; courseIndex++)
+                    {
+                        courseManagementList.Add(new Tuple<int, int, string>(tabIndex, courseIndex, courseInfos[courseIndex].Name));
+                    }
                 }
             }
 

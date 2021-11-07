@@ -13,6 +13,7 @@ namespace CourseManager
     public partial class ImportCourseProgressForm : Form
     {
         ImportCourseProgressFormViewModel _viewModel;
+        private readonly int _computerScienceTabCount = 3;
         public ImportCourseProgressForm(ImportCourseProgressFormViewModel viewModel)
         {
             _viewModel = viewModel;
@@ -24,16 +25,16 @@ namespace CourseManager
         // progress form load
         private void ImportCourseProgressFormLoad(object sender, EventArgs e)
         {
-            int count = _viewModel.ComputerScienceCourseTabPageInfos.Count;
-            
-            _importCourseProgressBar.Maximum = count;
+            const int INDEX_OFFSET = 2;
+            _importCourseProgressBar.Maximum = _computerScienceTabCount;
             _importCourseProgressBar.Value = 0;
 
-            for (int i = 0; i < count; i++)
+            for (int index = 0; index < _computerScienceTabCount; index++)
             {
-                _viewModel.LoadTabPageCourses(i); // need to make function async
+                Console.WriteLine("progress load index = " + index);
+                _viewModel.LoadTabPageCourses(index + INDEX_OFFSET); // need to make function async
                 _importCourseProgressBar.Increment(1);
-                _importCourseProgressLabel.Text = GenerateProgressLabelText(Convert.ToDouble((i + 1) * 100 / count));
+                _importCourseProgressLabel.Text = GenerateProgressLabelText(Convert.ToDouble((index + 1) * 100 / _computerScienceTabCount));
             }
         }
 

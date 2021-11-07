@@ -7,6 +7,7 @@
             TabName = tabName;
             TabText = tabText;
             CourseLink = courseLink;
+            Loaded = false;
         }
 
         public string TabName
@@ -20,6 +21,11 @@
         }
 
         public string CourseLink
+        {
+            get; set;
+        }
+
+        public bool Loaded
         {
             get; set;
         }
