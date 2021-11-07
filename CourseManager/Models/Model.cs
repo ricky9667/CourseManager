@@ -97,7 +97,6 @@ namespace CourseManager
         {
             if (!CheckTabExists(tabIndex))
             {
-                Console.WriteLine("loading course tab = " + tabIndex);
                 List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
                 List<bool> selectedCourses = new List<bool>();
 
