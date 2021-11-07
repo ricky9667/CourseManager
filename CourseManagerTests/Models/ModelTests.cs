@@ -30,14 +30,6 @@ namespace CourseManager.Tests
         }
 
         [TestMethod()]
-        public void CheckTabExistsTest()
-        {
-            Assert.IsFalse(model.CheckTabExists(0));
-            model.ManuallyLoadAllCourses();
-            Assert.IsTrue(model.CheckTabExists(0));
-        }
-
-        [TestMethod()]
         public void SetCourseInfoTest()
         {
             model.ManuallyLoadAllCourses();
@@ -72,10 +64,10 @@ namespace CourseManager.Tests
         [TestMethod()]
         public void GetCourseInfosTest()
         {
-            Assert.IsFalse(model.CheckTabExists(0));
+            //Assert.IsFalse(model.CheckTabExists(0));
             List<CourseInfo> courseInfos = model.GetCourseInfos(0);
 
-            Assert.IsTrue(model.CheckTabExists(0));
+            //Assert.IsTrue(model.CheckTabExists(0));
             Assert.AreEqual(12, courseInfos.Count);
             Assert.AreEqual("班週會及導師時間", courseInfos[0].Name);
         }

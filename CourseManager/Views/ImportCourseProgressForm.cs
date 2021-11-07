@@ -31,7 +31,6 @@ namespace CourseManager
 
             for (int index = 0; index < _computerScienceTabCount; index++)
             {
-                Console.WriteLine("progress load index = " + index);
                 _viewModel.LoadTabPageCourses(index + INDEX_OFFSET); // need to make function async
                 _importCourseProgressBar.Increment(1);
                 _importCourseProgressLabel.Text = GenerateProgressLabelText(Convert.ToDouble((index + 1) * 100 / _computerScienceTabCount));
