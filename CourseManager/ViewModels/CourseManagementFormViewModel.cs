@@ -12,6 +12,7 @@ namespace CourseManager
         private bool _courseGroupBoxEnabled;
         private bool _addCourseButtonEnabled;
         private bool _saveButtonEnabled;
+        private bool _importCourseButtonEnabled;
         int _currentSelectedCourse;
         List<Tuple<int, int, string>> _courseManagementList;
 
@@ -21,6 +22,7 @@ namespace CourseManager
             _courseGroupBoxEnabled = false;
             _addCourseButtonEnabled = true;
             _saveButtonEnabled = false;
+            _importCourseButtonEnabled = true;
             _currentSelectedCourse = -1;
             _courseManagementList = _model.GetCourseManagementList();
         }
@@ -69,6 +71,19 @@ namespace CourseManager
             {
                 _saveButtonEnabled = value;
                 NotifyPropertyChanged(nameof(SaveButtonEnabled));
+            }
+        }
+
+        public bool ImportCourseButtonEnabled
+        {
+            get
+            {
+                return _importCourseButtonEnabled;
+            }
+            set
+            {
+                _importCourseButtonEnabled = value;
+                NotifyPropertyChanged(nameof(ImportCourseButtonEnabled));
             }
         }
 

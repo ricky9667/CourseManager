@@ -29,6 +29,7 @@ namespace CourseManager
         {
             _addCourseButton.DataBindings.Add(nameof(_addCourseButton.Enabled), _viewModel, nameof(_viewModel.AddCourseButtonEnabled));
             _saveButton.DataBindings.Add(nameof(_saveButton.Enabled), _viewModel, nameof(_viewModel.SaveButtonEnabled));
+            _importComputerScienceCoursesButton.DataBindings.Add(nameof(_importComputerScienceCoursesButton.Enabled), _viewModel, nameof(_viewModel.ImportCourseButtonEnabled));
             _courseGroupBox.DataBindings.Add(nameof(_courseGroupBox.Enabled), _viewModel, nameof(_viewModel.CourseGroupBoxEnabled));
             foreach (Control courseGroupBoxControl in _courseGroupBox.Controls)
             {
@@ -273,6 +274,7 @@ namespace CourseManager
             ImportCourseProgressFormViewModel importCourseProgressFormViewModel = new ImportCourseProgressFormViewModel(_viewModel.Model);
             Form importCourseProgressForm = new ImportCourseProgressForm(importCourseProgressFormViewModel);
             importCourseProgressForm.ShowDialog();
+            _viewModel.ImportCourseButtonEnabled = false;
         }
     }
 }
