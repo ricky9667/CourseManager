@@ -13,6 +13,8 @@ namespace CourseManager.Tests
     {
         Model model;
         CourseSelectingFormViewModel viewModel;
+
+        // unit test case setup
         [TestInitialize]
         public void Setup()
         {
@@ -20,6 +22,7 @@ namespace CourseManager.Tests
             viewModel = new CourseSelectingFormViewModel(model);
         }
 
+        // test constructor
         [TestMethod()]
         public void CourseSelectingFormViewModelTest()
         {
@@ -31,6 +34,7 @@ namespace CourseManager.Tests
             Assert.AreEqual(12, viewModel.CurrentShowingIndexes.Count);
         }
 
+        // test notify observer
         [TestMethod()]
         public void NotifyObserverTest()
         {
@@ -44,6 +48,7 @@ namespace CourseManager.Tests
             Assert.IsTrue(isMethodCalled);
         }
 
+        // test controls enabled property
         [TestMethod()]
         public void ControlEnabledTest()
         {
@@ -55,12 +60,14 @@ namespace CourseManager.Tests
             Assert.IsTrue(viewModel.SubmitButtonEnabled);
         }
 
+        // test course tab page infos property
         [TestMethod()]
         public void CourseTabPageInfosTest()
         {
             Assert.AreEqual(2, viewModel.CourseTabPageInfos.Count);
         }
 
+        // test current course infos and current showing indexes
         [TestMethod()]
         public void UpdateCurrentTabDataTest()
         {
@@ -73,6 +80,7 @@ namespace CourseManager.Tests
             Assert.AreEqual(12, viewModel.CurrentShowingIndexes.Count);
         }
 
+        // test select courses and get message test
         [TestMethod()]
         public void SelectCoursesAndGetMessageTest()
         {

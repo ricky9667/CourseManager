@@ -14,6 +14,7 @@ namespace CourseManager.Tests
         Model model;
         ImportCourseProgressFormViewModel viewModel;
 
+        // unit test case setup
         [TestInitialize]
         public void Setup()
         {
@@ -21,6 +22,7 @@ namespace CourseManager.Tests
             viewModel = new ImportCourseProgressFormViewModel(model);
         }
 
+        // test load tab page courses
         [TestMethod()]
         public void LoadTabPageCoursesTest()
         {
@@ -30,6 +32,7 @@ namespace CourseManager.Tests
 
         }
 
+        // test generate progress label text
         [TestMethod()]
         public void GenerateProgressLabelTextTest()
         {

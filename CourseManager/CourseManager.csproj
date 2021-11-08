@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\CourseInfo.cs" />
+    <Compile Include="Models\ClassInfo.cs" />
     <Compile Include="Utils\CourseCrawler.cs" />
     <Compile Include="ViewModels\CourseManagementFormViewModel.cs" />
     <Compile Include="ViewModels\CourseSelectingFormViewModel.cs" />

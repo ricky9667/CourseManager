@@ -15,13 +15,15 @@ namespace CourseManager.Tests
         CourseInfo windowsProgrammingCourseInfo = new CourseInfo("291710", "視窗程式設計", "1", "3.0", "3", "★", "陳偉凱", "", "", "", "", "3 4 6", "", "", "二教206(e)\n二教205(e)", "43", "15", "", "", "", "查詢", "", "");
         CourseInfo databaseSystemsCourseInfo = new CourseInfo("291705", "資料庫系統", "1", "3.0", "3", "▲", "劉建宏", "", "", "7", "8 9", "", "", "", "六教327(e)", "100", "0", "", "", "", "查詢", "", "");
         CourseInfo artificialIntelligenceCourseInfo = new CourseInfo("294738", "人工智慧", "1", "3.0", "3", "▲", "黃育賢\n賴冠廷\n賴建宏", "", "", "", "2 3 4", "", "", "", "六教325(e)", "58", "1", "", "", "電子三、四甲乙合開", "查詢\n查詢\n查詢", "", "");
-        
+
+        // unit test case setup
         [TestInitialize]
         public void Setup()
         {
             model = new Model();
         }
 
+        // test constructor
         [TestMethod()]
         public void GetCourseInfoTest()
         {
@@ -29,6 +31,7 @@ namespace CourseManager.Tests
             Assert.IsTrue(testCourseInfo.CheckPropertiesIdentical(windowsProgrammingCourseInfo, new int[]{ 16, 17, 18, 19, 20, 21, 22 }));
         }
 
+        // test notify observer
         [TestMethod()]
         public void NotifyObserverTest()
         {
@@ -42,19 +45,21 @@ namespace CourseManager.Tests
             Assert.IsTrue(isMethodCalled);
         }
 
+        // test set course info
         [TestMethod()]
         public void SetCourseInfoTest()
         {
-            model.ManuallyLoadAllCourses();
+            model.LoadAllTabCourses();
             model.SetCourseInfo(0, 0, windowsProgrammingCourseInfo);
             Assert.IsTrue(windowsProgrammingCourseInfo.CheckPropertiesIdentical(model.GetCourseInfo(0, 0), new int[] { 16, 17, 18, 19, 20, 21, 22 }));
         }
 
+        // test add new course info
         [TestMethod()]
         public void AddNewCourseInfoTest()
         {
             const int tabIndex = 0;
-            model.ManuallyLoadAllCourses();
+            model.LoadAllTabCourses();
 
             int courseCountOld = model.GetCourseInfos(tabIndex).Count;
             model.AddNewCourseInfo(0, artificialIntelligenceCourseInfo);
@@ -66,6 +71,7 @@ namespace CourseManager.Tests
             Assert.IsFalse(model.CheckCourseSelected(tabIndex, courseIndex));
         }
 
+        //  test check course selected
         [TestMethod()]
         public void CheckCourseSelectedTest()
         {
@@ -74,6 +80,7 @@ namespace CourseManager.Tests
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => model.CheckCourseSelected(0, 20));
         }
 
+        // test get course infos
         [TestMethod()]
         public void GetCourseInfosTest()
         {
@@ -83,6 +90,7 @@ namespace CourseManager.Tests
             Assert.AreEqual("班週會及導師時間", courseInfos[0].Name);
         }
 
+        // test get showing indexes
         [TestMethod()]
         public void GetShowingIndexesTest()
         {
@@ -98,6 +106,7 @@ namespace CourseManager.Tests
             Assert.IsFalse(showingIndexes.Exists(item => item == 5));
         }
 
+        // test select courses
         [TestMethod()]
         public void SelectCoursesTest()
         {
@@ -113,6 +122,7 @@ namespace CourseManager.Tests
             Assert.IsTrue(model.CheckCourseSelected(0, 5));
         }
 
+        // test discard course
         [TestMethod()]
         public void DiscardCourseTest()
         {
@@ -127,10 +137,11 @@ namespace CourseManager.Tests
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => model.DiscardCourse(6));
         }
 
+        // test check same numbers
         [TestMethod()]
         public void CheckSameNumbersTest()
         {
-            model.ManuallyLoadAllCourses();
+            model.LoadAllTabCourses();
             model.SelectCourses(0, new List<int> { 3, 4, 5 });
             string message = model.CheckSameNumbers(1, new List<int> { 5, 6 });
             Assert.AreEqual("", message);
@@ -142,10 +153,11 @@ namespace CourseManager.Tests
             Assert.AreEqual(expectedMessage, message);
         }
 
+        // test check same names
         [TestMethod()]
         public void CheckSameNamesTest()
         {
-            model.ManuallyLoadAllCourses();
+            model.LoadAllTabCourses();
             model.SelectCourses(0, new List<int> { 3, 4 });
             string message = model.CheckSameNames(0, new List<int> { 7, 9 });
             Assert.AreEqual("", message);
@@ -156,10 +168,11 @@ namespace CourseManager.Tests
             Assert.AreEqual(expectedMessage, message);
         }
 
+        // test check conflict times
         [TestMethod()]
         public void CheckConflictTimesTest()
         {
-            model.ManuallyLoadAllCourses();
+            model.LoadAllTabCourses();
             model.SelectCourses(0, new List<int> { 3, 4 });
             string message = model.CheckSameNames(0, new List<int> { 7, 9 });
             Assert.AreEqual("", message); // 23
@@ -177,10 +190,11 @@ namespace CourseManager.Tests
             Assert.AreEqual(expectedMessage, message);
         }
 
+        // test get course management list
         [TestMethod()]
         public void GetCourseManagementListTest()
         {
-            model.ManuallyLoadAllCourses();
+            model.LoadAllTabCourses();
             List<Tuple<int, int, string>> courseList = model.GetCourseManagementList();
             int tabCount = model.CourseTabPageInfos.Count;
             int courseCount = 0;
@@ -191,10 +205,11 @@ namespace CourseManager.Tests
             Assert.AreEqual(courseCount, courseList.Count);
         }
 
+        // test move course info
         [TestMethod()]
         public void MoveCourseInfoTest()
         {
-            model.ManuallyLoadAllCourses();
+            model.LoadAllTabCourses();
             CourseInfo courseInfo = model.GetCourseInfo(0, 3);
 
             model.MoveCourseInfo(0, 3, 1);

@@ -13,6 +13,8 @@ namespace CourseManager.Tests
     {
         Model model;
         CourseManagementFormViewModel viewModel;
+        
+        // unit test case setup
         [TestInitialize]
         public void Setup()
         {
@@ -20,6 +22,7 @@ namespace CourseManager.Tests
             viewModel = new CourseManagementFormViewModel(model);
         }
 
+        // test constructor
         [TestMethod()]
         public void CourseManagementFormViewModelTest()
         {
@@ -29,6 +32,7 @@ namespace CourseManager.Tests
             Assert.AreEqual(-1, viewModel.CurrentSelectedCourse);
         }
 
+        // test notify observer
         [TestMethod()]
         public void NotifyObserverTest()
         {
@@ -42,6 +46,7 @@ namespace CourseManager.Tests
             Assert.IsTrue(isMethodCalled);
         }
 
+        // test controls enabled property
         [TestMethod()]
         public void ControlsEnabledTest()
         {
@@ -53,6 +58,7 @@ namespace CourseManager.Tests
             Assert.IsTrue(viewModel.SaveButtonEnabled);
         }
 
+        // test get course info
         [TestMethod()]
         public void GetCourseInfoTest()
         {
@@ -61,6 +67,7 @@ namespace CourseManager.Tests
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => viewModel.GetCourseInfo(0, 22));
         }
 
+        // test current selected course property
         [TestMethod()]
         public void CurrentSelectedCourseTest()
         {
@@ -68,6 +75,7 @@ namespace CourseManager.Tests
             Assert.AreEqual(10, viewModel.CurrentSelectedCourse);
         }
 
+        // test update course info
         [TestMethod()]
         public void UpdateCourseInfoTest()
         {
@@ -81,6 +89,7 @@ namespace CourseManager.Tests
             Assert.AreEqual(courseInfo, viewModel.GetCourseInfo(1, model.GetCourseInfos(1).Count - 1));
         }
 
+        // test add new course
         [TestMethod()]
         public void AddNewCourseTest()
         {
@@ -89,6 +98,7 @@ namespace CourseManager.Tests
             Assert.AreEqual(testCourseInfo, viewModel.GetCourseInfo(0, model.GetCourseInfos(0).Count - 1));
         }
 
+        // test check save button state
         [TestMethod()]
         public void CheckSaveButtonStateByCourseDataTest()
         {

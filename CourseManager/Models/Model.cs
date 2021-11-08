@@ -12,15 +12,12 @@ namespace CourseManager
         private readonly Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
         private readonly Dictionary<int, List<bool>> _isCourseSelected; 
         private readonly List<Tuple<int, int>> _selectedIndexPairs; // tabIndex, courseIndex
-        private readonly CourseCrawler _courseCrawler;
-
         public Model()
         {
             _courseTabPageInfos = new List<CourseTabPageInfo>();
             _courseInfosDictionary = new Dictionary<int, List<CourseInfo>>();
             _isCourseSelected = new Dictionary<int, List<bool>>();
             _selectedIndexPairs = new List<Tuple<int, int>>();
-            _courseCrawler = new CourseCrawler();
 
             SetUpTabPageInfo();
             LoadTabCourses(0);
@@ -55,27 +52,12 @@ namespace CourseManager
         // setup hard data, should be moved
         private void SetUpTabPageInfo()
         {
-            const string COMPUTER_SCIENCE_3_TAB_NAME = "computerScience3TabPage";
-            const string COMPUTER_SCIENCE_3_TAB_TEXT = "資工三";
-            const string COMPUTER_SCIENCE_3_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433";
-            const string ELECTRONIC_ENGINEERING_3A_TAB_NAME = "electronicEngineering3ATabPage";
-            const string ELECTRONIC_ENGINEERING_3A_TAB_TEXT = "電子三甲";
-            const string ELECTRONIC_ENGINEERING_3A_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423";
-            const string COMPUTER_SCIENCE_1_TAB_NAME = "computerScience1TabPage";
-            const string COMPUTER_SCIENCE_1_TAB_TEXT = "資工一";
-            const string COMPUTER_SCIENCE_1_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2676";
-            const string COMPUTER_SCIENCE_2_TAB_NAME = "computerScience2TabPage";
-            const string COMPUTER_SCIENCE_2_TAB_TEXT = "資工二";
-            const string COMPUTER_SCIENCE_2_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2550";
-            const string COMPUTER_SCIENCE_4_TAB_NAME = "computerScience4TabPage";
-            const string COMPUTER_SCIENCE_4_TAB_TEXT = "資工四";
-            const string COMPUTER_SCIENCE_4_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2314";
-
-            _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_3_TAB_NAME, COMPUTER_SCIENCE_3_TAB_TEXT, COMPUTER_SCIENCE_3_COURSE_LINK));
-            _courseTabPageInfos.Add(new CourseTabPageInfo(ELECTRONIC_ENGINEERING_3A_TAB_NAME, ELECTRONIC_ENGINEERING_3A_TAB_TEXT, ELECTRONIC_ENGINEERING_3A_COURSE_LINK));
-            _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_1_TAB_NAME, COMPUTER_SCIENCE_1_TAB_TEXT, COMPUTER_SCIENCE_1_COURSE_LINK));
-            _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_2_TAB_NAME, COMPUTER_SCIENCE_2_TAB_TEXT, COMPUTER_SCIENCE_2_COURSE_LINK));
-            _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_4_TAB_NAME, COMPUTER_SCIENCE_4_TAB_TEXT, COMPUTER_SCIENCE_4_COURSE_LINK));
+            ClassInfo classInfo = new ClassInfo();
+            _courseTabPageInfos.Add(classInfo.ComputerScience3TabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ElectronicEngineering3ATabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ComputerScience1TabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ComputerScience2TabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ComputerScience4TabPageInfo);
         }
 
         // fetch course tab data from crawler
@@ -83,9 +65,9 @@ namespace CourseManager
         {
             if (!_courseTabPageInfos[tabIndex].Loaded)
             {
-                List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
+                List<CourseInfo> courseInfos = _courseTabPageInfos[tabIndex].GetOwnCourseInfos();
                 List<bool> selectedCourses = new List<bool>();
-                for (int i = 0; i < courseInfos.Count; i++)
+                foreach (CourseInfo _ in courseInfos)
                 {
                     selectedCourses.Add(false);
                 }
@@ -98,7 +80,7 @@ namespace CourseManager
         }
 
         // load all courses
-        public void ManuallyLoadAllCourses()
+        public void LoadAllTabCourses()
         {
             Console.WriteLine(_courseTabPageInfos.Count);
             for (int index = 0; index < _courseTabPageInfos.Count; index++)

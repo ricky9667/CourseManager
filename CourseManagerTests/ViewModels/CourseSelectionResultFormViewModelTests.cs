@@ -13,6 +13,8 @@ namespace CourseManager.Tests
     {
         Model model;
         CourseSelectionResultFormViewModel viewModel;
+
+        // unit test case setup
         [TestInitialize]
         public void Setup()
         {
@@ -20,12 +22,14 @@ namespace CourseManager.Tests
             viewModel = new CourseSelectionResultFormViewModel(model);
         }
 
+        // test constructor
         [TestMethod()]
         public void CourseSelectionResultFormViewModelTest()
         {
             Assert.AreEqual(0, viewModel.SelectedCourseInfos.Count);
         }
 
+        // test notify observer
         [TestMethod()]
         public void NotifyObserverTest()
         {
@@ -40,6 +44,7 @@ namespace CourseManager.Tests
             Assert.IsTrue(isMethodCalled);
         }
 
+        // test update selected course infos
         [TestMethod()]
         public void UpdateSelectedCourseInfosTest()
         {
@@ -53,6 +58,7 @@ namespace CourseManager.Tests
             Assert.AreEqual(model.GetCourseInfo(1, 7), viewModel.SelectedCourseInfos[3]);
         }
 
+        // test remove course
         [TestMethod()]
         public void RemoveCourseTest()
         {

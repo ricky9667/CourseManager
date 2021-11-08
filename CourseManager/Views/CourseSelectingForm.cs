@@ -49,13 +49,11 @@ namespace CourseManager
                     _courseTabControl.Controls.Add(new TabPage
                     {
                         Location = new System.Drawing.Point(8, 39),
-                        Margin = new Padding(2, 4, 2, 4),
                         Size = new System.Drawing.Size(1557, 543),
                         TabIndex = index,
                         UseVisualStyleBackColor = true
                     });
                 }
-
                 _courseTabControl.Controls[index].Name = tabPageInfo.TabName;
                 _courseTabControl.Controls[index].Text = tabPageInfo.TabText;
                 index++;
