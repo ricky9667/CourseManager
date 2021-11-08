@@ -27,6 +27,20 @@ namespace CourseManager.Tests
         }
 
         [TestMethod()]
+        public void NotifyObserverTest()
+        {
+            bool isMethodCalled = false;
+            viewModel._viewModelChanged += () =>
+            {
+                isMethodCalled = true;
+            };
+
+            model.SelectCourses(0, new List<int> { 1, 2, 3 });
+            viewModel.RemoveCourse(0);
+            Assert.IsTrue(isMethodCalled);
+        }
+
+        [TestMethod()]
         public void UpdateSelectedCourseInfosTest()
         {
             model.SelectCourses(0, new List<int> { 3, 4, 5 });

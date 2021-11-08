@@ -30,6 +30,19 @@ namespace CourseManager.Tests
         }
 
         [TestMethod()]
+        public void NotifyObserverTest()
+        {
+            bool isMethodCalled = false;
+            viewModel._viewModelChanged += () =>
+            {
+                isMethodCalled = true;
+            };
+
+            viewModel.UpdateCourseManagementList();
+            Assert.IsTrue(isMethodCalled);
+        }
+
+        [TestMethod()]
         public void ControlsEnabledTest()
         {
             viewModel.CourseGroupBoxEnabled = true;
@@ -87,7 +100,7 @@ namespace CourseManager.Tests
             Assert.IsFalse(viewModel.CheckSaveButtonStateByCourseData(testCourseInfo, 0));
 
             viewModel.CurrentSelectedCourse = 4;
-            testCourseInfo = viewModel.GetCourseInfo(0, 4).Copy();
+            testCourseInfo = viewModel.GetCourseInfo(0, 4).GetCopy();
             testCourseInfo.Name = "ChangedCourseName";
             Assert.IsTrue(viewModel.CheckSaveButtonStateByCourseData(testCourseInfo, 0));
         }

@@ -32,6 +32,19 @@ namespace CourseManager.Tests
         }
 
         [TestMethod()]
+        public void NotifyObserverTest()
+        {
+            bool isMethodCalled = false;
+            viewModel._viewModelChanged += () =>
+            {
+                isMethodCalled = true;
+            };
+
+            viewModel.SelectCoursesAndGetMessage(0, new List<int> { 1, 2, 3 });
+            Assert.IsTrue(isMethodCalled);
+        }
+
+        [TestMethod()]
         public void ControlEnabledTest()
         {
             viewModel.CourseTabControlEnabled = false;
