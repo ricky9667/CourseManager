@@ -68,5 +68,16 @@ namespace CourseManager
                 return new CourseTabPageInfo(COMPUTER_SCIENCE_4_TAB_NAME, COMPUTER_SCIENCE_4_TAB_TEXT, COMPUTER_SCIENCE_4_COURSE_LINK);
             }
         }
+
+        public CourseTabPageInfo ComputerScienceMasterTabPageInfo
+        {
+            get
+            {
+                const string COMPUTER_SCIENCE_MASTER_TAB_NAME = "computerScienceMasterTabPage";
+                const string COMPUTER_SCIENCE_MASTER_TAB_TEXT = "資工所";
+                const string COMPUTER_SCIENCE_MASTER_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2701";
+                return new CourseTabPageInfo(COMPUTER_SCIENCE_MASTER_TAB_NAME, COMPUTER_SCIENCE_MASTER_TAB_TEXT, COMPUTER_SCIENCE_MASTER_COURSE_LINK);
+            }
+        }
     }
 }
