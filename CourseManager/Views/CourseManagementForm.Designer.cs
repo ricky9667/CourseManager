@@ -65,7 +65,7 @@ namespace CourseManager
             this._courseNumberTextBox = new System.Windows.Forms.TextBox();
             this._courseNameLabel = new System.Windows.Forms.Label();
             this._courseNumberLabel = new System.Windows.Forms.Label();
-            this._startCourseSettingsComboBox = new System.Windows.Forms.ComboBox();
+            this._openCourseSettingsComboBox = new System.Windows.Forms.ComboBox();
             this._addCourseButton = new System.Windows.Forms.Button();
             this._courseListBox = new System.Windows.Forms.ListBox();
             this._classManagementTabPage = new System.Windows.Forms.TabPage();
@@ -147,7 +147,7 @@ namespace CourseManager
             this._courseGroupBox.Controls.Add(this._courseNumberTextBox);
             this._courseGroupBox.Controls.Add(this._courseNameLabel);
             this._courseGroupBox.Controls.Add(this._courseNumberLabel);
-            this._courseGroupBox.Controls.Add(this._startCourseSettingsComboBox);
+            this._courseGroupBox.Controls.Add(this._openCourseSettingsComboBox);
             this._courseGroupBox.Location = new System.Drawing.Point(441, 20);
             this._courseGroupBox.Name = "_courseGroupBox";
             this._courseGroupBox.Size = new System.Drawing.Size(1311, 744);
@@ -443,15 +443,16 @@ namespace CourseManager
             // 
             // _startCourseSettingsComboBox
             // 
-            this._startCourseSettingsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this._startCourseSettingsComboBox.FormattingEnabled = true;
-            this._startCourseSettingsComboBox.Items.AddRange(new object[] {
+            this._openCourseSettingsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._openCourseSettingsComboBox.FormattingEnabled = true;
+            this._openCourseSettingsComboBox.Items.AddRange(new object[] {
             "開課",
             "停開"});
-            this._startCourseSettingsComboBox.Location = new System.Drawing.Point(37, 44);
-            this._startCourseSettingsComboBox.Name = "_startCourseSettingsComboBox";
-            this._startCourseSettingsComboBox.Size = new System.Drawing.Size(207, 32);
-            this._startCourseSettingsComboBox.TabIndex = 0;
+            this._openCourseSettingsComboBox.Location = new System.Drawing.Point(37, 44);
+            this._openCourseSettingsComboBox.Name = "_startCourseSettingsComboBox";
+            this._openCourseSettingsComboBox.Size = new System.Drawing.Size(207, 32);
+            this._openCourseSettingsComboBox.TabIndex = 0;
+            this._openCourseSettingsComboBox.SelectedIndexChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _addCourseButton
             // 
@@ -506,7 +507,7 @@ namespace CourseManager
 
         #endregion
 
-        private System.Windows.Forms.ComboBox _startCourseSettingsComboBox;
+        private System.Windows.Forms.ComboBox _openCourseSettingsComboBox;
         private System.Windows.Forms.Label _courseNumberLabel;
         private System.Windows.Forms.TextBox _courseNameTextBox;
         private System.Windows.Forms.Label _courseNameLabel;

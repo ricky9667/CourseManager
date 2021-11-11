@@ -10,13 +10,15 @@ namespace CourseManager
 
         private readonly List<CourseTabPageInfo> _courseTabPageInfos;
         private readonly Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
-        private readonly Dictionary<int, List<bool>> _isCourseSelected; 
+        private readonly Dictionary<int, List<bool>> _isCourseSelected;
+        private readonly Dictionary<int, List<bool>> _isCourseOpen;
         private readonly List<Tuple<int, int>> _selectedIndexPairs; // tabIndex, courseIndex
         public Model()
         {
             _courseTabPageInfos = new List<CourseTabPageInfo>();
             _courseInfosDictionary = new Dictionary<int, List<CourseInfo>>();
             _isCourseSelected = new Dictionary<int, List<bool>>();
+            _isCourseOpen = new Dictionary<int, List<bool>>(); // should test
             _selectedIndexPairs = new List<Tuple<int, int>>();
 
             SetUpTabPageInfo();
@@ -68,14 +70,16 @@ namespace CourseManager
             {
                 List<CourseInfo> courseInfos = _courseTabPageInfos[tabIndex].GetOwnCourseInfos();
                 List<bool> selectedCourses = new List<bool>();
+                List<bool> openedCourses = new List<bool>();
                 foreach (CourseInfo _ in courseInfos)
                 {
                     selectedCourses.Add(false);
+                    openedCourses.Add(true);
                 }
                 _courseInfosDictionary.Add(tabIndex, courseInfos);
                 _isCourseSelected.Add(tabIndex, selectedCourses);
+                _isCourseOpen.Add(tabIndex, openedCourses); // should test
                 _courseTabPageInfos[tabIndex].Loaded = true;
-
                 NotifyObserver();
             }
         }
@@ -83,13 +87,10 @@ namespace CourseManager
         // load all courses
         public void LoadAllTabCourses()
         {
-            Console.WriteLine(_courseTabPageInfos.Count);
             for (int index = 0; index < _courseTabPageInfos.Count; index++)
             {
                 LoadTabCourses(index);
             }
-
-            NotifyObserver();
         }
 
         // get single course info
@@ -138,6 +139,12 @@ namespace CourseManager
             return courseManagementList;
         }
 
+        // get course isopen property
+        public bool GetIsCourseOpen(int tabIndex, int courseIndex)
+        {
+            return _isCourseOpen[tabIndex][courseIndex];
+        }
+
         // set single course info
         public void SetCourseInfo(int tabIndex, int courseIndex, CourseInfo courseInfo)
         {
@@ -151,6 +158,18 @@ namespace CourseManager
             _courseInfosDictionary[tabIndex].Add(courseInfo);
             _isCourseSelected[tabIndex].Add(false);
             NotifyObserver();
+        }
+
+        // change open course status
+        public void UpdateCourseOpen(int tabIndex, int courseIndex, bool isCourseOpen)
+        {
+            _isCourseOpen[tabIndex][courseIndex] = isCourseOpen;
+        }
+
+        // add new open course status
+        public void AddNewCourseOpen(int tabIndex, bool isCourseOpen)
+        {
+            _isCourseOpen[tabIndex].Add(isCourseOpen);
         }
 
         // add checked courses to selected courses
@@ -192,6 +211,10 @@ namespace CourseManager
             bool isSelected = _isCourseSelected[tabIndex][courseIndex];
             _isCourseSelected[tabIndex].RemoveAt(courseIndex);
             _isCourseSelected[newTabIndex].Add(isSelected);
+
+            bool isOpen = _isCourseOpen[tabIndex][courseIndex];
+            _isCourseOpen[tabIndex].RemoveAt(courseIndex);
+            _isCourseOpen[newTabIndex].Add(isOpen);
 
             if (isSelected)
             {

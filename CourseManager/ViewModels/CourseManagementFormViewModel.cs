@@ -112,6 +112,16 @@ namespace CourseManager
             }
         }
 
+        public int IsOpenCourseIndex
+        {
+            get
+            {
+                int tabIndex = _courseManagementList[_currentSelectedCourse].Item1;
+                int courseIndex = _courseManagementList[_currentSelectedCourse].Item2;
+                return _model.GetIsCourseOpen(tabIndex, courseIndex) ? 0 : 1;
+            }
+        }
+
         public CourseInfo CurrentCourseInfo
         {
             get
@@ -167,10 +177,11 @@ namespace CourseManager
         }
 
         // update course info
-        public void UpdateCourseInfo(CourseInfo courseInfo, int newTabIndex)
+        public void UpdateCourseInfo(CourseInfo courseInfo, int newTabIndex, int isCourseOpenIndex)
         {
             Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
             _model.SetCourseInfo(course.Item1, course.Item2, courseInfo);
+            _model.UpdateCourseOpen(course.Item1, course.Item2, (isCourseOpenIndex == 0));
             if (course.Item1 != newTabIndex)
             {
                 _model.MoveCourseInfo(course.Item1, course.Item2, newTabIndex);
@@ -185,15 +196,17 @@ namespace CourseManager
         }
 
         // add course info to model
-        public void AddNewCourse(CourseInfo newCourseInfo, int newTabIndex)
+        public void AddNewCourse(CourseInfo newCourseInfo, int newTabIndex, int isCourseOpenIndex)
         {
             _model.AddNewCourseInfo(newTabIndex, newCourseInfo);
+            _model.AddNewCourseOpen(newTabIndex, (isCourseOpenIndex == 0));
         }
 
         // handle save button state
-        public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo, int classIndex)
+        public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo, int classIndex, int isOpenCourseIndex)
         {
             bool isClassChanged = true;
+            bool isOpenCourseChanged = true;
             bool isDataChanged = true;
             bool isTextFormatCorrect = changedCourseInfo.CheckCourseFormat();
             bool isCourseHourMatch = changedCourseInfo.CheckCourseHourMatch();
@@ -203,10 +216,11 @@ namespace CourseManager
                 Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
                 CourseInfo courseInfo = _model.GetCourseInfo(course.Item1, course.Item2);
                 isClassChanged = course.Item1 != classIndex;
+                isOpenCourseChanged = _model.GetIsCourseOpen(course.Item1, course.Item2) != (isOpenCourseIndex == 0);
                 isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
             }
 
-            return (isClassChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
+            return (isClassChanged || isOpenCourseChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
         }
 
         // check if course data is changed

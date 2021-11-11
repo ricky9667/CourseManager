@@ -101,7 +101,7 @@ namespace CourseManager
         // reset all data in group box
         private void ResetGroupBox()
         {
-            _startCourseSettingsComboBox.SelectedIndex = 0;
+            _openCourseSettingsComboBox.SelectedIndex = 0;
             _courseNumberTextBox.Text = "";
             _courseNameTextBox.Text = "";
             _stageTextBox.Text = "";
@@ -140,7 +140,7 @@ namespace CourseManager
         // render data to course group box by course info
         private void RenderCourseGroupBoxData(CourseInfo courseInfo, int classIndex)
         {
-            _startCourseSettingsComboBox.SelectedIndex = 0;
+            _openCourseSettingsComboBox.SelectedIndex = _viewModel.IsOpenCourseIndex;
             _courseNumberTextBox.Text = courseInfo.Number;
             _courseNameTextBox.Text = courseInfo.Name;
             _stageTextBox.Text = courseInfo.Stage;
@@ -166,13 +166,13 @@ namespace CourseManager
             {
                 CourseInfo courseInfo = new CourseInfo();
                 courseInfo = SetNewCourseInfoData(courseInfo);
-                _viewModel.AddNewCourse(courseInfo, _classComboBox.SelectedIndex);
+                _viewModel.AddNewCourse(courseInfo, _classComboBox.SelectedIndex, _openCourseSettingsComboBox.SelectedIndex);
             }
             else
             {
                 CourseInfo courseInfo = _viewModel.CurrentCourseInfo;
                 courseInfo = SetNewCourseInfoData(courseInfo);
-                _viewModel.UpdateCourseInfo(courseInfo, _classComboBox.SelectedIndex);
+                _viewModel.UpdateCourseInfo(courseInfo, _classComboBox.SelectedIndex, _openCourseSettingsComboBox.SelectedIndex);
             }
 
             _viewModel.CourseGroupBoxEnabled = _viewModel.SaveButtonEnabled = false;
@@ -231,7 +231,7 @@ namespace CourseManager
             {
                 CourseInfo showingCourseInfo = new CourseInfo();
                 showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
-                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex, _openCourseSettingsComboBox.SelectedIndex);
             }
         }
 
