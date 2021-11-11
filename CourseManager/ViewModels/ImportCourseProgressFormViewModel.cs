@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
 
 namespace CourseManager
 {
-    public class ImportCourseProgressFormViewModel : INotifyPropertyChanged
+    public class ImportCourseProgressFormViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly Model _model;
         private string _importCourseProgressBarText;
@@ -13,25 +12,16 @@ namespace CourseManager
             _model = model;
         }
 
-        public string ImportCourseProgressBarText
+        public List<int> ComputerScienceTabIndexes
         {
             get
             {
-                return _importCourseProgressBarText;
-            }
-            set
-            {
-                _importCourseProgressBarText = value;
-                NotifyPropertyChanged(nameof(ImportCourseProgressBarText));
-            }
-        }
-
-        // data binding update data on change
-        private void NotifyPropertyChanged(string propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                const int COMPUTER_SCIENCE_1_INDEX = 2;
+                const int COMPUTER_SCIENCE_2_INDEX = 3;
+                const int COMPUTER_SCIENCE_3_INDEX = 0;
+                const int COMPUTER_SCIENCE_4_INDEX = 4;
+                const int COMPUTER_SCIENCE_MASTER_INDEX = 5;
+                return new List<int> { COMPUTER_SCIENCE_1_INDEX, COMPUTER_SCIENCE_2_INDEX, COMPUTER_SCIENCE_3_INDEX, COMPUTER_SCIENCE_4_INDEX, COMPUTER_SCIENCE_MASTER_INDEX };
             }
         }
 

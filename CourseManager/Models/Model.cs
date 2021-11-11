@@ -58,6 +58,7 @@ namespace CourseManager
             _courseTabPageInfos.Add(classInfo.ComputerScience1TabPageInfo);
             _courseTabPageInfos.Add(classInfo.ComputerScience2TabPageInfo);
             _courseTabPageInfos.Add(classInfo.ComputerScience4TabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ComputerScienceMasterTabPageInfo);
         }
 
         // fetch course tab data from crawler
