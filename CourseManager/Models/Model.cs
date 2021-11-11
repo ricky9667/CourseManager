@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CourseManager
 {
@@ -38,7 +39,7 @@ namespace CourseManager
         {
             get
             {
-                return _selectedIndexPairs;
+                return _selectedIndexPairs.Where(indexPair => _isCourseOpen[indexPair.Item1][indexPair.Item2]).ToList();
             }
         }
 
@@ -112,7 +113,7 @@ namespace CourseManager
             int count = _courseInfosDictionary[tabIndex].Count;
             for (int courseIndex = 0; courseIndex < count; courseIndex++)
             {
-                if (!_isCourseSelected[tabIndex][courseIndex])
+                if (!_isCourseSelected[tabIndex][courseIndex] && _isCourseOpen[tabIndex][courseIndex])
                 {
                     showingList.Add(courseIndex);
                 }
@@ -164,12 +165,14 @@ namespace CourseManager
         public void UpdateCourseOpen(int tabIndex, int courseIndex, bool isCourseOpen)
         {
             _isCourseOpen[tabIndex][courseIndex] = isCourseOpen;
+            NotifyObserver();
         }
 
         // add new open course status
         public void AddNewCourseOpen(int tabIndex, bool isCourseOpen)
         {
             _isCourseOpen[tabIndex].Add(isCourseOpen);
+            NotifyObserver();
         }
 
         // add checked courses to selected courses
