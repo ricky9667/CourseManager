@@ -20,7 +20,10 @@ namespace CourseManager
                 const int COMPUTER_SCIENCE_3_INDEX = 0;
                 const int COMPUTER_SCIENCE_4_INDEX = 4;
                 const int COMPUTER_SCIENCE_MASTER_INDEX = 5;
-                return new List<int> { COMPUTER_SCIENCE_1_INDEX, COMPUTER_SCIENCE_2_INDEX, COMPUTER_SCIENCE_3_INDEX, COMPUTER_SCIENCE_4_INDEX, COMPUTER_SCIENCE_MASTER_INDEX };
+                return new List<int> 
+                { 
+                    COMPUTER_SCIENCE_1_INDEX, COMPUTER_SCIENCE_2_INDEX, COMPUTER_SCIENCE_3_INDEX, COMPUTER_SCIENCE_4_INDEX, COMPUTER_SCIENCE_MASTER_INDEX 
+                };
             }
         }
 

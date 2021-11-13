@@ -211,19 +211,17 @@ namespace CourseManager
             _courseInfosDictionary[newTabIndex].Add(courseInfo);
             int newCourseIndex = _courseInfosDictionary[newTabIndex].IndexOf(courseInfo);
 
-            bool isSelected = _isCourseSelected[tabIndex][courseIndex];
-            _isCourseSelected[tabIndex].RemoveAt(courseIndex);
-            _isCourseSelected[newTabIndex].Add(isSelected);
-
             bool isOpen = _isCourseOpen[tabIndex][courseIndex];
             _isCourseOpen[tabIndex].RemoveAt(courseIndex);
             _isCourseOpen[newTabIndex].Add(isOpen);
 
+            bool isSelected = _isCourseSelected[tabIndex][courseIndex];
+            _isCourseSelected[tabIndex].RemoveAt(courseIndex);
+            _isCourseSelected[newTabIndex].Add(isSelected);
             if (isSelected)
             {
                 AdjustSelectedIndexPairs(tabIndex, courseIndex, newTabIndex, newCourseIndex);
             }
-
             NotifyObserver();
         }
 

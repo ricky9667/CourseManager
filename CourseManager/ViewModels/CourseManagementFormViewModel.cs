@@ -146,7 +146,10 @@ namespace CourseManager
                 List<string> classNames = new List<string>();
                 foreach (CourseTabPageInfo info in _model.CourseTabPageInfos)
                 {
-                    classNames.Add(info.TabText);
+                    if (info.Loaded)
+                    {
+                        classNames.Add(info.TabText);
+                    }
                 }
                 return classNames;
             }

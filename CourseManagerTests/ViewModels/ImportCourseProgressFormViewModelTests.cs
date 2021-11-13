@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace CourseManager.Tests
 {
@@ -16,6 +17,14 @@ namespace CourseManager.Tests
             viewModel = new ImportCourseProgressFormViewModel(model);
         }
 
+        // test load tab indexes property
+        [TestMethod()]
+        public void GetComputerScienceTabIndexesTest()
+        {
+            List<int> expectedIndexes = new List<int> { 2, 3, 0, 4, 5 };
+            Assert.AreEqual(expectedIndexes.Count, viewModel.ComputerScienceTabIndexes.Count);
+        }
+
         // test load tab page courses
         [TestMethod()]
         public void LoadTabPageCoursesTest()
@@ -23,7 +32,6 @@ namespace CourseManager.Tests
             Assert.IsFalse(model.CourseTabPageInfos[3].Loaded);
             viewModel.LoadTabPageCourses(3);
             Assert.IsTrue(model.CourseTabPageInfos[3].Loaded);
-
         }
 
         // test generate progress label text

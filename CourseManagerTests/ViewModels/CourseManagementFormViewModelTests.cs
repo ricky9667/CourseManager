@@ -39,9 +39,9 @@ namespace CourseManager.Tests
 
         // test current tab index
         [TestMethod()]
-        public void GetCurrentTabIndexTest()
+        public void GetCourseManagementListTest()
         {
-            Assert.AreEqual(model.GetCourseManagementList()[0].Item1, viewModel.CurrentClassIndex);
+            Assert.AreEqual(model.GetCourseManagementList().Count, viewModel.CourseManagementList.Count);
         }
 
         // test notify observer
