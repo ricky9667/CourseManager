@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CourseManager;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseManager.Tests
 {
@@ -13,6 +8,8 @@ namespace CourseManager.Tests
     {
         Model model;
         CourseSelectionResultFormViewModel viewModel;
+        readonly int computerScience3TabIndex = 0;
+        readonly int electronicEngineering3ATabIndex = 1;
 
         // unit test case setup
         [TestInitialize]
@@ -39,7 +36,7 @@ namespace CourseManager.Tests
                 isMethodCalled = true;
             };
 
-            model.SelectCourses(0, new List<int> { 1, 2, 3 });
+            model.SelectCourses(computerScience3TabIndex, new List<int> { 1, 2, 3 });
             viewModel.RemoveCourse(0);
             Assert.IsTrue(isMethodCalled);
         }
@@ -48,28 +45,28 @@ namespace CourseManager.Tests
         [TestMethod()]
         public void UpdateSelectedCourseInfosTest()
         {
-            model.SelectCourses(0, new List<int> { 3, 4, 5 });
-            model.SelectCourses(1, new List<int> { 7 });
+            model.SelectCourses(computerScience3TabIndex, new List<int> { 3, 4, 5 });
+            model.SelectCourses(electronicEngineering3ATabIndex, new List<int> { 7 });
 
             Assert.AreEqual(4, viewModel.SelectedCourseInfos.Count);
-            Assert.AreEqual(model.GetCourseInfo(0, 3), viewModel.SelectedCourseInfos[0]);
-            Assert.AreEqual(model.GetCourseInfo(0, 4), viewModel.SelectedCourseInfos[1]);
-            Assert.AreEqual(model.GetCourseInfo(0, 5), viewModel.SelectedCourseInfos[2]);
-            Assert.AreEqual(model.GetCourseInfo(1, 7), viewModel.SelectedCourseInfos[3]);
+            Assert.AreEqual(model.GetCourseInfo(computerScience3TabIndex, 3), viewModel.SelectedCourseInfos[0]);
+            Assert.AreEqual(model.GetCourseInfo(computerScience3TabIndex, 4), viewModel.SelectedCourseInfos[1]);
+            Assert.AreEqual(model.GetCourseInfo(computerScience3TabIndex, 5), viewModel.SelectedCourseInfos[2]);
+            Assert.AreEqual(model.GetCourseInfo(electronicEngineering3ATabIndex, 7), viewModel.SelectedCourseInfos[3]);
         }
 
         // test remove course
         [TestMethod()]
         public void RemoveCourseTest()
         {
-            model.SelectCourses(0, new List<int> { 3, 4, 5 });
+            model.SelectCourses(computerScience3TabIndex, new List<int> { 3, 4, 5 });
             model.SelectCourses(1, new List<int> { 7 });
             viewModel.RemoveCourse(2);
             viewModel.RemoveCourse(1);
 
             Assert.AreEqual(2, viewModel.SelectedCourseInfos.Count);
-            Assert.AreEqual(model.GetCourseInfo(0, 3), viewModel.SelectedCourseInfos[0]);
-            Assert.AreEqual(model.GetCourseInfo(1, 7), viewModel.SelectedCourseInfos[1]);
+            Assert.AreEqual(model.GetCourseInfo(computerScience3TabIndex, 3), viewModel.SelectedCourseInfos[0]);
+            Assert.AreEqual(model.GetCourseInfo(electronicEngineering3ATabIndex, 7), viewModel.SelectedCourseInfos[1]);
         }
     }
 }

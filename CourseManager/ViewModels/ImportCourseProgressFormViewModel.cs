@@ -6,7 +6,6 @@ namespace CourseManager
     {
 
         private readonly Model _model;
-        private string _importCourseProgressBarText;
         public ImportCourseProgressFormViewModel(Model model)
         {
             _model = model;

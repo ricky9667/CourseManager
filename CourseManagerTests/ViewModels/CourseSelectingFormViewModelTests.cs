@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CourseManager;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseManager.Tests
 {
@@ -30,8 +25,15 @@ namespace CourseManager.Tests
             Assert.IsTrue(viewModel.CourseSelectionResultButtonEnabled);
             Assert.IsFalse(viewModel.SubmitButtonEnabled);
             Assert.AreEqual(0, viewModel.CurrentTabIndex);
-            Assert.AreEqual(12, viewModel.CurrentCourseInfos.Count);
-            Assert.AreEqual(12, viewModel.CurrentShowingIndexes.Count);
+            Assert.AreEqual(model.GetCourseInfos(0).Count, viewModel.CurrentCourseInfos.Count);
+            Assert.AreEqual(model.GetCourseInfos(0).Count, viewModel.CurrentShowingIndexes.Count);
+        }
+
+        // test model property
+        [TestMethod()]
+        public void GetModelTest()
+        {
+            Assert.AreEqual(model, viewModel.Model);
         }
 
         // test notify observer
@@ -72,12 +74,14 @@ namespace CourseManager.Tests
         public void UpdateCurrentTabDataTest()
         {
             viewModel.CurrentTabIndex = 1;
-            Assert.AreEqual(25, viewModel.CurrentCourseInfos.Count);
-            Assert.AreEqual(25, viewModel.CurrentShowingIndexes.Count);
+            int courseCount = model.GetCourseInfos(viewModel.CurrentTabIndex).Count;
+            Assert.AreEqual(courseCount, viewModel.CurrentCourseInfos.Count);
+            Assert.AreEqual(courseCount, viewModel.CurrentShowingIndexes.Count);
 
             viewModel.CurrentTabIndex = 0;
-            Assert.AreEqual(12, viewModel.CurrentCourseInfos.Count);
-            Assert.AreEqual(12, viewModel.CurrentShowingIndexes.Count);
+            courseCount = model.GetCourseInfos(viewModel.CurrentTabIndex).Count;
+            Assert.AreEqual(courseCount, viewModel.CurrentCourseInfos.Count);
+            Assert.AreEqual(courseCount, viewModel.CurrentShowingIndexes.Count);
         }
 
         // test select courses and get message test

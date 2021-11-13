@@ -1,10 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CourseManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseManager.Tests
 {
@@ -13,6 +7,8 @@ namespace CourseManager.Tests
     {
         Model model;
         StartUpFormViewModel viewModel;
+
+        // unit test case setup
         [TestInitialize]
         public void Setup()
         {
@@ -20,6 +16,7 @@ namespace CourseManager.Tests
             viewModel = new StartUpFormViewModel(model);
         }
 
+        // test constructor
         [TestMethod()]
         public void StartUpFormViewModelTest()
         {
@@ -27,6 +24,14 @@ namespace CourseManager.Tests
             Assert.IsTrue(viewModel.CourseManagementSystemButtonEnabled);
         }
 
+        // test model property
+        [TestMethod()]
+        public void GetModelTest()
+        {
+            Assert.AreEqual(model, viewModel.Model);
+        }
+
+        // test properties enabled
         [TestMethod()]
         public void ControlsEnabledTest()
         {

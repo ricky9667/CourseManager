@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CourseManager;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseManager.Tests
 {
@@ -12,10 +8,11 @@ namespace CourseManager.Tests
     public class ModelTests
     {
         Model model;
-        CourseInfo windowsProgrammingCourseInfo = new CourseInfo("291710", "視窗程式設計", "1", "3.0", "3", "★", "陳偉凱", "", "", "", "", "3 4 6", "", "", "二教206(e)\n二教205(e)", "43", "15", "", "", "", "查詢", "", "");
-        CourseInfo databaseSystemsCourseInfo = new CourseInfo("291705", "資料庫系統", "1", "3.0", "3", "▲", "劉建宏", "", "", "7", "8 9", "", "", "", "六教327(e)", "100", "0", "", "", "", "查詢", "", "");
-        CourseInfo artificialIntelligenceCourseInfo = new CourseInfo("294738", "人工智慧", "1", "3.0", "3", "▲", "黃育賢\n賴冠廷\n賴建宏", "", "", "", "2 3 4", "", "", "", "六教325(e)", "58", "1", "", "", "電子三、四甲乙合開", "查詢\n查詢\n查詢", "", "");
-
+        readonly CourseInfo windowsProgrammingCourseInfo = new CourseInfo("291710", "視窗程式設計", "1", "3.0", "3", "★", "陳偉凱", "", "", "", "", "3 4 6", "", "", "二教206(e)\n二教205(e)", "43", "15", "", "", "", "查詢", "", "");
+        readonly CourseInfo databaseSystemsCourseInfo = new CourseInfo("291705", "資料庫系統", "1", "3.0", "3", "▲", "劉建宏", "", "", "7", "8 9", "", "", "", "六教327(e)", "100", "0", "", "", "", "查詢", "", "");
+        readonly CourseInfo artificialIntelligenceCourseInfo = new CourseInfo("294738", "人工智慧", "1", "3.0", "3", "▲", "黃育賢\n賴冠廷\n賴建宏", "", "", "", "2 3 4", "", "", "", "六教325(e)", "58", "1", "", "", "電子三、四甲乙合開", "查詢\n查詢\n查詢", "", "");
+        readonly int computerScience3TabIndex = 0;
+        readonly int electronicEngineering3ATabIndex = 1;
         // unit test case setup
         [TestInitialize]
         public void Setup()
@@ -27,7 +24,7 @@ namespace CourseManager.Tests
         [TestMethod()]
         public void GetCourseInfoTest()
         {
-            CourseInfo testCourseInfo = model.GetCourseInfo(0, 9);
+            CourseInfo testCourseInfo = model.GetCourseInfo(computerScience3TabIndex, 9);
             Assert.IsTrue(testCourseInfo.CheckPropertiesIdentical(windowsProgrammingCourseInfo, new int[]{ 16, 17, 18, 19, 20, 21, 22 }));
         }
 
@@ -50,58 +47,60 @@ namespace CourseManager.Tests
         public void SetCourseInfoTest()
         {
             model.LoadAllTabCourses();
-            model.SetCourseInfo(0, 0, windowsProgrammingCourseInfo);
-            Assert.IsTrue(windowsProgrammingCourseInfo.CheckPropertiesIdentical(model.GetCourseInfo(0, 0), new int[] { 16, 17, 18, 19, 20, 21, 22 }));
+            int courseIndex = 0;
+            model.SetCourseInfo(computerScience3TabIndex, courseIndex, windowsProgrammingCourseInfo);
+            Assert.IsTrue(windowsProgrammingCourseInfo.CheckPropertiesIdentical(model.GetCourseInfo(computerScience3TabIndex, courseIndex), new int[] { 16, 17, 18, 19, 20, 21, 22 }));
         }
 
         // test add new course info
         [TestMethod()]
         public void AddNewCourseInfoTest()
         {
-            const int tabIndex = 0;
             model.LoadAllTabCourses();
 
-            int courseCountOld = model.GetCourseInfos(tabIndex).Count;
-            model.AddNewCourseInfo(0, artificialIntelligenceCourseInfo);
-            Assert.AreEqual(courseCountOld + 1, model.GetCourseInfos(tabIndex).Count);
+            int courseCountOld = model.GetCourseInfos(computerScience3TabIndex).Count;
+            model.AddNewCourseInfo(computerScience3TabIndex, artificialIntelligenceCourseInfo);
+            Assert.AreEqual(courseCountOld + 1, model.GetCourseInfos(computerScience3TabIndex).Count);
 
-            List<CourseInfo> courseInfos = model.GetCourseInfos(tabIndex);
+            List<CourseInfo> courseInfos = model.GetCourseInfos(computerScience3TabIndex);
             int courseIndex = courseInfos.Count - 1;
             Assert.IsTrue(courseInfos[courseIndex].CheckPropertiesIdentical(artificialIntelligenceCourseInfo, new int[] { }));
-            Assert.IsFalse(model.CheckCourseSelected(tabIndex, courseIndex));
+            Assert.IsFalse(model.CheckCourseSelected(computerScience3TabIndex, courseIndex));
         }
 
         //  test check course selected
         [TestMethod()]
         public void CheckCourseSelectedTest()
         {
-            Assert.IsFalse(model.CheckCourseSelected(0, 0));
-            Assert.IsFalse(model.CheckCourseSelected(1, 0));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => model.CheckCourseSelected(0, 20));
+            Assert.IsFalse(model.CheckCourseSelected(computerScience3TabIndex, 0));
+            Assert.IsFalse(model.CheckCourseSelected(electronicEngineering3ATabIndex, 20));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => model.CheckCourseSelected(computerScience3TabIndex, 20));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => model.CheckCourseSelected(electronicEngineering3ATabIndex, 40));
         }
 
         // test get course infos
         [TestMethod()]
         public void GetCourseInfosTest()
         {
-            List<CourseInfo> courseInfos = model.GetCourseInfos(0);
+            List<CourseInfo> courseInfos = model.GetCourseInfos(computerScience3TabIndex);
 
             Assert.AreEqual(12, courseInfos.Count);
-            Assert.AreEqual("班週會及導師時間", courseInfos[0].Name);
+            Assert.IsTrue(model.GetCourseInfo(computerScience3TabIndex, 0).CheckPropertiesIdentical(courseInfos[0], new int[] { }));
+            Assert.IsTrue(model.GetCourseInfo(computerScience3TabIndex, 4).CheckPropertiesIdentical(courseInfos[4], new int[] { }));
+            Assert.IsTrue(model.GetCourseInfo(computerScience3TabIndex, 8).CheckPropertiesIdentical(courseInfos[8], new int[] { }));
         }
 
         // test get showing indexes
         [TestMethod()]
         public void GetShowingIndexesTest()
         {
-            const int tabIndex = 0;
-            List<int> showingIndexes = model.GetShowingIndexes(tabIndex);
-            Assert.AreEqual(model.GetCourseInfos(tabIndex).Count, showingIndexes.Count);
+            List<int> showingIndexes = model.GetShowingIndexes(computerScience3TabIndex);
+            Assert.AreEqual(model.GetCourseInfos(computerScience3TabIndex).Count, showingIndexes.Count);
 
             List<int> selectedIndexes = new List<int>() { 3, 5 };
             int selectedIndexesCount = selectedIndexes.Count;
-            model.SelectCourses(0, selectedIndexes);
-            showingIndexes = model.GetShowingIndexes(tabIndex);
+            model.SelectCourses(computerScience3TabIndex, selectedIndexes);
+            showingIndexes = model.GetShowingIndexes(computerScience3TabIndex);
             Assert.IsFalse(showingIndexes.Exists(item => item == 3));
             Assert.IsFalse(showingIndexes.Exists(item => item == 5));
         }
@@ -114,12 +113,12 @@ namespace CourseManager.Tests
             List<int> selectedIndexes = new List<int>() { 3, 5 };
             int selectedIndexesCount = selectedIndexes.Count;
 
-            model.SelectCourses(0, selectedIndexes);
+            model.SelectCourses(computerScience3TabIndex, selectedIndexes);
             Assert.AreEqual(selectedIndexesCount, model.SelectedIndexPairs.Count);
-            Assert.AreEqual(Tuple.Create(0, 3), model.SelectedIndexPairs[0]);
-            Assert.IsTrue(model.CheckCourseSelected(0, 3));
-            Assert.AreEqual(Tuple.Create(0, 5), model.SelectedIndexPairs[1]);
-            Assert.IsTrue(model.CheckCourseSelected(0, 5));
+            Assert.AreEqual(Tuple.Create(computerScience3TabIndex, 3), model.SelectedIndexPairs[0]);
+            Assert.IsTrue(model.CheckCourseSelected(computerScience3TabIndex, 3));
+            Assert.AreEqual(Tuple.Create(computerScience3TabIndex, 5), model.SelectedIndexPairs[1]);
+            Assert.IsTrue(model.CheckCourseSelected(computerScience3TabIndex, 5));
         }
 
         // test discard course
@@ -129,11 +128,11 @@ namespace CourseManager.Tests
             Assert.AreEqual(0, model.SelectedIndexPairs.Count);
             List<int> selectedIndexes = new List<int>() { 3, 5, 7 };
 
-            model.SelectCourses(0, selectedIndexes);
-            Assert.IsTrue(model.CheckCourseSelected(0, 7));
+            model.SelectCourses(computerScience3TabIndex, selectedIndexes);
+            Assert.IsTrue(model.CheckCourseSelected(computerScience3TabIndex, 7));
 
             model.DiscardCourse(2);
-            Assert.IsFalse(model.CheckCourseSelected(0, 7));
+            Assert.IsFalse(model.CheckCourseSelected(computerScience3TabIndex, 7));
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => model.DiscardCourse(6));
         }
 
@@ -142,13 +141,13 @@ namespace CourseManager.Tests
         public void CheckSameNumbersTest()
         {
             model.LoadAllTabCourses();
-            model.SelectCourses(0, new List<int> { 3, 4, 5 });
+            model.SelectCourses(computerScience3TabIndex, new List<int> { 3, 4, 5 });
             string message = model.CheckSameNumbers(1, new List<int> { 5, 6 });
             Assert.AreEqual("", message);
 
-            message = model.CheckSameNumbers(0, new List<int> { 3, 4 });
-            CourseInfo courseInfo1 = model.GetCourseInfo(0, 3);
-            CourseInfo courseInfo2 = model.GetCourseInfo(0, 4);
+            message = model.CheckSameNumbers(computerScience3TabIndex, new List<int> { 3, 4 });
+            CourseInfo courseInfo1 = model.GetCourseInfo(computerScience3TabIndex, 3);
+            CourseInfo courseInfo2 = model.GetCourseInfo(computerScience3TabIndex, 4);
             string expectedMessage = courseInfo1.GetCompareSameNumberMessage(courseInfo1) + courseInfo2.GetCompareSameNumberMessage(courseInfo2);
             Assert.AreEqual(expectedMessage, message);
         }
@@ -158,12 +157,12 @@ namespace CourseManager.Tests
         public void CheckSameNamesTest()
         {
             model.LoadAllTabCourses();
-            model.SelectCourses(0, new List<int> { 3, 4 });
-            string message = model.CheckSameNames(0, new List<int> { 7, 9 });
+            model.SelectCourses(computerScience3TabIndex, new List<int> { 3, 4 });
+            string message = model.CheckSameNames(computerScience3TabIndex, new List<int> { 7, 9 });
             Assert.AreEqual("", message);
 
-            message = model.CheckSameNames(0, new List<int> { 2, 6 });
-            CourseInfo courseInfo1 = model.GetCourseInfo(0, 2);
+            message = model.CheckSameNames(computerScience3TabIndex, new List<int> { 2, 6 });
+            CourseInfo courseInfo1 = model.GetCourseInfo(computerScience3TabIndex, 2);
             string expectedMessage = courseInfo1.GetCompareSameNameMessage(courseInfo1);
             Assert.AreEqual(expectedMessage, message);
         }
@@ -173,19 +172,19 @@ namespace CourseManager.Tests
         public void CheckConflictTimesTest()
         {
             model.LoadAllTabCourses();
-            model.SelectCourses(0, new List<int> { 3, 4 });
-            string message = model.CheckSameNames(0, new List<int> { 7, 9 });
+            model.SelectCourses(computerScience3TabIndex, new List<int> { 3, 4 });
+            string message = model.CheckSameNames(computerScience3TabIndex, new List<int> { 7, 9 });
             Assert.AreEqual("", message); // 23
 
-            message = model.CheckConflictTimes(1, new List<int> { 23 });
-            CourseInfo courseInfo1 = model.GetCourseInfo(1, 23);
-            CourseInfo courseInfo2 = model.GetCourseInfo(0, 4);
+            message = model.CheckConflictTimes(electronicEngineering3ATabIndex, new List<int> { 23 });
+            CourseInfo courseInfo1 = model.GetCourseInfo(electronicEngineering3ATabIndex, 23);
+            CourseInfo courseInfo2 = model.GetCourseInfo(computerScience3TabIndex, 4);
             string expectedMessage = courseInfo1.GetCompareClassTimeMessage(courseInfo2);
             Assert.AreEqual(expectedMessage, message);
 
-            message = model.CheckConflictTimes(1, new List<int> { 11, 16 });
-            courseInfo1 = model.GetCourseInfo(1, 11);
-            courseInfo2 = model.GetCourseInfo(1, 16);
+            message = model.CheckConflictTimes(electronicEngineering3ATabIndex, new List<int> { 11, 16 });
+            courseInfo1 = model.GetCourseInfo(electronicEngineering3ATabIndex, 11);
+            courseInfo2 = model.GetCourseInfo(electronicEngineering3ATabIndex, 16);
             expectedMessage = courseInfo1.GetBothCompareClassTimeMessage(courseInfo2);
             Assert.AreEqual(expectedMessage, message);
         }
@@ -210,21 +209,21 @@ namespace CourseManager.Tests
         public void MoveCourseInfoTest()
         {
             model.LoadAllTabCourses();
-            CourseInfo courseInfo = model.GetCourseInfo(0, 3);
+            CourseInfo courseInfo = model.GetCourseInfo(computerScience3TabIndex, 3);
 
-            model.MoveCourseInfo(0, 3, 1);
+            model.MoveCourseInfo(computerScience3TabIndex, 3, 1);
             List<CourseInfo> courseInfos = model.GetCourseInfos(1);
             int courseIndex = courseInfos.Count - 1;
             Assert.IsTrue(courseInfos[courseIndex].CheckPropertiesIdentical(courseInfo, new int[] { }));
-            Assert.IsFalse(model.CheckCourseSelected(1, courseIndex));
+            Assert.IsFalse(model.CheckCourseSelected(electronicEngineering3ATabIndex, courseIndex));
 
             model.SelectCourses(1, new List<int>{ courseIndex - 2, courseIndex - 1, courseIndex });
-            model.MoveCourseInfo(1, courseIndex - 2, 0);
-            List<CourseInfo> newCourseInfos = model.GetCourseInfos(0);
+            model.MoveCourseInfo(1, courseIndex - 2, computerScience3TabIndex);
+            List<CourseInfo> newCourseInfos = model.GetCourseInfos(computerScience3TabIndex);
             int newCourseIndex = newCourseInfos.Count - 1;
-            Assert.IsTrue(model.CheckCourseSelected(0, newCourseIndex));
-            Assert.IsTrue(model.CheckCourseSelected(1, courseIndex - 2));
-            Assert.IsTrue(model.CheckCourseSelected(1, courseIndex - 1));
+            Assert.IsTrue(model.CheckCourseSelected(computerScience3TabIndex, newCourseIndex));
+            Assert.IsTrue(model.CheckCourseSelected(electronicEngineering3ATabIndex, courseIndex - 2));
+            Assert.IsTrue(model.CheckCourseSelected(electronicEngineering3ATabIndex, courseIndex - 1));
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => model.CheckCourseSelected(1, courseIndex));
         }
     }

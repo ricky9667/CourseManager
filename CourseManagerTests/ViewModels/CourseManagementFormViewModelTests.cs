@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CourseManager;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseManager.Tests
 {
@@ -13,7 +8,9 @@ namespace CourseManager.Tests
     {
         Model model;
         CourseManagementFormViewModel viewModel;
-        
+        readonly int computerScience3TabIndex = 0;
+        readonly int electronicEngineering3ATabIndex = 1;
+
         // unit test case setup
         [TestInitialize]
         public void Setup()
@@ -29,7 +26,22 @@ namespace CourseManager.Tests
             Assert.IsFalse(viewModel.CourseGroupBoxEnabled);
             Assert.IsTrue(viewModel.AddCourseButtonEnabled);
             Assert.IsFalse(viewModel.SaveButtonEnabled);
+            Assert.IsTrue(viewModel.ImportCourseButtonEnabled);
             Assert.AreEqual(-1, viewModel.CurrentSelectedCourse);
+        }
+
+        // test model property
+        [TestMethod()]
+        public void GetModelTest()
+        {
+            Assert.AreEqual(model, viewModel.Model);
+        }
+
+        // test current tab index
+        [TestMethod()]
+        public void GetCurrentTabIndexTest()
+        {
+            Assert.AreEqual(model.GetCourseManagementList()[0].Item1, viewModel.CurrentClassIndex);
         }
 
         // test notify observer
@@ -56,15 +68,17 @@ namespace CourseManager.Tests
             Assert.IsFalse(viewModel.AddCourseButtonEnabled);
             viewModel.SaveButtonEnabled = true;
             Assert.IsTrue(viewModel.SaveButtonEnabled);
+            viewModel.ImportCourseButtonEnabled = false;
+            Assert.IsFalse(viewModel.ImportCourseButtonEnabled);
         }
 
         // test get course info
         [TestMethod()]
         public void GetCourseInfoTest()
         {
-            Assert.AreEqual(model.GetCourseInfo(0, 0), viewModel.GetCourseInfo(0, 0));
-            Assert.AreEqual(model.GetCourseInfo(1, 10), viewModel.GetCourseInfo(1, 10));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => viewModel.GetCourseInfo(0, 22));
+            Assert.AreEqual(model.GetCourseInfo(computerScience3TabIndex, 0), viewModel.GetCourseInfo(computerScience3TabIndex, 0));
+            Assert.AreEqual(model.GetCourseInfo(electronicEngineering3ATabIndex, 10), viewModel.GetCourseInfo(electronicEngineering3ATabIndex, 10));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => viewModel.GetCourseInfo(computerScience3TabIndex, 22));
         }
 
         // test current selected course property
@@ -80,13 +94,13 @@ namespace CourseManager.Tests
         public void UpdateCourseInfoTest()
         {
             viewModel.CurrentSelectedCourse = 4;
-            CourseInfo courseInfo = viewModel.GetCourseInfo(0, 4);
+            CourseInfo courseInfo = viewModel.GetCourseInfo(computerScience3TabIndex, 4);
             courseInfo.Name = "ChangedCourseName";
-            viewModel.UpdateCourseInfo(courseInfo, 0);
-            Assert.AreEqual(courseInfo, viewModel.GetCourseInfo(0, 4));
+            viewModel.UpdateCourseInfo(courseInfo, computerScience3TabIndex, 0);
+            Assert.AreEqual(courseInfo, viewModel.GetCourseInfo(computerScience3TabIndex, 4));
 
-            viewModel.UpdateCourseInfo(courseInfo, 1);
-            Assert.AreEqual(courseInfo, viewModel.GetCourseInfo(1, model.GetCourseInfos(1).Count - 1));
+            viewModel.UpdateCourseInfo(courseInfo, electronicEngineering3ATabIndex, 0);
+            Assert.AreEqual(courseInfo, viewModel.GetCourseInfo(electronicEngineering3ATabIndex, model.GetCourseInfos(electronicEngineering3ATabIndex).Count - 1));
         }
 
         // test add new course
@@ -94,8 +108,8 @@ namespace CourseManager.Tests
         public void AddNewCourseTest()
         {
             CourseInfo testCourseInfo = new CourseInfo("123456", "TestCourse", "1", "3.0", "3", "★", "胡紹宇", "", "1", "2", "3", "", "", "", "二教206(e)", "43", "15", "", "", "", "查詢", "", "");
-            viewModel.AddNewCourse(testCourseInfo, 0);
-            Assert.AreEqual(testCourseInfo, viewModel.GetCourseInfo(0, model.GetCourseInfos(0).Count - 1));
+            viewModel.AddNewCourse(testCourseInfo, computerScience3TabIndex, 0);
+            Assert.AreEqual(testCourseInfo, viewModel.GetCourseInfo(computerScience3TabIndex, model.GetCourseInfos(computerScience3TabIndex).Count - 1));
         }
 
         // test check save button state
@@ -103,16 +117,16 @@ namespace CourseManager.Tests
         public void CheckSaveButtonStateByCourseDataTest()
         {
             CourseInfo testCourseInfo = new CourseInfo("123456", "TestCourse", "1", "3.0", "3", "★", "胡紹宇", "", "1", "2", "3", "", "", "", "二教206(e)", "43", "15", "", "", "", "查詢", "", "");
-            Assert.IsTrue(viewModel.CheckSaveButtonStateByCourseData(testCourseInfo, 0));
+            Assert.IsTrue(viewModel.CheckSaveButtonStateByCourseData(testCourseInfo, computerScience3TabIndex, 0));
 
             testCourseInfo.Name = "";
             testCourseInfo.Stage = "NotNumeric";
-            Assert.IsFalse(viewModel.CheckSaveButtonStateByCourseData(testCourseInfo, 0));
+            Assert.IsFalse(viewModel.CheckSaveButtonStateByCourseData(testCourseInfo, computerScience3TabIndex, 0));
 
             viewModel.CurrentSelectedCourse = 4;
-            testCourseInfo = viewModel.GetCourseInfo(0, 4).GetCopy();
+            testCourseInfo = viewModel.GetCourseInfo(computerScience3TabIndex, 4).GetCopy();
             testCourseInfo.Name = "ChangedCourseName";
-            Assert.IsTrue(viewModel.CheckSaveButtonStateByCourseData(testCourseInfo, 0));
+            Assert.IsTrue(viewModel.CheckSaveButtonStateByCourseData(testCourseInfo, computerScience3TabIndex, 0));
         }
     }
 }
