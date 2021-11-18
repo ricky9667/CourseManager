@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -35,15 +35,6 @@ namespace CourseManager
             get
             {
                 return _model;
-            }
-        }
-
-        // data binding update data on change
-        private void NotifyPropertyChanged(string propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -119,7 +110,16 @@ namespace CourseManager
         {
             get
             {
-                return _model.CourseTabPageInfos;
+                return _model.CourseTabPageInfos.Where(tabPageInfo => tabPageInfo.Loaded).ToList();
+            }
+        }
+
+        // data binding update data on change
+        private void NotifyPropertyChanged(string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 

@@ -7,22 +7,36 @@ namespace CourseManager
     public class CourseManagementFormViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        
+        public event ViewModelChangedEventHandler _viewModelChanged;
+        public delegate void ViewModelChangedEventHandler();
+
         private readonly Model _model;
         private bool _courseGroupBoxEnabled;
         private bool _addCourseButtonEnabled;
         private bool _saveButtonEnabled;
+        private bool _importCourseButtonEnabled;
         int _currentSelectedCourse;
         List<Tuple<int, int, string>> _courseManagementList;
 
         public CourseManagementFormViewModel(Model model)
         {
             _model = model;
+            _model._modelChanged += UpdateCourseManagementList;
+
             _courseGroupBoxEnabled = false;
             _addCourseButtonEnabled = true;
             _saveButtonEnabled = false;
+            _importCourseButtonEnabled = true;
             _currentSelectedCourse = -1;
-            _courseManagementList = _model.GetCourseManagementList();
+            UpdateCourseManagementList();
+        }
+
+        public Model Model
+        {
+            get
+            {
+                return _model;
+            }
         }
 
         public bool CourseGroupBoxEnabled
@@ -64,6 +78,19 @@ namespace CourseManager
             }
         }
 
+        public bool ImportCourseButtonEnabled
+        {
+            get
+            {
+                return _importCourseButtonEnabled;
+            }
+            set
+            {
+                _importCourseButtonEnabled = value;
+                NotifyPropertyChanged(nameof(ImportCourseButtonEnabled));
+            }
+        }
+
         public int CurrentSelectedCourse
         {
             get
@@ -82,6 +109,16 @@ namespace CourseManager
             get
             {
                 return _courseManagementList[_currentSelectedCourse].Item1;
+            }
+        }
+
+        public int IsOpenCourseIndex
+        {
+            get
+            {
+                int tabIndex = _courseManagementList[_currentSelectedCourse].Item1;
+                int courseIndex = _courseManagementList[_currentSelectedCourse].Item2;
+                return _model.GetIsCourseOpen(tabIndex, courseIndex) ? 0 : 1;
             }
         }
 
@@ -109,7 +146,10 @@ namespace CourseManager
                 List<string> classNames = new List<string>();
                 foreach (CourseTabPageInfo info in _model.CourseTabPageInfos)
                 {
-                    classNames.Add(info.TabText);
+                    if (info.Loaded)
+                    {
+                        classNames.Add(info.TabText);
+                    }
                 }
                 return classNames;
             }
@@ -124,6 +164,15 @@ namespace CourseManager
             }
         }
 
+        // notify observer on data changed
+        public void NotifyObserver()
+        {
+            if (_viewModelChanged != null)
+            {
+                _viewModelChanged();
+            }
+        }
+
         // get single course info by tab index and course index
         public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
@@ -131,29 +180,36 @@ namespace CourseManager
         }
 
         // update course info
-        public void UpdateCourseInfo(CourseInfo courseInfo, int newTabIndex)
+        public void UpdateCourseInfo(CourseInfo courseInfo, int newTabIndex, int isCourseOpenIndex)
         {
             Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
             _model.SetCourseInfo(course.Item1, course.Item2, courseInfo);
+            _model.UpdateCourseOpen(course.Item1, course.Item2, (isCourseOpenIndex == 0));
             if (course.Item1 != newTabIndex)
             {
                 _model.MoveCourseInfo(course.Item1, course.Item2, newTabIndex);
             }
+        }
 
+        // update course management list
+        public void UpdateCourseManagementList()
+        {
             _courseManagementList = _model.GetCourseManagementList();
+            NotifyObserver();
         }
 
         // add course info to model
-        public void AddNewCourse(CourseInfo newCourseInfo, int newTabIndex)
+        public void AddNewCourse(CourseInfo newCourseInfo, int newTabIndex, int isCourseOpenIndex)
         {
             _model.AddNewCourseInfo(newTabIndex, newCourseInfo);
-            _courseManagementList = _model.GetCourseManagementList();
+            _model.AddNewCourseOpen(newTabIndex, (isCourseOpenIndex == 0));
         }
 
         // handle save button state
-        public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo, int classIndex)
+        public bool CheckSaveButtonStateByCourseData(CourseInfo changedCourseInfo, int classIndex, int isOpenCourseIndex)
         {
             bool isClassChanged = true;
+            bool isOpenCourseChanged = true;
             bool isDataChanged = true;
             bool isTextFormatCorrect = changedCourseInfo.CheckCourseFormat();
             bool isCourseHourMatch = changedCourseInfo.CheckCourseHourMatch();
@@ -163,20 +219,16 @@ namespace CourseManager
                 Tuple<int, int, string> course = _courseManagementList[_currentSelectedCourse];
                 CourseInfo courseInfo = _model.GetCourseInfo(course.Item1, course.Item2);
                 isClassChanged = course.Item1 != classIndex;
+                isOpenCourseChanged = _model.GetIsCourseOpen(course.Item1, course.Item2) != (isOpenCourseIndex == 0);
                 isDataChanged = CheckCourseDataChanged(courseInfo, changedCourseInfo);
             }
-            
-            return (isClassChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
+
+            return (isClassChanged || isOpenCourseChanged || isDataChanged) && isTextFormatCorrect && isCourseHourMatch;
         }
 
         // check if course data is changed
         private bool CheckCourseDataChanged(CourseInfo courseInfo, CourseInfo changedCourseInfo)
         {
-            if (_currentSelectedCourse == -1)
-            {
-                return true; 
-            }
-            
             const int CLASSROOM_INDEX = 14;
             const int NUMBER_OF_STUDENT = 15;
             const int NUMBER_OF_DROP_STUDENT = 16;

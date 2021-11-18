@@ -12,6 +12,8 @@ namespace CourseManager
         public CourseManagementForm(CourseManagementFormViewModel viewModel)
         {
             _viewModel = viewModel;
+            _viewModel._viewModelChanged += LoadCoursesAndClasses;
+
             _isUpdatingCourseGroupBox = false;
             InitializeComponent();
         }
@@ -29,6 +31,7 @@ namespace CourseManager
         {
             _addCourseButton.DataBindings.Add(nameof(_addCourseButton.Enabled), _viewModel, nameof(_viewModel.AddCourseButtonEnabled));
             _saveButton.DataBindings.Add(nameof(_saveButton.Enabled), _viewModel, nameof(_viewModel.SaveButtonEnabled));
+            _importComputerScienceCoursesButton.DataBindings.Add(nameof(_importComputerScienceCoursesButton.Enabled), _viewModel, nameof(_viewModel.ImportCourseButtonEnabled));
             _courseGroupBox.DataBindings.Add(nameof(_courseGroupBox.Enabled), _viewModel, nameof(_viewModel.CourseGroupBoxEnabled));
             foreach (Control courseGroupBoxControl in _courseGroupBox.Controls)
             {
@@ -98,7 +101,7 @@ namespace CourseManager
         // reset all data in group box
         private void ResetGroupBox()
         {
-            _startCourseSettingsComboBox.SelectedIndex = 0;
+            _openCourseSettingsComboBox.SelectedIndex = 0;
             _courseNumberTextBox.Text = "";
             _courseNameTextBox.Text = "";
             _stageTextBox.Text = "";
@@ -137,7 +140,7 @@ namespace CourseManager
         // render data to course group box by course info
         private void RenderCourseGroupBoxData(CourseInfo courseInfo, int classIndex)
         {
-            _startCourseSettingsComboBox.SelectedIndex = 0;
+            _openCourseSettingsComboBox.SelectedIndex = _viewModel.IsOpenCourseIndex;
             _courseNumberTextBox.Text = courseInfo.Number;
             _courseNameTextBox.Text = courseInfo.Name;
             _stageTextBox.Text = courseInfo.Stage;
@@ -163,13 +166,13 @@ namespace CourseManager
             {
                 CourseInfo courseInfo = new CourseInfo();
                 courseInfo = SetNewCourseInfoData(courseInfo);
-                _viewModel.AddNewCourse(courseInfo, _classComboBox.SelectedIndex);
+                _viewModel.AddNewCourse(courseInfo, _classComboBox.SelectedIndex, _openCourseSettingsComboBox.SelectedIndex);
             }
             else
             {
                 CourseInfo courseInfo = _viewModel.CurrentCourseInfo;
                 courseInfo = SetNewCourseInfoData(courseInfo);
-                _viewModel.UpdateCourseInfo(courseInfo, _classComboBox.SelectedIndex);
+                _viewModel.UpdateCourseInfo(courseInfo, _classComboBox.SelectedIndex, _openCourseSettingsComboBox.SelectedIndex);
             }
 
             _viewModel.CourseGroupBoxEnabled = _viewModel.SaveButtonEnabled = false;
@@ -228,7 +231,7 @@ namespace CourseManager
             {
                 CourseInfo showingCourseInfo = new CourseInfo();
                 showingCourseInfo = SetNewCourseInfoData(showingCourseInfo);
-                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex);
+                _viewModel.SaveButtonEnabled = _viewModel.CheckSaveButtonStateByCourseData(showingCourseInfo, _classComboBox.SelectedIndex, _openCourseSettingsComboBox.SelectedIndex);
             }
         }
 
@@ -265,6 +268,22 @@ namespace CourseManager
             _viewModel.CourseGroupBoxEnabled = true;
             _courseGroupBox.Text = "新增課程";
             ResetGroupBox();
+        }
+
+        // import computer science courses and show loading dialog
+        private void ImportComputerScienceCoursesButtonClick(object sender, EventArgs e)
+        {
+            ImportCourseProgressFormViewModel importCourseProgressFormViewModel = new ImportCourseProgressFormViewModel(_viewModel.Model);
+            Form importCourseProgressForm = new ImportCourseProgressForm(importCourseProgressFormViewModel);
+            importCourseProgressForm.FormClosed += new FormClosedEventHandler(ImportCourseProgressFormClosed);
+            _viewModel.ImportCourseButtonEnabled = false;
+            importCourseProgressForm.ShowDialog();
+        }
+        
+        // change button state when form closed
+        private void ImportCourseProgressFormClosed(object sender, FormClosedEventArgs e)
+        {
+            _viewModel.ImportCourseButtonEnabled = true;
         }
     }
 }

@@ -7,11 +7,14 @@ namespace CourseManager
     {
         private readonly StartUpFormViewModel _viewModel;
         Form _courseSelectingForm;
+        Form _courseManagementForm;
         public StartUpForm(StartUpFormViewModel viewModel)
         {
             _viewModel = viewModel;
             _courseSelectingForm = new CourseSelectingForm(new CourseSelectingFormViewModel(_viewModel.Model));
             _courseSelectingForm.FormClosing += new FormClosingEventHandler(CourseSelectingFormClosing);
+            _courseManagementForm = new CourseManagementForm(new CourseManagementFormViewModel(_viewModel.Model));
+            _courseManagementForm.FormClosing += new FormClosingEventHandler(CourseManagementFormClosing);
 
             InitializeComponent();
             SetBindingProperties();
@@ -45,17 +48,19 @@ namespace CourseManager
         // show course management system
         private void CourseManagementSystemButtonClick(object sender, EventArgs e)
         {
-            CourseManagementFormViewModel courseManagementFormViewModel = new CourseManagementFormViewModel(_viewModel.Model);
-            Form form = new CourseManagementForm(courseManagementFormViewModel);
-            form.FormClosed += new FormClosedEventHandler(CourseManagementSystemFormClosed);
-            form.Show();
+            _courseManagementForm.Show();
             _viewModel.CourseManagementSystemButtonEnabled = false;
         }
 
-        // handle course management form close event
-        private void CourseManagementSystemFormClosed(object sender, FormClosedEventArgs e)
+        // handle course management form closing event
+        private void CourseManagementFormClosing(object sender, FormClosingEventArgs e)
         {
-            _viewModel.CourseManagementSystemButtonEnabled = true;
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                _courseManagementForm.Hide();
+                _viewModel.CourseManagementSystemButtonEnabled = true;
+            }
         }
 
         // exit application

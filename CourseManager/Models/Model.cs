@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CourseManager
 {
@@ -10,19 +11,20 @@ namespace CourseManager
 
         private readonly List<CourseTabPageInfo> _courseTabPageInfos;
         private readonly Dictionary<int, List<CourseInfo>> _courseInfosDictionary;
-        private readonly Dictionary<int, List<bool>> _isCourseSelected; 
+        private readonly Dictionary<int, List<bool>> _isCourseSelected;
+        private readonly Dictionary<int, List<bool>> _isCourseOpen;
         private readonly List<Tuple<int, int>> _selectedIndexPairs; // tabIndex, courseIndex
-        private readonly CourseCrawler _courseCrawler;
-
         public Model()
         {
             _courseTabPageInfos = new List<CourseTabPageInfo>();
             _courseInfosDictionary = new Dictionary<int, List<CourseInfo>>();
             _isCourseSelected = new Dictionary<int, List<bool>>();
+            _isCourseOpen = new Dictionary<int, List<bool>>(); // should test
             _selectedIndexPairs = new List<Tuple<int, int>>();
-            _courseCrawler = new CourseCrawler();
 
             SetUpTabPageInfo();
+            LoadTabCourses(0);
+            LoadTabCourses(1);
         }
 
         public List<CourseTabPageInfo> CourseTabPageInfos
@@ -30,6 +32,14 @@ namespace CourseManager
             get
             {
                 return _courseTabPageInfos;
+            }
+        }
+
+        public List<Tuple<int, int>> SelectedIndexPairs
+        {
+            get
+            {
+                return _selectedIndexPairs.Where(indexPair => _isCourseOpen[indexPair.Item1][indexPair.Item2]).ToList();
             }
         }
 
@@ -42,24 +52,98 @@ namespace CourseManager
             }
         }
 
-        // setup hard data
+        // setup hard data, should be moved
         private void SetUpTabPageInfo()
         {
-            const string COMPUTER_SCIENCE_3_TAB_NAME = "computerScience3TabPage";
-            const string COMPUTER_SCIENCE_3_TAB_TEXT = "資工三";
-            const string COMPUTER_SCIENCE_3_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2433";
-            const string ELECTRONIC_ENGINEERING_3A_TAB_NAME = "electronicEngineering3ATabPage";
-            const string ELECTRONIC_ENGINEERING_3A_TAB_TEXT = "電子三甲";
-            const string ELECTRONIC_ENGINEERING_3A_COURSE_LINK = "https://aps.ntut.edu.tw/course/tw/Subj.jsp?format=-4&year=110&sem=1&code=2423";
+            ClassInfo classInfo = new ClassInfo();
+            _courseTabPageInfos.Add(classInfo.ComputerScience3TabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ElectronicEngineering3ATabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ComputerScience1TabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ComputerScience2TabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ComputerScience4TabPageInfo);
+            _courseTabPageInfos.Add(classInfo.ComputerScienceMasterTabPageInfo);
+        }
 
-            _courseTabPageInfos.Add(new CourseTabPageInfo(COMPUTER_SCIENCE_3_TAB_NAME, COMPUTER_SCIENCE_3_TAB_TEXT, COMPUTER_SCIENCE_3_COURSE_LINK));
-            _courseTabPageInfos.Add(new CourseTabPageInfo(ELECTRONIC_ENGINEERING_3A_TAB_NAME, ELECTRONIC_ENGINEERING_3A_TAB_TEXT, ELECTRONIC_ENGINEERING_3A_COURSE_LINK));
+        // fetch course tab data from crawler
+        public void LoadTabCourses(int tabIndex)
+        {
+            if (!_courseTabPageInfos[tabIndex].Loaded)
+            {
+                List<CourseInfo> courseInfos = _courseTabPageInfos[tabIndex].GetOwnCourseInfos();
+                List<bool> selectedCourses = new List<bool>();
+                List<bool> openedCourses = new List<bool>();
+                foreach (CourseInfo _ in courseInfos)
+                {
+                    selectedCourses.Add(false);
+                    openedCourses.Add(true);
+                }
+                _courseInfosDictionary.Add(tabIndex, courseInfos);
+                _isCourseSelected.Add(tabIndex, selectedCourses);
+                _isCourseOpen.Add(tabIndex, openedCourses); // should test
+                _courseTabPageInfos[tabIndex].Loaded = true;
+                NotifyObserver();
+            }
+        }
+
+        // load all courses
+        public void LoadAllTabCourses()
+        {
+            for (int index = 0; index < _courseTabPageInfos.Count; index++)
+            {
+                LoadTabCourses(index);
+            }
         }
 
         // get single course info
         public CourseInfo GetCourseInfo(int tabIndex, int courseIndex)
         {
             return _courseInfosDictionary[tabIndex][courseIndex];
+        }
+
+        // get course infos from selected tab
+        public List<CourseInfo> GetCourseInfos(int tabIndex)
+        {
+            return _courseInfosDictionary[tabIndex];
+        }
+
+        // get showing indexes of current datagridview
+        public List<int> GetShowingIndexes(int tabIndex)
+        {
+            List<int> showingList = new List<int>();
+            int count = _courseInfosDictionary[tabIndex].Count;
+            for (int courseIndex = 0; courseIndex < count; courseIndex++)
+            {
+                if (!_isCourseSelected[tabIndex][courseIndex] && _isCourseOpen[tabIndex][courseIndex])
+                {
+                    showingList.Add(courseIndex);
+                }
+            }
+            return showingList;
+        }
+
+        // get course management list
+        public List<Tuple<int, int, string>> GetCourseManagementList()
+        {
+            List<Tuple<int, int, string>> courseManagementList = new List<Tuple<int, int, string>>(); // tabIndex, courseIndex, courseName
+            for (int tabIndex = 0; tabIndex < _courseTabPageInfos.Count; tabIndex++)
+            {
+                if (_courseTabPageInfos[tabIndex].Loaded)
+                {
+                    List<CourseInfo> courseInfos = _courseInfosDictionary[tabIndex];
+                    for (int courseIndex = 0; courseIndex < courseInfos.Count; courseIndex++)
+                    {
+                        courseManagementList.Add(new Tuple<int, int, string>(tabIndex, courseIndex, courseInfos[courseIndex].Name));
+                    }
+                }
+            }
+
+            return courseManagementList;
+        }
+
+        // get course isopen property
+        public bool GetIsCourseOpen(int tabIndex, int courseIndex)
+        {
+            return _isCourseOpen[tabIndex][courseIndex];
         }
 
         // set single course info
@@ -77,51 +161,18 @@ namespace CourseManager
             NotifyObserver();
         }
 
-        // get course infos from selected tab
-        public List<CourseInfo> GetCourseInfos(int tabIndex)
+        // change open course status
+        public void UpdateCourseOpen(int tabIndex, int courseIndex, bool isCourseOpen)
         {
-            if (!_courseInfosDictionary.ContainsKey(tabIndex))
-            {
-                LoadCourses(tabIndex);
-            }
-            return _courseInfosDictionary[tabIndex];
+            _isCourseOpen[tabIndex][courseIndex] = isCourseOpen;
+            NotifyObserver();
         }
 
-        // fetch course data from crawler
-        private void LoadCourses(int tabIndex)
+        // add new open course status
+        public void AddNewCourseOpen(int tabIndex, bool isCourseOpen)
         {
-            List<CourseInfo> courseInfos = _courseCrawler.FetchCourseInfos(_courseTabPageInfos[tabIndex].CourseLink);
-            List<bool> selectedCourses = new List<bool>();
-
-            int courseCount = courseInfos.Count;
-            while (courseCount-- > 0)
-            {
-                selectedCourses.Add(false);
-            }
-
-            _courseInfosDictionary.Add(tabIndex, courseInfos);
-            _isCourseSelected.Add(tabIndex, selectedCourses);
-        }
-
-        // get showing indexes of current datagridview
-        public List<int> GetShowingIndexes(int tabIndex)
-        {
-            List<int> showingList = new List<int>();
-            int count = _courseInfosDictionary[tabIndex].Count;
-            for (int courseIndex = 0; courseIndex < count; courseIndex++)
-            {
-                if (!_isCourseSelected[tabIndex][courseIndex])
-                {
-                    showingList.Add(courseIndex);
-                }
-            }
-            return showingList;
-        }
-
-        // get selected courses index pairs
-        public List<Tuple<int, int>> GetSelectedIndexPairs()
-        {
-            return _selectedIndexPairs;
+            _isCourseOpen[tabIndex].Add(isCourseOpen);
+            NotifyObserver();
         }
 
         // add checked courses to selected courses
@@ -152,6 +203,50 @@ namespace CourseManager
             NotifyObserver();
         }
 
+        // move course info to new list in dictionary
+        public void MoveCourseInfo(int tabIndex, int courseIndex, int newTabIndex)
+        {
+            CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
+            _courseInfosDictionary[tabIndex].RemoveAt(courseIndex);
+            _courseInfosDictionary[newTabIndex].Add(courseInfo);
+            int newCourseIndex = _courseInfosDictionary[newTabIndex].IndexOf(courseInfo);
+
+            bool isOpen = _isCourseOpen[tabIndex][courseIndex];
+            _isCourseOpen[tabIndex].RemoveAt(courseIndex);
+            _isCourseOpen[newTabIndex].Add(isOpen);
+
+            bool isSelected = _isCourseSelected[tabIndex][courseIndex];
+            _isCourseSelected[tabIndex].RemoveAt(courseIndex);
+            _isCourseSelected[newTabIndex].Add(isSelected);
+            if (isSelected)
+            {
+                AdjustSelectedIndexPairs(tabIndex, courseIndex, newTabIndex, newCourseIndex);
+            }
+            NotifyObserver();
+        }
+
+        // adjust course indexes when course moved to another tab
+        private void AdjustSelectedIndexPairs(int tabIndex, int courseIndex, int newTabIndex, int newCourseIndex)
+        {
+            for (int i = 0; i < _selectedIndexPairs.Count; i++)
+            {
+                if (_selectedIndexPairs[i].Item1 == tabIndex && _selectedIndexPairs[i].Item2 == courseIndex)
+                {
+                    _selectedIndexPairs[i] = new Tuple<int, int>(newTabIndex, newCourseIndex);
+                }
+                else if (_selectedIndexPairs[i].Item1 == tabIndex && _selectedIndexPairs[i].Item2 > courseIndex)
+                {
+                    _selectedIndexPairs[i] = new Tuple<int, int>(tabIndex, _selectedIndexPairs[i].Item2 - 1);
+                }
+            }
+        }
+
+        // check if a particular course is selected
+        public bool CheckCourseSelected(int tabIndex, int courseIndex)
+        {
+            return _isCourseSelected[tabIndex][courseIndex];
+        }
+
         // check same course numbers
         public string CheckSameNumbers(int tabIndex, List<int> courseIndexes)
         {
@@ -165,7 +260,6 @@ namespace CourseManager
                     message += courseInfo.GetCompareSameNumberMessage(selectedCourseInfo);
                 }
             }
-
             return message;
         }
 
@@ -216,62 +310,6 @@ namespace CourseManager
                 }
             }
             return message;
-        }
-
-        // get course management list
-        public List<Tuple<int, int, string>> GetCourseManagementList()
-        {
-            List<Tuple<int, int, string>> courseManagementList = new List<Tuple<int, int, string>>(); // tabIndex, courseIndex, courseName
-            for (int tabIndex = 0; tabIndex < _courseTabPageInfos.Count; tabIndex++)
-            {
-                if (!_courseInfosDictionary.ContainsKey(tabIndex))
-                {
-                    LoadCourses(tabIndex);
-                }
-                List<CourseInfo> courseInfos = _courseInfosDictionary[tabIndex];
-                for (int courseIndex = 0; courseIndex < courseInfos.Count; courseIndex++)
-                {
-                    courseManagementList.Add(new Tuple<int, int, string>(tabIndex, courseIndex, courseInfos[courseIndex].Name));
-                }
-            }
-
-            return courseManagementList;
-        }
-
-        // move course info to new list in dictionary
-        public void MoveCourseInfo(int tabIndex, int courseIndex, int newTabIndex)
-        {
-            CourseInfo courseInfo = _courseInfosDictionary[tabIndex][courseIndex];
-            _courseInfosDictionary[tabIndex].RemoveAt(courseIndex);
-            _courseInfosDictionary[newTabIndex].Add(courseInfo);
-            int newCourseIndex = _courseInfosDictionary[newTabIndex].IndexOf(courseInfo);
-
-            bool isSelected = _isCourseSelected[tabIndex][courseIndex];
-            _isCourseSelected[tabIndex].RemoveAt(courseIndex);
-            _isCourseSelected[newTabIndex].Add(isSelected);
-
-            if (isSelected)
-            {
-                AdjustSelectedIndexPairs(tabIndex, courseIndex, newTabIndex, newCourseIndex);
-            }
-            NotifyObserver();
-        }
-
-        // adjust course indexes when course moved to another tab
-        private void AdjustSelectedIndexPairs(int tabIndex, int courseIndex, int newTabIndex, int newCourseIndex)
-        {
-            for (int i = 0; i < _selectedIndexPairs.Count; i++)
-            {
-                if (_selectedIndexPairs[i].Item1 == tabIndex && _selectedIndexPairs[i].Item2 == courseIndex)
-                {
-                    _selectedIndexPairs[i] = new Tuple<int, int>(newTabIndex, newCourseIndex);
-                }
-                else if (_selectedIndexPairs[i].Item1 == tabIndex && _selectedIndexPairs[i].Item2 > courseIndex)
-                {
-                    _selectedIndexPairs[i] = new Tuple<int, int>(tabIndex, _selectedIndexPairs[i].Item2 - 1);
-                }
-
-            }
         }
     }
 }

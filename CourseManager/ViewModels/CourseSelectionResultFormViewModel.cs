@@ -39,7 +39,7 @@ namespace CourseManager
         public void UpdateSelectedCourseInfos()
         {
             _selectedCourseInfos.Clear();
-            foreach (Tuple<int, int> indexPair in _model.GetSelectedIndexPairs())
+            foreach (Tuple<int, int> indexPair in _model.SelectedIndexPairs)
             {
                 int tabIndex = indexPair.Item1;
                 int courseIndex = indexPair.Item2;

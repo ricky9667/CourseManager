@@ -31,6 +31,7 @@ namespace CourseManager
         {
             this._courseManagementTabControl = new System.Windows.Forms.TabControl();
             this._courseManagementTabPage = new System.Windows.Forms.TabPage();
+            this._importComputerScienceCoursesButton = new System.Windows.Forms.Button();
             this._saveButton = new System.Windows.Forms.Button();
             this._courseGroupBox = new System.Windows.Forms.GroupBox();
             this._timeDataGridView = new System.Windows.Forms.DataGridView();
@@ -64,7 +65,7 @@ namespace CourseManager
             this._courseNumberTextBox = new System.Windows.Forms.TextBox();
             this._courseNameLabel = new System.Windows.Forms.Label();
             this._courseNumberLabel = new System.Windows.Forms.Label();
-            this._startCourseSettingsComboBox = new System.Windows.Forms.ComboBox();
+            this._openCourseSettingsComboBox = new System.Windows.Forms.ComboBox();
             this._addCourseButton = new System.Windows.Forms.Button();
             this._courseListBox = new System.Windows.Forms.ListBox();
             this._classManagementTabPage = new System.Windows.Forms.TabPage();
@@ -87,6 +88,7 @@ namespace CourseManager
             // 
             // _courseManagementTabPage
             // 
+            this._courseManagementTabPage.Controls.Add(this._importComputerScienceCoursesButton);
             this._courseManagementTabPage.Controls.Add(this._saveButton);
             this._courseManagementTabPage.Controls.Add(this._courseGroupBox);
             this._courseManagementTabPage.Controls.Add(this._addCourseButton);
@@ -99,12 +101,22 @@ namespace CourseManager
             this._courseManagementTabPage.Text = "課程管理";
             this._courseManagementTabPage.UseVisualStyleBackColor = true;
             // 
+            // _importComputerScienceCoursesButton
+            // 
+            this._importComputerScienceCoursesButton.Location = new System.Drawing.Point(239, 784);
+            this._importComputerScienceCoursesButton.Name = "_importComputerScienceCoursesButton";
+            this._importComputerScienceCoursesButton.Size = new System.Drawing.Size(244, 71);
+            this._importComputerScienceCoursesButton.TabIndex = 4;
+            this._importComputerScienceCoursesButton.Text = "匯入資工系全部課程";
+            this._importComputerScienceCoursesButton.UseVisualStyleBackColor = true;
+            this._importComputerScienceCoursesButton.Click += new System.EventHandler(this.ImportComputerScienceCoursesButtonClick);
+            // 
             // _saveButton
             // 
             this._saveButton.Enabled = false;
-            this._saveButton.Location = new System.Drawing.Point(1429, 770);
+            this._saveButton.Location = new System.Drawing.Point(1519, 784);
             this._saveButton.Name = "_saveButton";
-            this._saveButton.Size = new System.Drawing.Size(323, 95);
+            this._saveButton.Size = new System.Drawing.Size(206, 71);
             this._saveButton.TabIndex = 3;
             this._saveButton.Text = "儲存";
             this._saveButton.UseVisualStyleBackColor = true;
@@ -135,7 +147,7 @@ namespace CourseManager
             this._courseGroupBox.Controls.Add(this._courseNumberTextBox);
             this._courseGroupBox.Controls.Add(this._courseNameLabel);
             this._courseGroupBox.Controls.Add(this._courseNumberLabel);
-            this._courseGroupBox.Controls.Add(this._startCourseSettingsComboBox);
+            this._courseGroupBox.Controls.Add(this._openCourseSettingsComboBox);
             this._courseGroupBox.Location = new System.Drawing.Point(441, 20);
             this._courseGroupBox.Name = "_courseGroupBox";
             this._courseGroupBox.Size = new System.Drawing.Size(1311, 744);
@@ -170,11 +182,11 @@ namespace CourseManager
             this._timeDataGridView.TabIndex = 23;
             this._timeDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TimeDataGridViewCellClicked);
             // 
-            // classTimeColumn
+            // _classTimeColumn
             // 
             this._classTimeColumn.HeaderText = "節數";
             this._classTimeColumn.MinimumWidth = 10;
-            this._classTimeColumn.Name = "classTimeColumn";
+            this._classTimeColumn.Name = "_classTimeColumn";
             this._classTimeColumn.ReadOnly = true;
             // 
             // sundayColumn
@@ -268,10 +280,10 @@ namespace CourseManager
             this._hourLabel.TabIndex = 19;
             this._hourLabel.Text = "時數(*)";
             // 
-            // _noteTextbox
+            // _noteTextBox
             // 
             this._noteTextBox.Location = new System.Drawing.Point(118, 227);
-            this._noteTextBox.Name = "_noteTextbox";
+            this._noteTextBox.Name = "_noteTextBox";
             this._noteTextBox.Size = new System.Drawing.Size(926, 36);
             this._noteTextBox.TabIndex = 18;
             this._noteTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -285,10 +297,10 @@ namespace CourseManager
             this._noteLabel.TabIndex = 17;
             this._noteLabel.Text = "備註";
             // 
-            // _languageTextbox
+            // _languageTextBox
             // 
             this._languageTextBox.Location = new System.Drawing.Point(826, 168);
-            this._languageTextBox.Name = "_languageTextbox";
+            this._languageTextBox.Name = "_languageTextBox";
             this._languageTextBox.Size = new System.Drawing.Size(458, 36);
             this._languageTextBox.TabIndex = 16;
             this._languageTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -302,10 +314,10 @@ namespace CourseManager
             this._languageLabel.TabIndex = 15;
             this._languageLabel.Text = "授課語言";
             // 
-            // _teachingAssistantTextbox
+            // _teachingAssistantTextBox
             // 
             this._teachingAssistantTextBox.Location = new System.Drawing.Point(171, 165);
-            this._teachingAssistantTextBox.Name = "_teachingAssistantTextbox";
+            this._teachingAssistantTextBox.Name = "_teachingAssistantTextBox";
             this._teachingAssistantTextBox.Size = new System.Drawing.Size(450, 36);
             this._teachingAssistantTextBox.TabIndex = 14;
             this._teachingAssistantTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -334,7 +346,6 @@ namespace CourseManager
             this._courseTypeComboBox.Name = "_courseTypeComboBox";
             this._courseTypeComboBox.Size = new System.Drawing.Size(179, 32);
             this._courseTypeComboBox.TabIndex = 12;
-            this._teachingAssistantTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _courseTypeLabel
             // 
@@ -345,10 +356,10 @@ namespace CourseManager
             this._courseTypeLabel.TabIndex = 11;
             this._courseTypeLabel.Text = "修(*)";
             // 
-            // _teacherTextbox
+            // _teacherTextBox
             // 
             this._teacherTextBox.Location = new System.Drawing.Point(765, 101);
-            this._teacherTextBox.Name = "_teacherTextbox";
+            this._teacherTextBox.Name = "_teacherTextBox";
             this._teacherTextBox.Size = new System.Drawing.Size(205, 36);
             this._teacherTextBox.TabIndex = 10;
             this._teacherTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -362,10 +373,10 @@ namespace CourseManager
             this._teacherLabel.TabIndex = 9;
             this._teacherLabel.Text = "教師(*)";
             // 
-            // _creditTextbox
+            // _creditTextBox
             // 
             this._creditTextBox.Location = new System.Drawing.Point(417, 101);
-            this._creditTextBox.Name = "_creditTextbox";
+            this._creditTextBox.Name = "_creditTextBox";
             this._creditTextBox.Size = new System.Drawing.Size(173, 36);
             this._creditTextBox.TabIndex = 8;
             this._creditTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -379,10 +390,10 @@ namespace CourseManager
             this._creditLabel.TabIndex = 7;
             this._creditLabel.Text = "學分(*)";
             // 
-            // _stageTextbox
+            // _stageTextBox
             // 
             this._stageTextBox.Location = new System.Drawing.Point(142, 101);
-            this._stageTextBox.Name = "_stageTextbox";
+            this._stageTextBox.Name = "_stageTextBox";
             this._stageTextBox.Size = new System.Drawing.Size(134, 36);
             this._stageTextBox.TabIndex = 6;
             this._stageTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -396,18 +407,18 @@ namespace CourseManager
             this._stageLabel.TabIndex = 5;
             this._stageLabel.Text = "階段(*)";
             // 
-            // _courseNameTextbox
+            // _courseNameTextBox
             // 
             this._courseNameTextBox.Location = new System.Drawing.Point(914, 40);
-            this._courseNameTextBox.Name = "_courseNameTextbox";
+            this._courseNameTextBox.Name = "_courseNameTextBox";
             this._courseNameTextBox.Size = new System.Drawing.Size(370, 36);
             this._courseNameTextBox.TabIndex = 4;
             this._courseNameTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
-            // _courseNumberTextbox
+            // _courseNumberTextBox
             // 
             this._courseNumberTextBox.Location = new System.Drawing.Point(417, 41);
-            this._courseNumberTextBox.Name = "_courseNumberTextbox";
+            this._courseNumberTextBox.Name = "_courseNumberTextBox";
             this._courseNumberTextBox.Size = new System.Drawing.Size(280, 36);
             this._courseNumberTextBox.TabIndex = 3;
             this._courseNumberTextBox.TextChanged += new System.EventHandler(this.CourseInfoDataChanged);
@@ -432,21 +443,22 @@ namespace CourseManager
             // 
             // _startCourseSettingsComboBox
             // 
-            this._startCourseSettingsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this._startCourseSettingsComboBox.FormattingEnabled = true;
-            this._startCourseSettingsComboBox.Items.AddRange(new object[] {
+            this._openCourseSettingsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._openCourseSettingsComboBox.FormattingEnabled = true;
+            this._openCourseSettingsComboBox.Items.AddRange(new object[] {
             "開課",
             "停開"});
-            this._startCourseSettingsComboBox.Location = new System.Drawing.Point(37, 44);
-            this._startCourseSettingsComboBox.Name = "_startCourseSettingsComboBox";
-            this._startCourseSettingsComboBox.Size = new System.Drawing.Size(207, 32);
-            this._startCourseSettingsComboBox.TabIndex = 0;
+            this._openCourseSettingsComboBox.Location = new System.Drawing.Point(37, 44);
+            this._openCourseSettingsComboBox.Name = "_startCourseSettingsComboBox";
+            this._openCourseSettingsComboBox.Size = new System.Drawing.Size(207, 32);
+            this._openCourseSettingsComboBox.TabIndex = 0;
+            this._openCourseSettingsComboBox.SelectedIndexChanged += new System.EventHandler(this.CourseInfoDataChanged);
             // 
             // _addCourseButton
             // 
-            this._addCourseButton.Location = new System.Drawing.Point(17, 770);
+            this._addCourseButton.Location = new System.Drawing.Point(17, 784);
             this._addCourseButton.Name = "_addCourseButton";
-            this._addCourseButton.Size = new System.Drawing.Size(401, 95);
+            this._addCourseButton.Size = new System.Drawing.Size(201, 71);
             this._addCourseButton.TabIndex = 1;
             this._addCourseButton.Text = "新增課程";
             this._addCourseButton.UseVisualStyleBackColor = true;
@@ -482,7 +494,7 @@ namespace CourseManager
             this.MaximizeBox = false;
             this.Name = "CourseManagementForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CourseManagementForm";
+            this.Text = "課程管理";
             this.Load += new System.EventHandler(this.CourseManagementFormLoad);
             this._courseManagementTabControl.ResumeLayout(false);
             this._courseManagementTabPage.ResumeLayout(false);
@@ -495,7 +507,7 @@ namespace CourseManager
 
         #endregion
 
-        private System.Windows.Forms.ComboBox _startCourseSettingsComboBox;
+        private System.Windows.Forms.ComboBox _openCourseSettingsComboBox;
         private System.Windows.Forms.Label _courseNumberLabel;
         private System.Windows.Forms.TextBox _courseNameTextBox;
         private System.Windows.Forms.Label _courseNameLabel;
@@ -534,5 +546,6 @@ namespace CourseManager
         private System.Windows.Forms.DataGridViewCheckBoxColumn _thursdayColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn _fridayColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn _saturdayColumn;
+        private System.Windows.Forms.Button _importComputerScienceCoursesButton;
     }
 }

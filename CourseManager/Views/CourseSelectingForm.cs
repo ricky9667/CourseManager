@@ -12,6 +12,7 @@ namespace CourseManager
         public CourseSelectingForm(CourseSelectingFormViewModel viewModel)
         {
             _viewModel = viewModel;
+            _viewModel._viewModelChanged += LoadCourseTabControl;
             _viewModel._viewModelChanged += LoadCourseDataGridView;
 
             _courseSelectionResultForm = new CourseSelectionResultForm(new CourseSelectionResultFormViewModel(_viewModel.Model));
@@ -24,14 +25,7 @@ namespace CourseManager
         // load select course form
         private void CourseSelectingFormLoad(object sender, EventArgs e)
         {
-            int index = 0;
-            foreach (CourseTabPageInfo tabPageInfo in _viewModel.CourseTabPageInfos)
-            {
-                _courseTabControl.Controls[index].Name = tabPageInfo.TabName;
-                _courseTabControl.Controls[index].Text = tabPageInfo.TabText;
-                index++;
-            }
-
+            LoadCourseTabControl();
             LoadCourseDataGridView();
         }
 
@@ -42,6 +36,28 @@ namespace CourseManager
             _courseSelectionResultButton.DataBindings.Add(nameof(_courseSelectionResultButton.Enabled), _viewModel, nameof(_viewModel.CourseSelectionResultButtonEnabled));
             _submitButton.DataBindings.Add(nameof(_submitButton.Enabled), _viewModel, nameof(_viewModel.SubmitButtonEnabled));
             _courseTabControl.DataBindings.Add(nameof(_courseTabControl.SelectedIndex), _viewModel, nameof(_viewModel.CurrentTabIndex));
+        }
+
+        // setup tab control
+        private void LoadCourseTabControl()
+        {
+            int index = 0;
+            foreach (CourseTabPageInfo tabPageInfo in _viewModel.CourseTabPageInfos)
+            {
+                if (_courseTabControl.Controls.Count <= index)
+                {
+                    _courseTabControl.Controls.Add(new TabPage
+                    {
+                        Location = new System.Drawing.Point(8, 39),
+                        Size = new System.Drawing.Size(1557, 543),
+                        TabIndex = index,
+                        UseVisualStyleBackColor = true
+                    });
+                }
+                _courseTabControl.Controls[index].Name = tabPageInfo.TabName;
+                _courseTabControl.Controls[index].Text = tabPageInfo.TabText;
+                index++;
+            }
         }
 
         // setup datagridview
