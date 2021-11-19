@@ -15,6 +15,9 @@ namespace CourseManager
         private bool _addCourseButtonEnabled;
         private bool _saveButtonEnabled;
         private bool _importCourseButtonEnabled;
+        private bool _addClassButtonEnabled;
+        private bool _addButtonEnabled;
+        private bool _classNameTextBoxEnabled;
         int _currentSelectedCourse;
         List<Tuple<int, int, string>> _courseManagementList;
 
@@ -27,6 +30,9 @@ namespace CourseManager
             _addCourseButtonEnabled = true;
             _saveButtonEnabled = false;
             _importCourseButtonEnabled = true;
+            _addClassButtonEnabled = true;
+            _addButtonEnabled = false;
+            _classNameTextBoxEnabled = false;
             _currentSelectedCourse = -1;
             UpdateCourseManagementList();
         }
@@ -88,6 +94,45 @@ namespace CourseManager
             {
                 _importCourseButtonEnabled = value;
                 NotifyPropertyChanged(nameof(ImportCourseButtonEnabled));
+            }
+        }
+
+        public bool AddClassButtonEnabled
+        {
+            get
+            {
+                return _addClassButtonEnabled;
+            }
+            set
+            {
+                _addClassButtonEnabled = value;
+                NotifyPropertyChanged(nameof(AddClassButtonEnabled));
+            }
+        }
+
+        public bool AddButtonEnabled
+        {
+            get
+            {
+                return _addButtonEnabled;
+            }
+            set
+            {
+                _addButtonEnabled = value;
+                NotifyPropertyChanged(nameof(AddButtonEnabled));
+            }
+        }
+
+        public bool ClassNameTextBoxEnabled
+        {
+            get
+            {
+                return _classNameTextBoxEnabled;
+            }
+            set
+            {
+                _classNameTextBoxEnabled = value;
+                NotifyPropertyChanged(nameof(ClassNameTextBoxEnabled));
             }
         }
 

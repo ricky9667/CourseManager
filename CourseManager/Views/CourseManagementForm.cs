@@ -40,6 +40,10 @@ namespace CourseManager
                 courseGroupBoxControl.DataBindings.Add(nameof(courseGroupBoxControl.Enabled), _viewModel, nameof(_viewModel.CourseGroupBoxEnabled));
             }
             _courseListBox.DataBindings.Add(nameof(_courseListBox.SelectedIndex), _viewModel, nameof(_viewModel.CurrentSelectedCourse));
+
+            _addClassButton.DataBindings.Add(nameof(_addClassButton.Enabled), _viewModel, nameof(_viewModel.AddClassButtonEnabled));
+            _addButton.DataBindings.Add(nameof(_addButton.Enabled), _viewModel, nameof(_viewModel.AddButtonEnabled));
+            _classNameTextBox.DataBindings.Add(nameof(_classNameTextBox.Enabled), _viewModel, nameof(_viewModel.ClassNameTextBoxEnabled));
         }
 
         // load courses in course list box
@@ -305,9 +309,9 @@ namespace CourseManager
             {
                 _classGroupBox.Text = "班級";
                 _classNameTextBox.Text = _classListBox.SelectedItem.ToString();
-                _addClassButton.Enabled = true;
-                _addButton.Enabled = false;
-                _classNameTextBox.Enabled = true;
+                _viewModel.AddClassButtonEnabled = true;
+                _viewModel.AddButtonEnabled = false;
+                _viewModel.ClassNameTextBoxEnabled = true;
                 _classCoursesListBox.Items.Clear();
                 foreach (Tuple<int, int, string> course in _viewModel.CourseManagementList)
                 {
@@ -326,14 +330,14 @@ namespace CourseManager
             _classNameTextBox.Text = "";
             _classListBox.ClearSelected();
             _classCoursesListBox.Items.Clear();
-            _classNameTextBox.Enabled = true;
-            _addClassButton.Enabled = false;
+            _viewModel.AddClassButtonEnabled = false;
+            _viewModel.ClassNameTextBoxEnabled = true;
         }
 
         // change add button state from class name text box
         private void ClassNameTextBoxTextChanged(object sender, EventArgs e)
         {
-            _addButton.Enabled = _classNameTextBox.Text.Trim() != "";
+            _viewModel.AddButtonEnabled = (_classNameTextBox.Text.Trim() != "");
         }
 
         // add new class to model
@@ -341,8 +345,8 @@ namespace CourseManager
         {
             _viewModel.AddNewClass(_classNameTextBox.Text);
             _classNameTextBox.Text = "";
-            _addButton.Enabled = false;
-            _addClassButton.Enabled = true;
+            _viewModel.AddButtonEnabled = false;
+            _viewModel.AddClassButtonEnabled = true;
         }
     }
 }
