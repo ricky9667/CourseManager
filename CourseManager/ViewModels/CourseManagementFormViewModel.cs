@@ -30,10 +30,12 @@ namespace CourseManager
             _addCourseButtonEnabled = true;
             _saveButtonEnabled = false;
             _importCourseButtonEnabled = true;
+            _currentSelectedCourse = -1;
+
             _addClassButtonEnabled = true;
             _addButtonEnabled = false;
             _classNameTextBoxEnabled = false;
-            _currentSelectedCourse = -1;
+
             UpdateCourseManagementList();
         }
 

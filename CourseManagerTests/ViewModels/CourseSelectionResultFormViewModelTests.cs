@@ -13,7 +13,7 @@ namespace CourseManager.Tests
 
         // unit test case setup
         [TestInitialize]
-        public void Setup()
+        public void Initialize()
         {
             model = new Model();
             viewModel = new CourseSelectionResultFormViewModel(model);
