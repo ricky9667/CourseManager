@@ -146,6 +146,20 @@ namespace CourseManager
             return _isCourseOpen[tabIndex][courseIndex];
         }
 
+        // get loaded tab indexes
+        public List<int> GetLoadedTabs()
+        {
+            List<int> loadedTabs = new List<int>();
+            for (int index = 0; index < _courseTabPageInfos.Count; index++)
+            {
+                if (_courseTabPageInfos[index].Loaded)
+                {
+                    loadedTabs.Add(index);
+                }
+            }
+            return loadedTabs;
+        }
+
         // set single course info
         public void SetCourseInfo(int tabIndex, int courseIndex, CourseInfo courseInfo)
         {
