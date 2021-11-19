@@ -23,6 +23,7 @@ namespace CourseManager
         {
             LoadCoursesAndClasses();
             LoadTimeDataGridViewRows();
+            LoadClassListBoxItems();
             SetBindingProperties();
         }
 
@@ -66,6 +67,16 @@ namespace CourseManager
             }
             _timeDataGridView.Refresh();
             _timeDataGridView.ClearSelection();
+        }
+
+        // load class list box classes
+        private void LoadClassListBoxItems()
+        {
+            _classListBox.Items.Clear();
+            foreach (string className in _viewModel.ClassNames)
+            {
+                _classListBox.Items.Add(className);
+            }
         }
 
         // create datagridview row
@@ -284,6 +295,20 @@ namespace CourseManager
         private void ImportCourseProgressFormClosed(object sender, FormClosedEventArgs e)
         {
             _viewModel.ImportCourseButtonEnabled = true;
+        }
+
+        // render courses when class list box index changed
+        private void ClassListBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            _classNameTextBox.Text = _classListBox.SelectedItem.ToString();
+            _classCoursesListBox.Items.Clear();
+            foreach (Tuple<int, int, string> course in _viewModel.CourseManagementList)
+            {
+                if (course.Item1 == _classListBox.SelectedIndex)
+                {
+                    _classCoursesListBox.Items.Add(course.Item3);
+                }
+            }
         }
     }
 }
