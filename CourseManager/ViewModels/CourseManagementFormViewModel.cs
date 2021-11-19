@@ -237,5 +237,15 @@ namespace CourseManager
             const int EXPERIMENT_INDEX = 22;
             return !courseInfo.CheckPropertiesIdentical(changedCourseInfo, new int[] { CLASSROOM_INDEX, NUMBER_OF_STUDENT, NUMBER_OF_DROP_STUDENT, OUTLINE_INDEX, AUDIT_INDEX, EXPERIMENT_INDEX });
         }
+
+        // add new tab page from class management
+        public void AddNewClass(string className)
+        {
+            CourseTabPageInfo tabPageInfo = new CourseTabPageInfo(className, className, "")
+            {
+                Loaded = true
+            };
+            _model.AddNewTabPage(tabPageInfo);
+        }
     }
 }

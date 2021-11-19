@@ -13,6 +13,7 @@ namespace CourseManager
         {
             _viewModel = viewModel;
             _viewModel._viewModelChanged += LoadCoursesAndClasses;
+            _viewModel._viewModelChanged += LoadClassListBoxItems;
 
             _isUpdatingCourseGroupBox = false;
             InitializeComponent();
@@ -300,15 +301,48 @@ namespace CourseManager
         // render courses when class list box index changed
         private void ClassListBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            _classNameTextBox.Text = _classListBox.SelectedItem.ToString();
-            _classCoursesListBox.Items.Clear();
-            foreach (Tuple<int, int, string> course in _viewModel.CourseManagementList)
+            if (_classListBox.SelectedIndex != -1)
             {
-                if (course.Item1 == _classListBox.SelectedIndex)
+                _classGroupBox.Text = "班級";
+                _classNameTextBox.Text = _classListBox.SelectedItem.ToString();
+                _addClassButton.Enabled = true;
+                _addButton.Enabled = false;
+                _classNameTextBox.Enabled = true;
+                _classCoursesListBox.Items.Clear();
+                foreach (Tuple<int, int, string> course in _viewModel.CourseManagementList)
                 {
-                    _classCoursesListBox.Items.Add(course.Item3);
+                    if (course.Item1 == _classListBox.SelectedIndex)
+                    {
+                        _classCoursesListBox.Items.Add(course.Item3);
+                    }
                 }
             }
+        }
+
+        // change class management state when add class button clicked
+        private void AddClassButtonClick(object sender, EventArgs e)
+        {
+            _classGroupBox.Text = "新增班級";
+            _classNameTextBox.Text = "";
+            _classListBox.ClearSelected();
+            _classCoursesListBox.Items.Clear();
+            _classNameTextBox.Enabled = true;
+            _addClassButton.Enabled = false;
+        }
+
+        // change add button state from class name text box
+        private void ClassNameTextBoxTextChanged(object sender, EventArgs e)
+        {
+            _addButton.Enabled = _classNameTextBox.Text.Trim() != "";
+        }
+
+        // add new class to model
+        private void AddButtonClick(object sender, EventArgs e)
+        {
+            _viewModel.AddNewClass(_classNameTextBox.Text);
+            _classNameTextBox.Text = "";
+            _addButton.Enabled = false;
+            _addClassButton.Enabled = true;
         }
     }
 }

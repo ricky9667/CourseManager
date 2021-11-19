@@ -161,6 +161,17 @@ namespace CourseManager
             NotifyObserver();
         }
 
+        // add new tab page info
+        public void AddNewTabPage(CourseTabPageInfo tabPageInfo)
+        {
+            int index = _courseTabPageInfos.Count;
+            _courseTabPageInfos.Add(tabPageInfo);
+            _courseInfosDictionary.Add(index, new List<CourseInfo>());
+            _isCourseSelected.Add(index, new List<bool>());
+            _isCourseOpen.Add(index, new List<bool>());
+            NotifyObserver();
+        }
+
         // change open course status
         public void UpdateCourseOpen(int tabIndex, int courseIndex, bool isCourseOpen)
         {
