@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using OpenQA.Selenium;
 using System.Windows.Input;
 using System.Windows.Forms;
+using OpenQA.Selenium.Interactions;
 
 namespace CourseManager.Tests
 {
@@ -83,6 +84,12 @@ namespace CourseManager.Tests
         }
 
         // test
+        public void ClickById(string id)
+        {
+            _driver.FindElementByAccessibilityId(id).Click();
+        }
+
+        // test
         public void ClickByName(string name)
         {
             _driver.FindElementByName(name).Click();
@@ -112,16 +119,16 @@ namespace CourseManager.Tests
         }
 
         // test
-        public void ClickDataGridViewCellBy(string name, int rowIndex, string columnName)
+        public void ClickDataGridViewCellBy(string id, int rowIndex, string columnName)
         {
-            var dataGridView = _driver.FindElementByAccessibilityId(name);
+            var dataGridView = _driver.FindElementByAccessibilityId(id);
             _driver.FindElementByName($"{columnName} 資料列 {rowIndex}").Click();
         }
 
         // test
-        public void ClickListBoxItemBy(string name, string itemName)
+        public void ClickListBoxItemBy(string id, string itemName)
         {
-            var listBox = _driver.FindElementByAccessibilityId(name);
+            var listBox = _driver.FindElementByAccessibilityId(id);
             _driver.FindElementByName(itemName).Click();
         }
 
@@ -133,25 +140,25 @@ namespace CourseManager.Tests
         }
 
         // test
-        public string[] GetDataGridViewRowDataStrings(string name, int rowIndex)
+        public string[] GetDataGridViewRowDataStrings(string id, int rowIndex)
         {
-            var dataGridView = _driver.FindElementByAccessibilityId(name);
+            var dataGridView = _driver.FindElementByAccessibilityId(id);
             var rowDatas = dataGridView.FindElementByName($"資料列 {rowIndex}").FindElementsByXPath("//*");
             List<string> stringsList = new List<string>();
 
             // FindElementsByXPath("//*") 會把 "row" node 也抓出來，因此 i 要從 1 開始以跳過 "row" node
             for (int i = 1; i < rowDatas.Count; i++)
             {
-                stringsList.Add(rowDatas[i].Text);
+                stringsList.Add(rowDatas[i].Text.Replace("(null)", ""));
             }
 
             return stringsList.ToArray();
         }
 
         // test
-        public void InputValueToTextBox(string name, string text)
+        public void InputValueToTextBox(string id, string text)
         {
-            var element = _driver.FindElementByAccessibilityId(name);
+            var element = _driver.FindElementByAccessibilityId(id);
             element.Clear();
             element.SendKeys(text);
         }
@@ -164,29 +171,29 @@ namespace CourseManager.Tests
         }
 
         // test
-        public void AssertText(string name, string text)
+        public void AssertText(string id, string text)
         {
-            WindowsElement element = _driver.FindElementByAccessibilityId(name);
+            WindowsElement element = _driver.FindElementByAccessibilityId(id);
             Assert.AreEqual(text, element.Text);
         }
 
         // test
-        public void AssertDataGridViewRowDataBy(string name, int rowIndex, string[] data)
+        public void AssertDataGridViewRowDataBy(string id, int rowIndex, string[] data)
         {
-            var dataGridView = _driver.FindElementByAccessibilityId(name);
+            var dataGridView = _driver.FindElementByAccessibilityId(id);
             var rowDatas = dataGridView.FindElementByName($"資料列 {rowIndex}").FindElementsByXPath("//*");
 
             // FindElementsByXPath("//*") 會把 "row" node 也抓出來，因此 i 要從 1 開始以跳過 "row" node
             for (int i = 1; i < rowDatas.Count; i++)
             {
-                Assert.AreEqual(data[i - 1], rowDatas[i].Text);
+                Assert.AreEqual(data[i - 1], rowDatas[i].Text.Replace("(null)", ""));
             }
         }
 
         // test
-        public void AssertDataGridViewRowCountBy(string name, int rowCount)
+        public void AssertDataGridViewRowCountBy(string id, int rowCount)
         {
-            var dataGridView = _driver.FindElementByAccessibilityId(name);
+            var dataGridView = _driver.FindElementByAccessibilityId(id);
             Point point = new Point(dataGridView.Location.X, dataGridView.Location.Y);
             AutomationElement element = AutomationElement.FromPoint(point);
 

@@ -79,7 +79,7 @@ namespace CourseManager.Tests
         }
 
         // test select course with conflict time
-        [TestMethod]
+        [TestMethod()]
         public void SelectCourseWithConflict()
         {
             _robot.ClickByName("Course Selecting System");
@@ -100,7 +100,7 @@ namespace CourseManager.Tests
         }
 
         // test select course with same name
-        [TestMethod]
+        [TestMethod()]
         public void SelectCourseWithSameName()
         {
             _robot.ClickByName("Course Selecting System");
