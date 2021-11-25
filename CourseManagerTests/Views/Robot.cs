@@ -119,6 +119,14 @@ namespace CourseManager.Tests
         }
 
         // test
+        public string GetMessageBoxText()
+        {
+            var element = _driver.FindElementByClassName("Static");
+            Console.WriteLine("element = " + element.Text);
+            return element.Text;
+        }
+
+        // test
         public string[] GetDataGridViewRowDataStrings(string name, int rowIndex)
         {
             var dataGridView = _driver.FindElementByAccessibilityId(name);

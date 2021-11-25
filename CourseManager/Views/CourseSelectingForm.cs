@@ -166,8 +166,18 @@ namespace CourseManager
 
             string message = _viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes);
             MessageBox.Show(message);
+            ResetCourseDataGridViewCheckBoxes();
             _courseDataGridView.ClearSelection();
             _viewModel.SubmitButtonEnabled = false;
+        }
+
+        // reset course data grid view checkboxes
+        private void ResetCourseDataGridViewCheckBoxes()
+        {
+            foreach (DataGridViewRow row in _courseDataGridView.Rows)
+            {
+                row.Cells[0].Value = false;
+            }
         }
 
         // handle course selection form closing event
