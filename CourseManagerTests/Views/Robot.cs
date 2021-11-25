@@ -83,7 +83,7 @@ namespace CourseManager.Tests
         }
 
         // test
-        public void ClickButton(string name)
+        public void ClickByName(string name)
         {
             _driver.FindElementByName(name).Click();
         }
@@ -119,10 +119,16 @@ namespace CourseManager.Tests
         }
 
         // test
+        public void ClickListBoxItemBy(string name, string itemName)
+        {
+            var listBox = _driver.FindElementByAccessibilityId(name);
+            _driver.FindElementByName(itemName).Click();
+        }
+
+        // test
         public string GetMessageBoxText()
         {
             var element = _driver.FindElementByClassName("Static");
-            Console.WriteLine("element = " + element.Text);
             return element.Text;
         }
 
@@ -140,6 +146,14 @@ namespace CourseManager.Tests
             }
 
             return stringsList.ToArray();
+        }
+
+        // test
+        public void InputValueToTextBox(string name, string text)
+        {
+            var element = _driver.FindElementByAccessibilityId(name);
+            element.Clear();
+            element.SendKeys(text);
         }
 
         // test

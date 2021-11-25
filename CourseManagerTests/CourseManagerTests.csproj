@@ -88,6 +88,7 @@
     <Compile Include="ViewModels\CourseSelectionResultFormViewModelTests.cs" />
     <Compile Include="ViewModels\ImportCourseProgressFormViewModelTests.cs" />
     <Compile Include="ViewModels\StartUpFormViewModelTests.cs" />
+    <Compile Include="Views\EditCourseTests.cs" />
     <Compile Include="Views\SelectCourseTests.cs" />
     <Compile Include="Views\Robot.cs" />
   </ItemGroup>

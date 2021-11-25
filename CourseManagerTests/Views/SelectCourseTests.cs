@@ -1,16 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CourseManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace CourseManager.Tests
 {
     [TestClass()]
-    public class CourseSelectingFormTests
+    public class SelectCourseTests
     {
         private Robot _robot;
         private string targetAppPath;
@@ -37,10 +34,11 @@ namespace CourseManager.Tests
             _robot.CleanUp();
         }
 
+        // test select course successfully
         [TestMethod()]
         public void SelectCourseAndRemoveCourseTest()
         {
-            _robot.ClickButton("Course Selecting System");
+            _robot.ClickByName("Course Selecting System");
             _robot.SwitchTo(COURSE_SELECTING_FORM);
 
             _robot.ClickTabControl("資工三");
@@ -48,7 +46,7 @@ namespace CourseManager.Tests
             string[] firstCourseDataStrings = _robot.GetDataGridViewRowDataStrings(COURSE_DATA_GRID_VIEW, FIRST_SELECTED_INDEX);
             string[] expectedCourseDataStrings = _robot.GetDataGridViewRowDataStrings(COURSE_DATA_GRID_VIEW, FIRST_SELECTED_INDEX + 1);
             _robot.ClickDataGridViewCellBy(COURSE_DATA_GRID_VIEW, FIRST_SELECTED_INDEX, "選");
-            _robot.ClickButton("確認送出");
+            _robot.ClickByName("確認送出");
             _robot.CloseMessageBox();
             _robot.AssertDataGridViewRowDataBy(COURSE_DATA_GRID_VIEW, FIRST_SELECTED_INDEX, expectedCourseDataStrings);
 
@@ -57,11 +55,11 @@ namespace CourseManager.Tests
             string[] secondCourseDataStrings = _robot.GetDataGridViewRowDataStrings(COURSE_DATA_GRID_VIEW, SECOND_SELECTED_INDEX);
             expectedCourseDataStrings = _robot.GetDataGridViewRowDataStrings(COURSE_DATA_GRID_VIEW, SECOND_SELECTED_INDEX + 1);
             _robot.ClickDataGridViewCellBy(COURSE_DATA_GRID_VIEW, SECOND_SELECTED_INDEX, "選");
-            _robot.ClickButton("確認送出");
+            _robot.ClickByName("確認送出");
             _robot.CloseMessageBox();
             _robot.AssertDataGridViewRowDataBy(COURSE_DATA_GRID_VIEW, SECOND_SELECTED_INDEX, expectedCourseDataStrings);
 
-            _robot.ClickButton("查看選課結果");
+            _robot.ClickByName("查看選課結果");
             _robot.SwitchTo(COURSE_SELECTION_RESULT_FORM);
             expectedCourseDataStrings = GetSelectedCourseDataStrings(firstCourseDataStrings);
             expectedCourseDataStrings[0] = "退選";
@@ -80,10 +78,11 @@ namespace CourseManager.Tests
             _robot.AssertDataGridViewRowDataBy(COURSE_DATA_GRID_VIEW, SECOND_SELECTED_INDEX, secondCourseDataStrings);
         }
 
+        // test select course with conflict time
         [TestMethod]
         public void SelectCourseWithConflict()
         {
-            _robot.ClickButton("Course Selecting System");
+            _robot.ClickByName("Course Selecting System");
             _robot.SwitchTo(COURSE_SELECTING_FORM);
 
             _robot.ClickTabControl("電子三甲");
@@ -93,32 +92,33 @@ namespace CourseManager.Tests
             _robot.ClickDataGridViewCellBy(COURSE_DATA_GRID_VIEW, 3, "選");
             _robot.ClickDataGridViewCellBy(COURSE_DATA_GRID_VIEW, 7, "選");
             _robot.ClickDataGridViewCellBy(COURSE_DATA_GRID_VIEW, 11, "選");
-            _robot.ClickButton("確認送出");
+            _robot.ClickByName("確認送出");
 
-            string expectedText = "加選失敗\r\n\r\n衝堂：" + SelectCourseFailText(firstConflictCourseDataStrings) + SelectCourseFailText(secondConflictCourseDataStrings);
+            string expectedText = "加選失敗\r\n\r\n衝堂：" + GetSelectCourseFailText(firstConflictCourseDataStrings) + GetSelectCourseFailText(secondConflictCourseDataStrings);
             Assert.AreEqual(expectedText, _robot.GetMessageBoxText());
             _robot.CloseMessageBox();
         }
 
+        // test select course with same name
         [TestMethod]
         public void SelectCourseWithSameName()
         {
-            _robot.ClickButton("Course Selecting System");
+            _robot.ClickByName("Course Selecting System");
             _robot.SwitchTo(COURSE_SELECTING_FORM);
 
             _robot.ClickTabControl("資工三");
             _robot.ClickDataGridViewCellBy(COURSE_DATA_GRID_VIEW, 1, "選");
             _robot.ClickDataGridViewCellBy(COURSE_DATA_GRID_VIEW, 5, "選");
-            _robot.ClickButton("確認送出");
+            _robot.ClickByName("確認送出");
             _robot.CloseMessageBox();
 
             _robot.ClickTabControl("電子三甲");
             string[] conflictCourseDataStrings = _robot.GetDataGridViewRowDataStrings(COURSE_DATA_GRID_VIEW, 14);
             _robot.ClickDataGridViewCellBy(COURSE_DATA_GRID_VIEW, 14, "選");
-            _robot.ClickButton("確認送出");
+            _robot.ClickByName("確認送出");
 
 
-            string expectedText = "加選失敗\r\n\r\n課程名稱相同：" + SelectCourseFailText(conflictCourseDataStrings);
+            string expectedText = "加選失敗\r\n\r\n課程名稱相同：" + GetSelectCourseFailText(conflictCourseDataStrings);
             Assert.AreEqual(expectedText, _robot.GetMessageBoxText());
             _robot.CloseMessageBox();
         }
@@ -135,7 +135,7 @@ namespace CourseManager.Tests
         }
 
         // get select course fail course text
-        private string SelectCourseFailText(string[] courseDataStrings)
+        private string GetSelectCourseFailText(string[] courseDataStrings)
         {
             const int COURSE_NUMBER_INDEX = 1;
             const int COURSE_NAME_INDEX = 2;
