@@ -130,5 +130,61 @@ namespace CourseManager.Tests
                 _robot.ClickByName("上移一行"); // scroll down
             }
         }
+
+        [TestMethod()]
+        public void EditCourseInfoWithCourseSelectedClassChanged()
+        {
+            _robot.ClickByName("Course Selecting System");
+            _robot.SwitchTo(COURSE_SELECTING_FORM);
+            const int SELECT_INDEX = 9;
+            string[] windowsProgrammingCourseDataStrings = _robot.GetDataGridViewRowDataStrings(COURSE_DATA_GRID_VIEW, SELECT_INDEX);
+
+            _robot.ClickTabControl("資工三");
+            _robot.ClickDataGridViewCellBy(COURSE_DATA_GRID_VIEW, SELECT_INDEX, "選");
+            _robot.ClickByName("確認送出");
+            _robot.CloseMessageBox();
+
+            _robot.ClickByName("查看選課結果");
+            _robot.SwitchTo(START_UP_FORM);
+            _robot.ClickByName("Course Management System");
+            _robot.SwitchTo(COURSE_MANAGEMENT_FORM);
+            _robot.ClickTabControl("課程管理");
+            _robot.ClickByName(WINDOWS_PROGRAMMING_COURSE_NAME);
+
+            _robot.InputValueToTextBox("_courseNumberTextBox", "270915");
+            _robot.InputValueToTextBox("_courseNameTextBox", "物件導向分析與設計");
+            _robot.InputValueToTextBox("_creditTextBox", "2.0");
+            _robot.ClickByName("時數(*)");
+            _robot.ClickByName("2");
+            _robot.ClickByName("班級(*)");
+            _robot.ClickByName("電子三甲");
+            _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "四");
+            _robot.ClickDataGridViewCellBy("_timeDataGridView", 3, "四");
+            _robot.ClickDataGridViewCellBy("_timeDataGridView", 6, "四");
+            _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "一");
+            _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "二");
+            _robot.ClickByName("儲存");
+
+            for (int i = 0; i < 10; i++)
+            {
+                _robot.ClickById("DownButton"); // scroll down
+            }
+            _robot.ClickByName("物件導向分析與設計"); // test if new course can be found
+            for (int i = 0; i < 10; i++)
+            {
+                _robot.ClickById("UpButton"); // scroll down
+            }
+
+            _robot.SwitchTo(COURSE_SELECTION_RESULT_FORM);
+            windowsProgrammingCourseDataStrings[0] = "退選";
+            windowsProgrammingCourseDataStrings[1] = "270915";
+            windowsProgrammingCourseDataStrings[2] = "物件導向分析與設計";
+            windowsProgrammingCourseDataStrings[4] = "2.0";
+            windowsProgrammingCourseDataStrings[5] = "2";
+            windowsProgrammingCourseDataStrings[9] = "3";
+            windowsProgrammingCourseDataStrings[10] = "3";
+            windowsProgrammingCourseDataStrings[12] = "";
+            _robot.AssertDataGridViewRowDataBy("selectedCourseDataGridView", 0, windowsProgrammingCourseDataStrings);
+        }
     }
 }
