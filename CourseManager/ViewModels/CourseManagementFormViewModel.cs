@@ -288,10 +288,8 @@ namespace CourseManager
         // add new tab page from class management
         public void AddNewClass(string className)
         {
-            CourseTabPageInfo tabPageInfo = new CourseTabPageInfo(className, className, "")
-            {
-                Loaded = true
-            };
+            CourseTabPageInfo tabPageInfo = new CourseTabPageInfo(className, className, "");
+            tabPageInfo.Loaded = true;
             _model.AddNewTabPage(tabPageInfo);
         }
     }

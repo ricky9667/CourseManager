@@ -147,9 +147,6 @@ namespace CourseManager
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
             _courseSelectionResultForm.Show();
-            _viewModel.CourseTabControlEnabled = false;
-            _viewModel.CourseSelectionResultButtonEnabled = false;
-            _viewModel.SubmitButtonEnabled = false;
         }
 
         // submit courses
