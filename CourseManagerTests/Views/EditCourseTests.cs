@@ -19,6 +19,7 @@ namespace CourseManager.Tests
         private const string COURSE_SELECTION_RESULT_FORM = "CourseSelectionResultForm";
         private const string COURSE_MANAGEMENT_FORM = "CourseManagementForm";
         private const string COURSE_DATA_GRID_VIEW = "courseDataGridView";
+        private const string WINDOWS_PROGRAMMING_COURSE_NAME = "視窗程式設計";
         // init
         [TestInitialize]
         public void Initialize()
@@ -39,17 +40,33 @@ namespace CourseManager.Tests
         }
 
         [TestMethod]
-        public void EditCourseInfoTest()
+        public void EditCourseInfoAndCheckEnabledTest()
         {
             _robot.ClickByName("Course Management System");
             _robot.SwitchTo(COURSE_MANAGEMENT_FORM);
 
             _robot.ClickTabControl("課程管理");
-            _robot.ClickByName("視窗程式設計");
+            _robot.ClickByName(WINDOWS_PROGRAMMING_COURSE_NAME);
             _robot.InputValueToTextBox("_courseNameTextBox", "視窗程式設計好難");
             _robot.AssertEnable("儲存", true);
 
             _robot.InputValueToTextBox("_courseNameTextBox", "");
+            _robot.AssertEnable("儲存", false);
+        }
+
+        [TestMethod]
+        public void EditCourseTimeAndCheckEnabledTest()
+        {
+            _robot.ClickByName("Course Management System");
+            _robot.SwitchTo(COURSE_MANAGEMENT_FORM);
+
+            _robot.ClickTabControl("課程管理");
+            _robot.ClickByName(WINDOWS_PROGRAMMING_COURSE_NAME);
+            _robot.ClickDataGridViewCellBy("_timeDataGridView", 6, "四");
+            _robot.ClickDataGridViewCellBy("_timeDataGridView", 5, "四");
+            _robot.AssertEnable("儲存", true);
+
+            _robot.ClickDataGridViewCellBy("_timeDataGridView", 6, "四");
             _robot.AssertEnable("儲存", false);
         }
     }
