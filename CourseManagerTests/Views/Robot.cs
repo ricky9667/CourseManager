@@ -142,8 +142,8 @@ namespace CourseManager.Tests
         // test
         public string[] GetDataGridViewRowDataStrings(string id, int rowIndex)
         {
-            var dataGridView = _driver.FindElementByAccessibilityId(id);
-            var rowDatas = dataGridView.FindElementByName($"資料列 {rowIndex}").FindElementsByXPath("//*");
+            //var dataGridView = _driver.FindElementByAccessibilityId(id);
+            var rowDatas = _driver.FindElementByAccessibilityId(id).FindElementByName($"資料列 {rowIndex}").FindElementsByXPath("//*");
             List<string> stringsList = new List<string>();
 
             // FindElementsByXPath("//*") 會把 "row" node 也抓出來，因此 i 要從 1 開始以跳過 "row" node

@@ -39,6 +39,7 @@ namespace CourseManager.Tests
             _robot.CleanUp();
         }
 
+        // test edit course info and check enabled
         [TestMethod()]
         public void EditCourseInfoAndCheckEnabledTest()
         {
@@ -54,6 +55,7 @@ namespace CourseManager.Tests
             _robot.AssertEnable("儲存", false);
         }
 
+        // test edit course time and check enabled
         [TestMethod()]
         public void EditCourseTimeAndCheckEnabledTest()
         {
@@ -70,8 +72,9 @@ namespace CourseManager.Tests
             _robot.AssertEnable("儲存", false);
         }
 
+        // test edit course with class changed
         [TestMethod()]
-        public void EditCourseInfoWithClassChanged()
+        public void EditCourseInfoWithClassChangedTest()
         {
             _robot.ClickByName("Course Selecting System");
             _robot.SwitchTo(COURSE_SELECTING_FORM);
@@ -79,25 +82,8 @@ namespace CourseManager.Tests
             string[] windowsProgrammingCourseDataStrings = _robot.GetDataGridViewRowDataStrings(COURSE_DATA_GRID_VIEW, SELECT_INDEX);
             string[] expectedCourseDataStrings = _robot.GetDataGridViewRowDataStrings(COURSE_DATA_GRID_VIEW, SELECT_INDEX + 1);
 
-            _robot.SwitchTo(START_UP_FORM);
-            _robot.ClickByName("Course Management System");
-            _robot.SwitchTo(COURSE_MANAGEMENT_FORM);
-            _robot.ClickTabControl("課程管理");
-            _robot.ClickByName(WINDOWS_PROGRAMMING_COURSE_NAME);
-
-            _robot.InputValueToTextBox("_courseNumberTextBox", "270915");
-            _robot.InputValueToTextBox("_courseNameTextBox", "物件導向分析與設計");
-            _robot.InputValueToTextBox("_creditTextBox", "2.0");
-            _robot.ClickByName("時數(*)");
-            _robot.ClickByName("2");
-            _robot.ClickByName("班級(*)");
-            _robot.ClickByName("電子三甲");
-            _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "四");
-            _robot.ClickDataGridViewCellBy("_timeDataGridView", 3, "四");
-            _robot.ClickDataGridViewCellBy("_timeDataGridView", 6, "四");
-            _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "一");
-            _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "二");
-            _robot.ClickByName("儲存");
+            OpenWindowsAndGoToCourseManagementForm();
+            EditWindowsProgrammingCourse();
 
             _robot.ScrollDownListBox(10);
             _robot.ClickByName("物件導向分析與設計"); // test if new course can be found
@@ -108,21 +94,16 @@ namespace CourseManager.Tests
             _robot.AssertDataGridViewRowDataBy(COURSE_DATA_GRID_VIEW, SELECT_INDEX, expectedCourseDataStrings);
 
             _robot.ClickTabControl("電子三甲");
-            windowsProgrammingCourseDataStrings[1] = "270915";
-            windowsProgrammingCourseDataStrings[2] = "物件導向分析與設計";
-            windowsProgrammingCourseDataStrings[4] = "2.0";
-            windowsProgrammingCourseDataStrings[5] = "2";
-            windowsProgrammingCourseDataStrings[9] = "3";
-            windowsProgrammingCourseDataStrings[10] = "3";
-            windowsProgrammingCourseDataStrings[12] = "";
+            ModifyWindowsProgrammingCourseStrings(windowsProgrammingCourseDataStrings);
 
             _robot.ScrollDownDataGridView(15);
             _robot.AssertDataGridViewRowDataBy(COURSE_DATA_GRID_VIEW, 25, windowsProgrammingCourseDataStrings);
             _robot.ScrollUpDataGridView(15);
         }
 
+        // test edit course with class changed and course selected
         [TestMethod()]
-        public void EditCourseInfoWithCourseSelectedClassChanged()
+        public void EditCourseInfoWithCourseSelectedClassChangedTest()
         {
             _robot.ClickByName("Course Selecting System");
             _robot.SwitchTo(COURSE_SELECTING_FORM);
@@ -134,13 +115,34 @@ namespace CourseManager.Tests
             _robot.ClickByName("確認送出");
             _robot.CloseMessageBox();
 
+            OpenWindowsAndGoToCourseManagementForm();
+            EditWindowsProgrammingCourse();
+
+            _robot.ScrollDownListBox(10);
+            _robot.ClickByName("物件導向分析與設計"); // test if new course can be found
+            _robot.ScrollUpListBox(10);
+
+            _robot.SwitchTo(COURSE_SELECTING_FORM);
             _robot.ClickByName("查看選課結果");
+            _robot.SwitchTo(COURSE_SELECTION_RESULT_FORM);
+            ModifyWindowsProgrammingCourseStrings(windowsProgrammingCourseDataStrings);
+            windowsProgrammingCourseDataStrings[0] = "退選";
+            _robot.AssertDataGridViewRowDataBy("selectedCourseDataGridView", 0, windowsProgrammingCourseDataStrings);
+        }
+    
+        // open windows and go to course management form
+        private void OpenWindowsAndGoToCourseManagementForm()
+        {
             _robot.SwitchTo(START_UP_FORM);
             _robot.ClickByName("Course Management System");
             _robot.SwitchTo(COURSE_MANAGEMENT_FORM);
             _robot.ClickTabControl("課程管理");
             _robot.ClickByName(WINDOWS_PROGRAMMING_COURSE_NAME);
+        }
 
+        // edit windows programming course
+        private void EditWindowsProgrammingCourse()
+        {
             _robot.InputValueToTextBox("_courseNumberTextBox", "270915");
             _robot.InputValueToTextBox("_courseNameTextBox", "物件導向分析與設計");
             _robot.InputValueToTextBox("_creditTextBox", "2.0");
@@ -154,13 +156,11 @@ namespace CourseManager.Tests
             _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "一");
             _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "二");
             _robot.ClickByName("儲存");
+        }
 
-            _robot.ScrollDownListBox(10);
-            _robot.ClickByName("物件導向分析與設計"); // test if new course can be found
-            _robot.ScrollUpListBox(10);
-
-            _robot.SwitchTo(COURSE_SELECTION_RESULT_FORM);
-            windowsProgrammingCourseDataStrings[0] = "退選";
+        // modify windows programming course strings
+        private string[] ModifyWindowsProgrammingCourseStrings(string[] windowsProgrammingCourseDataStrings)
+        {
             windowsProgrammingCourseDataStrings[1] = "270915";
             windowsProgrammingCourseDataStrings[2] = "物件導向分析與設計";
             windowsProgrammingCourseDataStrings[4] = "2.0";
@@ -168,7 +168,7 @@ namespace CourseManager.Tests
             windowsProgrammingCourseDataStrings[9] = "3";
             windowsProgrammingCourseDataStrings[10] = "3";
             windowsProgrammingCourseDataStrings[12] = "";
-            _robot.AssertDataGridViewRowDataBy("selectedCourseDataGridView", 0, windowsProgrammingCourseDataStrings);
+            return windowsProgrammingCourseDataStrings;
         }
     }
 }

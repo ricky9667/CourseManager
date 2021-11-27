@@ -23,6 +23,7 @@ namespace CourseManager.Tests
             _robot = new Robot(targetAppPath, START_UP_FORM);
         }
 
+        // dispose
         [TestCleanup]
         public void Cleanup()
         {

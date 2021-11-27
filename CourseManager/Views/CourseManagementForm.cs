@@ -191,7 +191,6 @@ namespace CourseManager
                 courseInfo = SetNewCourseInfoData(courseInfo);
                 _viewModel.UpdateCourseInfo(courseInfo, _classComboBox.SelectedIndex, _openCourseSettingsComboBox.SelectedIndex);
             }
-
             _viewModel.CourseGroupBoxEnabled = _viewModel.SaveButtonEnabled = false;
             _viewModel.AddCourseButtonEnabled = true;
             _timeDataGridView.ClearSelection();
