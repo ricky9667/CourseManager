@@ -99,15 +99,10 @@ namespace CourseManager.Tests
             _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "二");
             _robot.ClickByName("儲存");
 
-            for (int i = 0; i < 10; i++)
-            {
-                _robot.ClickById("DownButton"); // scroll down
-            }
+            _robot.ScrollDownListBox(10);
             _robot.ClickByName("物件導向分析與設計"); // test if new course can be found
-            for (int i = 0; i < 10; i++)
-            {
-                _robot.ClickById("UpButton"); // scroll down
-            }
+            _robot.ScrollUpListBox(10);
+
             _robot.SwitchTo(COURSE_SELECTING_FORM);
             _robot.ClickTabControl("資工三");
             _robot.AssertDataGridViewRowDataBy(COURSE_DATA_GRID_VIEW, SELECT_INDEX, expectedCourseDataStrings);
@@ -120,15 +115,10 @@ namespace CourseManager.Tests
             windowsProgrammingCourseDataStrings[9] = "3";
             windowsProgrammingCourseDataStrings[10] = "3";
             windowsProgrammingCourseDataStrings[12] = "";
-            for (int i = 0; i < 15; i++)
-            {
-                _robot.ClickByName("下移一行"); // scroll down
-            }
+
+            _robot.ScrollDownDataGridView(15);
             _robot.AssertDataGridViewRowDataBy(COURSE_DATA_GRID_VIEW, 25, windowsProgrammingCourseDataStrings);
-            for (int i = 0; i < 15; i++)
-            {
-                _robot.ClickByName("上移一行"); // scroll down
-            }
+            _robot.ScrollUpDataGridView(15);
         }
 
         [TestMethod()]
@@ -165,15 +155,9 @@ namespace CourseManager.Tests
             _robot.ClickDataGridViewCellBy("_timeDataGridView", 2, "二");
             _robot.ClickByName("儲存");
 
-            for (int i = 0; i < 10; i++)
-            {
-                _robot.ClickById("DownButton"); // scroll down
-            }
+            _robot.ScrollDownListBox(10);
             _robot.ClickByName("物件導向分析與設計"); // test if new course can be found
-            for (int i = 0; i < 10; i++)
-            {
-                _robot.ClickById("UpButton"); // scroll down
-            }
+            _robot.ScrollUpListBox(10);
 
             _robot.SwitchTo(COURSE_SELECTION_RESULT_FORM);
             windowsProgrammingCourseDataStrings[0] = "退選";

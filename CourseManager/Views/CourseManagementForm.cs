@@ -141,6 +141,7 @@ namespace CourseManager
             _viewModel.SaveButtonEnabled = false;
             _timeDataGridView.ClearSelection();
             _courseGroupBox.Text = "編輯課程";
+            _saveButton.Text = "儲存";
 
             _isUpdatingCourseGroupBox = true;
             if (_courseListBox.SelectedIndex != -1)
@@ -192,6 +193,7 @@ namespace CourseManager
             }
 
             _viewModel.CourseGroupBoxEnabled = _viewModel.SaveButtonEnabled = false;
+            _viewModel.AddCourseButtonEnabled = true;
             _timeDataGridView.ClearSelection();
             LoadCoursesAndClasses();
             ResetGroupBox();
@@ -283,6 +285,7 @@ namespace CourseManager
             _viewModel.AddCourseButtonEnabled = false;
             _viewModel.CourseGroupBoxEnabled = true;
             _courseGroupBox.Text = "新增課程";
+            _saveButton.Text = "新增";
             ResetGroupBox();
         }
 

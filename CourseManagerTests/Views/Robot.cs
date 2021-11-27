@@ -164,6 +164,46 @@ namespace CourseManager.Tests
         }
 
         // test
+        public void ScrollUpListBox(int times)
+        {
+            var element = _driver.FindElementByAccessibilityId("UpButton");
+            for (int i = 0; i < times; i++)
+            {
+                element.Click();
+            }
+        }
+
+        // test
+        public void ScrollDownListBox(int times)
+        {
+            var element = _driver.FindElementByAccessibilityId("DownButton");
+            for (int i = 0; i < times; i++)
+            {
+                element.Click();
+            }
+        }
+
+        // test
+        public void ScrollUpDataGridView(int times)
+        {
+            var element = _driver.FindElementByName("上移一行");
+            for (int i = 0; i < times; i++)
+            {
+                element.Click();
+            }
+        }
+
+        // test
+        public void ScrollDownDataGridView(int times)
+        {
+            var element = _driver.FindElementByName("下移一行");
+            for (int i = 0; i < times; i++)
+            {
+                element.Click();
+            }
+        }
+
+        // test
         public void AssertEnable(string name, bool state)
         {
             WindowsElement element = _driver.FindElementByName(name);
