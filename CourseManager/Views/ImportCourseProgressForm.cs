@@ -37,6 +37,9 @@ namespace CourseManager
                 _importCourseProgressBar.Value = (int)Math.Round(percentage);
                 _importCourseProgressLabel.Text = _viewModel.GenerateProgressLabelText(percentage);
             }
+
+            await Task.Delay(1000);
+            Close();
         }
     }
 }

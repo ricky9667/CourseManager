@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CourseManager;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace CourseManager.Tests
@@ -16,10 +11,8 @@ namespace CourseManager.Tests
         private string targetAppPath;
         private const string START_UP_FORM = "StartUpForm";
         private const string COURSE_SELECTING_FORM = "CourseSelectingForm";
-        private const string COURSE_SELECTION_RESULT_FORM = "CourseSelectionResultForm";
         private const string COURSE_MANAGEMENT_FORM = "CourseManagementForm";
         private const string COURSE_DATA_GRID_VIEW = "courseDataGridView";
-        private const string WINDOWS_PROGRAMMING_COURSE_NAME = "視窗程式設計";
         // init
         [TestInitialize]
         public void Initialize()
@@ -47,7 +40,6 @@ namespace CourseManager.Tests
             _robot.SwitchTo(COURSE_MANAGEMENT_FORM);
 
             _robot.ClickTabControl("課程管理");
-            _robot.ClickByName("新增課程");
             _robot.ClickByName("新增課程");
             _robot.AssertText("_courseGroupBox", "新增課程");
             _robot.AssertText("_saveButton", "新增");
