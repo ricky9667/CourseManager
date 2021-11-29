@@ -24,6 +24,7 @@ namespace CourseManager
         async private void ImportCourseProgressFormShown(object sender, EventArgs e)
         {
             const int FULL_PERCENTAGE = 100;
+            const int DELAY_TIME = 1000;
             _importCourseProgressBar.Maximum = FULL_PERCENTAGE;
             _importCourseProgressBar.Value = 0;
 
@@ -31,12 +32,14 @@ namespace CourseManager
             foreach (int index in _viewModel.ComputerScienceTabIndexes)
             {
                 _viewModel.LoadTabPageCourses(index);
-                await Task.Delay(1000);
+                await Task.Delay(DELAY_TIME);
 
                 double percentage = Convert.ToDouble(count++ * FULL_PERCENTAGE / _viewModel.ComputerScienceTabIndexes.Count);
                 _importCourseProgressBar.Value = (int)Math.Round(percentage);
                 _importCourseProgressLabel.Text = _viewModel.GenerateProgressLabelText(percentage);
             }
+            await Task.Delay(DELAY_TIME);
+            Close();
         }
     }
 }

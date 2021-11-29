@@ -13,6 +13,7 @@ namespace CourseManager
         {
             _viewModel = viewModel;
             _viewModel._viewModelChanged += LoadCoursesAndClasses;
+            _viewModel._viewModelChanged += LoadClassListBoxItems;
 
             _isUpdatingCourseGroupBox = false;
             InitializeComponent();
@@ -23,6 +24,7 @@ namespace CourseManager
         {
             LoadCoursesAndClasses();
             LoadTimeDataGridViewRows();
+            LoadClassListBoxItems();
             SetBindingProperties();
         }
 
@@ -38,6 +40,10 @@ namespace CourseManager
                 courseGroupBoxControl.DataBindings.Add(nameof(courseGroupBoxControl.Enabled), _viewModel, nameof(_viewModel.CourseGroupBoxEnabled));
             }
             _courseListBox.DataBindings.Add(nameof(_courseListBox.SelectedIndex), _viewModel, nameof(_viewModel.CurrentSelectedCourse));
+
+            _addClassButton.DataBindings.Add(nameof(_addClassButton.Enabled), _viewModel, nameof(_viewModel.AddClassButtonEnabled));
+            _addButton.DataBindings.Add(nameof(_addButton.Enabled), _viewModel, nameof(_viewModel.AddButtonEnabled));
+            _classNameTextBox.DataBindings.Add(nameof(_classNameTextBox.Enabled), _viewModel, nameof(_viewModel.ClassNameTextBoxEnabled));
         }
 
         // load courses in course list box
@@ -66,6 +72,16 @@ namespace CourseManager
             }
             _timeDataGridView.Refresh();
             _timeDataGridView.ClearSelection();
+        }
+
+        // load class list box classes
+        private void LoadClassListBoxItems()
+        {
+            _classListBox.Items.Clear();
+            foreach (string className in _viewModel.ClassNames)
+            {
+                _classListBox.Items.Add(className);
+            }
         }
 
         // create datagridview row
@@ -125,6 +141,7 @@ namespace CourseManager
             _viewModel.SaveButtonEnabled = false;
             _timeDataGridView.ClearSelection();
             _courseGroupBox.Text = "編輯課程";
+            _saveButton.Text = "儲存";
 
             _isUpdatingCourseGroupBox = true;
             if (_courseListBox.SelectedIndex != -1)
@@ -174,8 +191,8 @@ namespace CourseManager
                 courseInfo = SetNewCourseInfoData(courseInfo);
                 _viewModel.UpdateCourseInfo(courseInfo, _classComboBox.SelectedIndex, _openCourseSettingsComboBox.SelectedIndex);
             }
-
             _viewModel.CourseGroupBoxEnabled = _viewModel.SaveButtonEnabled = false;
+            _viewModel.AddCourseButtonEnabled = true;
             _timeDataGridView.ClearSelection();
             LoadCoursesAndClasses();
             ResetGroupBox();
@@ -267,6 +284,7 @@ namespace CourseManager
             _viewModel.AddCourseButtonEnabled = false;
             _viewModel.CourseGroupBoxEnabled = true;
             _courseGroupBox.Text = "新增課程";
+            _saveButton.Text = "新增";
             ResetGroupBox();
         }
 
@@ -284,6 +302,53 @@ namespace CourseManager
         private void ImportCourseProgressFormClosed(object sender, FormClosedEventArgs e)
         {
             _viewModel.ImportCourseButtonEnabled = true;
+        }
+
+        // render courses when class list box index changed
+        private void ClassListBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_classListBox.SelectedIndex != -1)
+            {
+                _classGroupBox.Text = "班級";
+                _classNameTextBox.Text = _classListBox.SelectedItem.ToString();
+                _viewModel.AddClassButtonEnabled = true;
+                _viewModel.AddButtonEnabled = false;
+                _viewModel.ClassNameTextBoxEnabled = true;
+                _classCoursesListBox.Items.Clear();
+                foreach (Tuple<int, int, string> course in _viewModel.CourseManagementList)
+                {
+                    if (course.Item1 == _classListBox.SelectedIndex)
+                    {
+                        _classCoursesListBox.Items.Add(course.Item3);
+                    }
+                }
+            }
+        }
+
+        // change class management state when add class button clicked
+        private void AddClassButtonClick(object sender, EventArgs e)
+        {
+            _classGroupBox.Text = "新增班級";
+            _classNameTextBox.Text = "";
+            _classListBox.ClearSelected();
+            _classCoursesListBox.Items.Clear();
+            _viewModel.AddClassButtonEnabled = false;
+            _viewModel.ClassNameTextBoxEnabled = true;
+        }
+
+        // change add button state from class name text box
+        private void ClassNameTextBoxTextChanged(object sender, EventArgs e)
+        {
+            _viewModel.AddButtonEnabled = (_classNameTextBox.Text.Trim() != "");
+        }
+
+        // add new class to model
+        private void AddButtonClick(object sender, EventArgs e)
+        {
+            _viewModel.AddNewClass(_classNameTextBox.Text);
+            _classNameTextBox.Text = "";
+            _viewModel.AddButtonEnabled = false;
+            _viewModel.AddClassButtonEnabled = true;
         }
     }
 }

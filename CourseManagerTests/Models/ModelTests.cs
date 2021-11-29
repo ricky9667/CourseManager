@@ -15,7 +15,7 @@ namespace CourseManager.Tests
         readonly int electronicEngineering3ATabIndex = 1;
         // unit test case setup
         [TestInitialize]
-        public void Setup()
+        public void Initialize()
         {
             model = new Model();
         }
@@ -66,6 +66,25 @@ namespace CourseManager.Tests
             int courseIndex = courseInfos.Count - 1;
             Assert.IsTrue(courseInfos[courseIndex].CheckPropertiesIdentical(artificialIntelligenceCourseInfo, new int[] { }));
             Assert.IsFalse(model.CheckCourseSelected(computerScience3TabIndex, courseIndex));
+        }
+
+        // test add new tab page
+        [TestMethod()]
+        public void AddNewTabPage()
+        {
+            model.LoadAllTabCourses();
+
+            int oldCount = model.CourseTabPageInfos.Count;
+            const string tabName = "newTabPageInfo";
+            const string tabText = "New Tab Page";
+            model.AddNewTabPage(new CourseTabPageInfo(tabName, tabText, ""));
+
+            Assert.AreEqual(oldCount + 1, model.CourseTabPageInfos.Count);
+            int lastIndex = model.CourseTabPageInfos.Count - 1;
+            Assert.AreEqual(tabName, model.CourseTabPageInfos[lastIndex].TabName);
+            Assert.AreEqual(tabText, model.CourseTabPageInfos[lastIndex].TabText);
+            Assert.IsFalse(model.CourseTabPageInfos[lastIndex].Loaded);
+            Assert.AreEqual(0, model.GetCourseInfos(lastIndex).Count);
         }
 
         //  test check course selected

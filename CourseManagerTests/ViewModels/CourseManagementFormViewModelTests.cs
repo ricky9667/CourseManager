@@ -13,7 +13,7 @@ namespace CourseManager.Tests
 
         // unit test case setup
         [TestInitialize]
-        public void Setup()
+        public void Initialize()
         {
             model = new Model();
             viewModel = new CourseManagementFormViewModel(model);
@@ -28,6 +28,10 @@ namespace CourseManager.Tests
             Assert.IsFalse(viewModel.SaveButtonEnabled);
             Assert.IsTrue(viewModel.ImportCourseButtonEnabled);
             Assert.AreEqual(-1, viewModel.CurrentSelectedCourse);
+
+            Assert.IsTrue(viewModel.AddClassButtonEnabled);
+            Assert.IsFalse(viewModel.AddButtonEnabled);
+            Assert.IsFalse(viewModel.ClassNameTextBoxEnabled);
         }
 
         // test model property
@@ -70,6 +74,13 @@ namespace CourseManager.Tests
             Assert.IsTrue(viewModel.SaveButtonEnabled);
             viewModel.ImportCourseButtonEnabled = false;
             Assert.IsFalse(viewModel.ImportCourseButtonEnabled);
+
+            viewModel.AddClassButtonEnabled = false;
+            Assert.IsFalse(viewModel.AddClassButtonEnabled);
+            viewModel.AddButtonEnabled = true;
+            Assert.IsTrue(viewModel.AddButtonEnabled);
+            viewModel.ClassNameTextBoxEnabled = true;
+            Assert.IsTrue(viewModel.ClassNameTextBoxEnabled);
         }
 
         // test get course info
@@ -127,6 +138,21 @@ namespace CourseManager.Tests
             testCourseInfo = viewModel.GetCourseInfo(computerScience3TabIndex, 4).GetCopy();
             testCourseInfo.Name = "ChangedCourseName";
             Assert.IsTrue(viewModel.CheckSaveButtonStateByCourseData(testCourseInfo, computerScience3TabIndex, 0));
+        }
+
+        // test add new class
+        [TestMethod()]
+        public void AddNewClassTest()
+        {
+            int oldCount = model.CourseTabPageInfos.Count;
+            const string className = "newClass";
+            viewModel.AddNewClass(className);
+
+            Assert.AreEqual(oldCount + 1, model.CourseTabPageInfos.Count);
+            int lastIndex = model.CourseTabPageInfos.Count - 1;
+            Assert.AreEqual(className, model.CourseTabPageInfos[lastIndex].TabName);
+            Assert.AreEqual(className, model.CourseTabPageInfos[lastIndex].TabText);
+            Assert.IsTrue(model.CourseTabPageInfos[lastIndex].Loaded);
         }
     }
 }

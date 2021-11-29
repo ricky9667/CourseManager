@@ -15,6 +15,9 @@ namespace CourseManager
         private bool _addCourseButtonEnabled;
         private bool _saveButtonEnabled;
         private bool _importCourseButtonEnabled;
+        private bool _addClassButtonEnabled;
+        private bool _addButtonEnabled;
+        private bool _classNameTextBoxEnabled;
         int _currentSelectedCourse;
         List<Tuple<int, int, string>> _courseManagementList;
 
@@ -28,6 +31,11 @@ namespace CourseManager
             _saveButtonEnabled = false;
             _importCourseButtonEnabled = true;
             _currentSelectedCourse = -1;
+
+            _addClassButtonEnabled = true;
+            _addButtonEnabled = false;
+            _classNameTextBoxEnabled = false;
+
             UpdateCourseManagementList();
         }
 
@@ -88,6 +96,45 @@ namespace CourseManager
             {
                 _importCourseButtonEnabled = value;
                 NotifyPropertyChanged(nameof(ImportCourseButtonEnabled));
+            }
+        }
+
+        public bool AddClassButtonEnabled
+        {
+            get
+            {
+                return _addClassButtonEnabled;
+            }
+            set
+            {
+                _addClassButtonEnabled = value;
+                NotifyPropertyChanged(nameof(AddClassButtonEnabled));
+            }
+        }
+
+        public bool AddButtonEnabled
+        {
+            get
+            {
+                return _addButtonEnabled;
+            }
+            set
+            {
+                _addButtonEnabled = value;
+                NotifyPropertyChanged(nameof(AddButtonEnabled));
+            }
+        }
+
+        public bool ClassNameTextBoxEnabled
+        {
+            get
+            {
+                return _classNameTextBoxEnabled;
+            }
+            set
+            {
+                _classNameTextBoxEnabled = value;
+                NotifyPropertyChanged(nameof(ClassNameTextBoxEnabled));
             }
         }
 
@@ -236,6 +283,14 @@ namespace CourseManager
             const int AUDIT_INDEX = 21;
             const int EXPERIMENT_INDEX = 22;
             return !courseInfo.CheckPropertiesIdentical(changedCourseInfo, new int[] { CLASSROOM_INDEX, NUMBER_OF_STUDENT, NUMBER_OF_DROP_STUDENT, OUTLINE_INDEX, AUDIT_INDEX, EXPERIMENT_INDEX });
+        }
+
+        // add new tab page from class management
+        public void AddNewClass(string className)
+        {
+            CourseTabPageInfo tabPageInfo = new CourseTabPageInfo(className, className, "");
+            tabPageInfo.Loaded = true;
+            _model.AddNewTabPage(tabPageInfo);
         }
     }
 }

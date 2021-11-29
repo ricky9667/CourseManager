@@ -147,9 +147,6 @@ namespace CourseManager
         private void CourseSelectionResultButtonClick(object sender, EventArgs e)
         {
             _courseSelectionResultForm.Show();
-            _viewModel.CourseTabControlEnabled = false;
-            _viewModel.CourseSelectionResultButtonEnabled = false;
-            _viewModel.SubmitButtonEnabled = false;
         }
 
         // submit courses
@@ -169,8 +166,18 @@ namespace CourseManager
 
             string message = _viewModel.SelectCoursesAndGetMessage(tabIndex, selectedIndexes);
             MessageBox.Show(message);
+            ResetCourseDataGridViewCheckBoxes();
             _courseDataGridView.ClearSelection();
             _viewModel.SubmitButtonEnabled = false;
+        }
+
+        // reset course data grid view checkboxes
+        private void ResetCourseDataGridViewCheckBoxes()
+        {
+            foreach (DataGridViewRow row in _courseDataGridView.Rows)
+            {
+                row.Cells[0].Value = false;
+            }
         }
 
         // handle course selection form closing event

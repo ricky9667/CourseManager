@@ -17,6 +17,7 @@ namespace CourseManager
         private int _currentTabIndex;
         private List<CourseInfo> _currentTabCourseInfos;
         private List<int> _currentTabShowingIndexes;
+        private List<int> _currentLoadedTabs;
         public CourseSelectingFormViewModel(Model model)
         {
             _model = model;
@@ -28,6 +29,7 @@ namespace CourseManager
             _currentTabIndex = 0;
             _currentTabCourseInfos = _model.GetCourseInfos(_currentTabIndex);
             _currentTabShowingIndexes = _model.GetShowingIndexes(_currentTabIndex);
+            _currentLoadedTabs = _model.GetLoadedTabs();
         }
 
         public Model Model
@@ -135,8 +137,9 @@ namespace CourseManager
         // update current tab course infos and current showing indexes
         public void UpdateCurrentTabData()
         {
-            _currentTabCourseInfos = _model.GetCourseInfos(_currentTabIndex);
-            _currentTabShowingIndexes = _model.GetShowingIndexes(_currentTabIndex);
+            _currentLoadedTabs = _model.GetLoadedTabs();
+            _currentTabCourseInfos = _model.GetCourseInfos(_currentLoadedTabs[_currentTabIndex]);
+            _currentTabShowingIndexes = _model.GetShowingIndexes(_currentLoadedTabs[_currentTabIndex]);
             NotifyObserver();
         }
 
